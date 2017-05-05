@@ -9,14 +9,13 @@
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
 <div>
-	Tu usuario es : <sec:authentication property="principal.username" />    
-</div>   
-<ul>Roles detectados:</ul>
+	<p>Tu usuario es : <sec:authentication property="principal.username" />    
+	<p>Roles detectados: 
 	<sec:authorize access="hasRole('USER')">
-		<li> hasRole('USER')
+		hasRole('USER')
 	</sec:authorize>
 	<sec:authorize access="hasRole('ADMIN')">
-		<li> hasRole('ADMIN')
+		hasRole('ADMIN')
 	</sec:authorize>
-</ul>
+</div>   
 </sec:authorize>

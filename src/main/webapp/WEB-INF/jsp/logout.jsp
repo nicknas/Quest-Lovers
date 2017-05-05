@@ -8,9 +8,12 @@
 
 <div class="starter-template">
 	<h1>Logout</h1>
-	<p class="lead">Acabas de salir del sistema</p>
+	<p class="lead">¿Estás seguro que deseas salir?</p>
 
-	<%@ include file="../jspf/authinfo.jspf"%>		
+	<form action="/logout" method="post">
+	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
+		<button type="submit">Salir</button>
+	</form>		
 </div>
 
 <%@ include file="../jspf/footer.jspf"%>
