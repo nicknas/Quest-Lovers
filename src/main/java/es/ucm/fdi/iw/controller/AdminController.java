@@ -9,13 +9,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.model.User;
 
 @Controller	
 @RequestMapping("admin")
@@ -38,7 +39,7 @@ public class AdminController {
 	@Autowired
 	private LocalData localData;
 	
-	@PersistenceContext
+	@Autowired
 	private EntityManager entityManager;
 
     @ModelAttribute
@@ -50,6 +51,20 @@ public class AdminController {
 	public String root() {
 		return "admin";
 	}
+
+	// probando persist
+	@GetMapping("/addUser")
+	@Transactional
+	public @ResponseBody String addUser() {
+		User u = new User();
+		u.setLogin("c");
+		u.setPassword("cc");
+		u.setRoles("ADMIN,USER");
+		entityManager.persist(u);
+		
+		return "ok";
+	}
+	
 	
 	/**
 	 * Returns a users' photo
