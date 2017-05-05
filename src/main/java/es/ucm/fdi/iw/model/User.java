@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,7 +10,7 @@ public class User {
 	private long id;
 	private String login;
 	private String password;
-	private String role;
+	private String roles; // split by , to separate roles
 	private byte enabled;
 	
 	@Id
@@ -22,6 +23,7 @@ public class User {
 		this.id = id;
 	}	
 
+	@Column(unique=true)
 	public String getLogin() {
 		return login;
 	}
@@ -38,12 +40,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return role;
+	public String getRoles() {
+		return roles;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 
 	public byte getEnabled() {
