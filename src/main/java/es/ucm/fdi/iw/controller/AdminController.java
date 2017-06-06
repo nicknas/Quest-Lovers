@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -40,6 +41,9 @@ public class AdminController {
 	private LocalData localData;
 	
 	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
 	private EntityManager entityManager;
 
     @ModelAttribute
@@ -48,23 +52,31 @@ public class AdminController {
     }
 
 	@GetMapping({"", "/"})
-	public String root() {
-		return "admin";
+	public String root(Model m) {
+		m.addAttribute("users", entityManager
+				.createQuery("select u from User u").getResultList());
+		
+		return "admin";	
 	}
 
-	// probando persist
-	@GetMapping("/addUser")
+	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	@Transactional
-	public @ResponseBody String addUser() {
+	public String addUser(
+			@RequestParam String login, 
+			@RequestParam String password, 
+			@RequestParam(required=false) String isAdmin, Model m) {
 		User u = new User();
-		u.setLogin("c");
-		u.setPassword("cc");
-		u.setRoles("ADMIN,USER");
+		u.setLogin(login);
+		u.setPassword(passwordEncoder.encode(password));
+		u.setRoles("on".equals(isAdmin) ? "ADMIN,USER" : "USER");
 		entityManager.persist(u);
 		
-		return "ok";
+		entityManager.flush();
+		m.addAttribute("users", entityManager
+				.createQuery("select u from User u").getResultList());
+		
+		return "admin";
 	}
-	
 	
 	/**
 	 * Returns a users' photo
