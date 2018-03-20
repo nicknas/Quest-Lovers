@@ -8,37 +8,81 @@
 
 <div class="starter-template">
 	<h1>Admin</h1>
-	<p class="lead">Información muy confidencial</p>
+
 
 	<hr/>
 
-	<form action="/admin/addUser" method="post">
-		<label for="login">login<input name="login"/></label>
-		<label for="password">password<input type="password" name="password"/></label>
-		<label for="isAdmin">is admin?<input type="checkbox" name="isAdmin"></label>
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            
-            <div class="form-actions">
-                <button type="submit" class="btn">Create user</button>
-            </div>
-	</form>
-	
-	<hr/>
-	
-	<table>
-	<thead>
-	<tr><th>id<th>login<th>roles</tr>
-	</thead>
-	<tbody>
-	<c:forEach items="${users}" var="u">
-		<tr>
-		<td>${u.id}<td>${u.login}<td>${u.roles}
-		</tr>	
-	</c:forEach>
-	</tbody>
-	</table>
+	<div class="columns">
+		<div class="column">
+			<h4>Añadir nuevo editor</h4>
+			<form action="/admin/addUser" method="post">
+				<label for="user">user<input name="user"/></label>
+				<label for="password">password<input type="password" name="password"/></label>
+				<label for="email">email<input type="text" name="email"></label>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	            
+	            <div class="form-actions">
+	                <button type="submit" class="btn">Crear editor</button>
+	            </div>
+			</form>
+		</div>
+		
+		<div class="column">
+			<h4>Reportes</h4>
+			<div class="lista-reportes">
+				<div class="reporte">
+					<p>Usuario que realiza el reporte</p>
+					<p>Usuario que se reporta</p>
+					<p>Comentario del reporte...............					...................................
+					...................................
+					<button type="button" class="btn btn-success" aria-label="Left Align">
+  						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-danger" aria-label="Left Align">
+  						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+					</p>							
+				</div>
+				<div class="reporte">
+					<p>Usuario que realiza el reporte</p>
+					<p>Usuario que se reporta</p>
+					<p>Comentario del reporte...............
+					...................................
+					...................................
+					<button type="button" class="btn btn-success" aria-label="Left Align">
+  						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-danger" aria-label="Left Align">
+  						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+					
+					</p>	
+				</div>
+		</div>
+	</div>
+</div>
+	<div class="columns">
+		<div class="column">
+			<h4>Lista de editores</h4>
+			<table>
+			<thead>
+			<tr><th>id<th>editor<th>historias publicadas</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${users}" var="u">
+				<tr>
+				<td>${u.id}<td>${u.login}<td>${u.roles}
+				</tr>	
+			</c:forEach>
+			</tbody>
+			</table>
+		</div>
+		<div class="column">
 
-	<%@ include file="../jspf/authinfo.jspf"%>		
+			<%@ include file="../jspf/authinfo.jspf"%>		
+		</div>
+	</div>		
+		
 </div>
 
 <%@ include file="../jspf/footer.jspf"%>

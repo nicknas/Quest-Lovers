@@ -81,56 +81,50 @@ public class AdminController {
 	/**
 	 * Returns a users' photo
 	 * @param id of user to get photo from
-	 * @return the image, or error
+	 * @return
 	 */
-	@RequestMapping(value="/photo/{id}", 
-			method = RequestMethod.GET, 
-			produces = MediaType.IMAGE_JPEG_VALUE)
+	@RequestMapping(value="/photo/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public void userPhoto(@PathVariable("id") String id, 
 			HttpServletResponse response) {
 	    File f = localData.getFile("user", id);
-	    try (InputStream in = f.exists() ? 
-		    	new BufferedInputStream(new FileInputStream(f)) :
-		    	new BufferedInputStream(this.getClass().getClassLoader()
-		    			.getResourceAsStream("unknown-user.jpg"))) {
+	    InputStream in = null;
+	    try {
+		    if (f.exists()) {
+		    	in = new BufferedInputStream(new FileInputStream(f));
+		    } else {
+		    	in = new BufferedInputStream(
+		    			this.getClass().getClassLoader().getResourceAsStream("unknown-user.jpg"));
+		    }
 	    	FileCopyUtils.copy(in, response.getOutputStream());
 	    } catch (IOException ioe) {
-	    	response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404
 	    	log.info("Error retrieving file: " + f + " -- " + ioe.getMessage());
 	    }
 	}
 	
 	/**
-	 * Uploads a photo for a user. Intended to be used via Ajax
+	 * Uploads a photo for a user
 	 * @param id of user 
 	 * @param photo to upload
-	 * @return a textual response indicating success, status code
+	 * @return
 	 */
 	@RequestMapping(value="/photo/{id}", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(
-    		HttpServletResponse response,
-    		@RequestParam("photo") MultipartFile photo,
+    public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
     		@PathVariable("id") String id){
-
-		String error = "";
-        if (photo.isEmpty()) {
-        	error = "You failed to upload a photo for " 
-                + id + " because the file was empty.";        
+        if (!photo.isEmpty()) {
+            try {
+                byte[] bytes = photo.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(
+                        		new FileOutputStream(localData.getFile("user", id)));
+                stream.write(bytes);
+                stream.close();
+                return "You successfully uploaded " + id + 
+                		" into " + localData.getFile("user", id).getAbsolutePath() + "!";
+            } catch (Exception e) {
+                return "You failed to upload " + id + " => " + e.getMessage();
+            }
         } else {
-	        File f = localData.getFile("user", id);
-	        try (BufferedOutputStream stream =
-	                new BufferedOutputStream(
-	                    new FileOutputStream(f))) {
-	            stream.write(photo.getBytes());
-	            return "Uploaded " + id 
-	            		+ " into " + f.getAbsolutePath() + "!";
-	        } catch (Exception e) {
-		    	error = "Upload failed " 
-		    			+ id + " => " + e.getMessage();
-	        }
+            return "You failed to upload a photo for " + id + " because the file was empty.";
         }
-        // exit with error, blame user
-    	response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return error;
 	}
 }

@@ -39,4 +39,22 @@ public class RootController {
 	public String upload() {
 		return "upload";
 	}
+		
+	@GetMapping("/quest")
+	public String quest() {
+		return "quest";
+	}
+	@GetMapping("/matches")
+	public String matches() {
+		return "matches";
+	}
+	@GetMapping("/user")
+	public String user() {
+		return "user";
+	}
+	@GetMapping("/hacer_quest")
+	public String hacer_quest() {
+		return "hacer_quest";
+	}
+	
 }
