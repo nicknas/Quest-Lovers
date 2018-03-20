@@ -56,5 +56,29 @@ public class RootController {
 	public String hacer_quest() {
 		return "hacer_quest";
 	}
+	@GetMapping("/match")
+	public String match() {
+		return "match";
+	}
+	@GetMapping("/reportes")
+	public String reportes() {
+		return "reportes";
+  }
+	@GetMapping("/messages") 
+	public String messages(){
+		return "messages";
+	}
+	@GetMapping("/editores") 
+	public String editores(){
+		return "editores";
+	}
+	@GetMapping("/registro") 
+	public String registro(){
+		return "registro";
+	}
+	@GetMapping("/quest_admin") 
+	public String quest_admin(){
+		return "quest_admin";
+	}
 	
 }

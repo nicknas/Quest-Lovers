@@ -1,9 +1,8 @@
-.quests-list{
-	background-color:#8a909b
-}
 .quest{
-	background-color:#ffff9b;
-	margin: 5%;
+	background-color:#fff;
+}
+.list-quest{
+	list-style:none;
 }
 .columns {
 	display: flex;
@@ -31,4 +30,40 @@
 	margin-top: 2%;
 	border-style: solid;
     border-width: 2px;
+}
+.img-center{
+	margin: auto;
+}
+
+.demo-text-note{
+	display: block;
+	width: 260px;
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	font-size: 13px;
+	line-height: 13px;
+	color: #131415;
+	font-weight: 400;
+}
+.demo-type-example{
+	padding-left: 25%;
+	margin-bottom: 40px;
+	position: relative;
+}
+/*modificacion color navbar*/
+.navbar-default{
+  background-color:#13c1ac;
+}
+.navbar-default .navbar-brand{
+	color: #FFF;
+}
+
+.navbar-default .navbar-nav > li > a {
+	color: #FFF;
+}
+
+.btn-main-color{
+	color: #FFF;
+	background-color: #13c1ac;
 }

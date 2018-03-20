@@ -127,4 +127,23 @@ public class AdminController {
             return "You failed to upload a photo for " + id + " because the file was empty.";
         }
 	}
+	@RequestMapping(value = "/addEditor", method = RequestMethod.POST)
+	@Transactional
+	public String addEditor(
+			@RequestParam String user, 
+			@RequestParam String password, 
+			@RequestParam(required=false) String isAdmin, Model m) {
+		User u = new User();
+		u.setLogin(user);
+		u.setPassword(passwordEncoder.encode(password));
+		u.setRoles("EDITOR");
+		entityManager.persist(u);
+		
+		entityManager.flush();
+		m.addAttribute("users", entityManager
+				.createQuery("select u from User u").getResultList());
+		
+		return "admin";
+	}
 }
+

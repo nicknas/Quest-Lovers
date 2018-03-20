@@ -1,12 +1,48 @@
-body {
+/*body {
   padding-top: 50px;
 }
+*/
 .starter-template {
-  padding: 40px 15px;
-  text-align: center;
+	text-align: center;
 }
+
 table td, table th {
-  padding: 2px;
-  spacing: 0;
-  border: 1px solid gray;
+	padding: 2px;
+	spacing: 0;
+	border: 1px solid gray;
+}
+
+.mycontent-left {
+	padding: 15px;
+	text-align: left;
+}
+
+.mycontent-right {
+	padding: 15px;
+	text-align: left;
+}
+
+.panel-footer-reporte {
+	text-align: right;
+}
+
+.usuario-reporta {
+	text-align: left;
+}
+
+.btn-circle {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	background-color: #13c1ac;
+	border: none;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.btn-circle:focus {
+	outline: none;
 }
