@@ -8,16 +8,7 @@
 
 <div class="starter-template">
 	<h1>Admin</h1>
-	<form action="/admin/addEditor" method="post">
-				<label for="user">user<input name="user"/></label>
-				<label for="password">password<input type="password" name="password"/></label>
-				<label for="email">email<input type="text" name="email"></label>
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-	            
-	            <div class="form-actions">
-	                <button type="submit" class="btn">Crear editor</button>
-	            </div>
-	</form>
+	
 
 	<hr/>
 	<table>

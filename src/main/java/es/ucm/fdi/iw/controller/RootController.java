@@ -1,19 +1,30 @@
 package es.ucm.fdi.iw.controller;
 
 import java.security.Principal;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.UserQueries;
 
 @Controller	
 public class RootController {
 
 	private static Logger log = Logger.getLogger(RootController.class);
 	
-    @ModelAttribute
+	@PersistenceContext
+	private EntityManager entityManager;
+	
+	@ModelAttribute
     public void addAttributes(Model model) {
         model.addAttribute("s", "/static");
     }
@@ -68,10 +79,15 @@ public class RootController {
 	public String messages(){
 		return "messages";
 	}
+	
 	@GetMapping("/editores") 
-	public String editores(){
+	@Transactional
+	public String editores(Model m){
+		List<User> lista = UserQueries.findEditores(entityManager);
+		m.addAttribute("editores", lista);
 		return "editores";
 	}
+	
 	@GetMapping("/registro") 
 	public String registro(){
 		return "registro";
