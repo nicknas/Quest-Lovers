@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.UserQueries;
 
 @Controller	
 @RequestMapping("admin")
@@ -58,7 +60,7 @@ public class AdminController {
 		
 		return "admin";	
 	}
-
+		
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	@Transactional
 	public String addUser(
@@ -131,19 +133,34 @@ public class AdminController {
 	@Transactional
 	public String addEditor(
 			@RequestParam String user, 
-			@RequestParam String password, 
+			@RequestParam String password,
+			@RequestParam String password2,
+			@RequestParam String email,
+			@RequestParam int edad,
+			@RequestParam String ciudad,
+			@RequestParam String resumen,
+		
 			@RequestParam(required=false) String isAdmin, Model m) {
 		User u = new User();
-		u.setLogin(user);
-		u.setPassword(passwordEncoder.encode(password));
-		u.setRoles("EDITOR");
-		entityManager.persist(u);
-		
-		entityManager.flush();
-		m.addAttribute("users", entityManager
-				.createQuery("select u from User u").getResultList());
-		
-		return "admin";
+		if(!password.equals(password2)) {
+			return "error";
+		} else {
+			u.setLogin(user);
+			u.setPassword(passwordEncoder.encode(password));
+			u.setCiudad(ciudad);
+			u.setEdad(edad);
+			u.setEmail(email);
+			u.setResumen(resumen);
+			u.setRoles("EDITOR");
+			
+			entityManager.persist(u);
+			
+			entityManager.flush();
+			
+			List<User> lista = UserQueries.findEditores(entityManager);
+			m.addAttribute("editores", lista);
+			return "editores";
+		}
 	}
 }
 

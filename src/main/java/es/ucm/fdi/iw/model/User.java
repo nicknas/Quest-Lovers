@@ -11,6 +11,10 @@ public class User {
 	private String login;
 	private String password;
 	private String roles; // split by , to separate roles
+	private String ciudad;
+	private int edad;
+	private String resumen;
+	private String email;
 	private byte enabled;
 	
 	@Id
@@ -54,5 +58,37 @@ public class User {
 
 	public void setEnabled(byte enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public int getEdad() {
+		return edad;
+	}
+
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+
+	public String getResumen() {
+		return resumen;
+	}
+
+	public void setResumen(String resumen) {
+		this.resumen = resumen;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

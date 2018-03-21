@@ -25,42 +25,41 @@
 			</div>
 			<div id="collapse1" class="panel-collapse collapse">
 				<div class="panel-body">
-					<form class="form-horizontal" id="formulario-editor">
+					<form class="form-horizontal" id="formulario-editor" action="/admin/addEditor" method="post">
 						<fieldset>
 
 							<div class="col-md-6">
+
 								<!-- Text input-->
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="Nombre">Nombre</label>
+									<label class="col-md-3 control-label" for="email">Email</label>
 									<div class="col-md-7">
-										<input id="Nombre" name="Nombre" placeholder="Nombre"
+										<input id="email" name="email" placeholder="Email"
 											class="form-control input-md" type="text">
 									</div>
 								</div>
 
 								<!-- Text input-->
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="Apellidos">Apellidos</label>
+									<label class="col-md-3 control-label" for="ciudad">Ciudad</label>
 									<div class="col-md-7">
-										<input id="Apellidos" name="Apellidos" placeholder="Apellidos"
+										<input id="ciudad" name="ciudad" placeholder="ciudad"
 											class="form-control input-md" type="text">
 									</div>
 								</div>
-
-								<!-- Text input-->
+								
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="Email">Email</label>
+									<label class="col-md-3 control-label" for="resumen">Resumen</label>
 									<div class="col-md-7">
-										<input id="Email" name="Email" placeholder="Email"
+										<input id="ciudad" name="resumen" placeholder="resumen"
 											class="form-control input-md" type="text">
 									</div>
 								</div>
-
-								<!-- Text input-->
+								
 								<div class="form-group">
-									<label class="col-md-3 control-label" for="Teléfono">Teléfono</label>
+									<label class="col-md-3 control-label" for="edad">Edad</label>
 									<div class="col-md-7">
-										<input id="Teléfono" name="Teléfono" placeholder="Teléfono"
+										<input id="ciudad" name="edad" placeholder="edad"
 											class="form-control input-md" type="text">
 									</div>
 								</div>
@@ -69,39 +68,41 @@
 							<div class="col-md-6">
 								<!-- Text input-->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="Usuario">Usuario</label>
+									<label class="col-md-4 control-label" for="user">Usuario</label>
 									<div class="col-md-7">
-										<input id="Usuario" name="Usuario" placeholder="Usuario"
+										<input id="Usuario" name="user" placeholder="user"
 											class="form-control input-md" type="text">
 									</div>
 								</div>
 
 								<!-- Text input-->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="Contraseña">Contraseña</label>
+									<label class="col-md-4 control-label" for="password">Contraseña</label>
 									<div class="col-md-7">
-										<input id="Contraseña" name="Contraseña"
+										<input id="Contraseña" name="password"
 											placeholder="Contraseña" class="form-control input-md"
 											type="password">
 									</div>
 								</div>
 								<!-- Text input-->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="Contraseña">Repite contraseña</label>
+									<label class="col-md-4 control-label" for="password2">Repite contraseña</label>
 									<div class="col-md-7">
-										<input id="Contraseña" name="Contraseña"
-											placeholder="Contraseña" class="form-control input-md"
+										<input id="Contraseña" name="password2"
+											placeholder="Repite Contraseña" class="form-control input-md"
 											type="password">
 									</div>
 								</div>
 							</div>
 
 						</fieldset>
-					</form>
+					
 				</div>
 				<div class="panel-footer">
-					<button id="btn-guardar-editor" class="btn btn-success">Guardar</button>
-					<button id="btn-cancelar-editor" class="btn btn-danger">Cancelar</button>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
+					<button type="submit" id="btn-guardar-editor" class="btn btn-success">Guardar</button>
+					<button type="cancel" id="btn-cancelar-editor" class="btn btn-danger">Cancelar</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -110,42 +111,24 @@
 		<thead>
 			<tr>
 				<th>Select</th>
+				<th>ID</th>
 				<th>Nombre</th>
-				<th>Apellidos</th>
 				<th>Email</th>
-				<th>Teléfono</th>
-				<th>Usuario</th>
+				<th>Ciudad</th>
 				<th>Contraseña</th>
 			</tr>
 		</thead>
 		<tbody>
+		<c:forEach items="${editores}" var="u">
 			<tr>
 				<td><input type="checkbox" class="checkbox-editor"></td>
-				<td>John</td>
-				<td>Doe</td>
-				<td>john@example.com</td>
-				<td>636123123</td>
-				<td>Doe</td>
-				<td>Doe</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" class="checkbox-editor"></td>
-				<td>Mary</td>
-				<td>Moe</td>
-				<td>mary@example.com</td>
-				<td>636123123</td>
-				<td>Doe</td>
-				<td>Doe</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" class="checkbox-editor"></td>
-				<td>July</td>
-				<td>Dooley</td>
-				<td>july@example.com</td>
-				<td>636123123</td>
-				<td>Doe</td>
-				<td>Doe</td>
-			</tr>
+				<td>${u.id}</td>
+				<td>${u.login}</td>
+				<td>${u.email}</td>
+				<td>${u.ciudad}</td>
+				<td>${u.password}</td>
+			</tr>	
+		</c:forEach>	
 		</tbody>
 	</table>
 
