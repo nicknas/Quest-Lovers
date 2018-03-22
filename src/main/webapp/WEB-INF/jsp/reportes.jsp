@@ -15,58 +15,30 @@
 		<h4>Pendientes</h4>
 			<div class="mycontent-left">
 				<div class="panel-group" id="desplegable-izq">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#desplegable-izq"
-									href="#collapse11">Pepito Fernanadez</a>
-							</h4>
-						</div>
-						<div id="collapse11" class="panel-collapse collapse">
-							<div class="panel-body">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt
-								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-								commodo consequat.</div>
-							<div class="panel-footer panel-footer-reporte">
-								<div class="usuario-reporta">Usuario que reporta: Nick</div>
-								<button type="button" class="btn btn-success"
-									aria-label="Left Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-danger"
-									aria-label="Left Align">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
+					<c:forEach items="${reportes_nuevos}" var="nuevos"> 
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#desplegable-izq"
+										href="#${nuevos.id}">${nuevos.reportado}</a>
+								</h4>
+							</div>
+							<div id="${nuevos.id}" class="panel-collapse collapse">
+								<div class="panel-body">${nuevos.comentario}</div>
+								<div class="panel-footer panel-footer-reporte">
+									<div class="usuario-reporta">Usuario que reporta: ${nuevos.reportador}</div>
+									<button type="button" class="btn btn-success"
+										aria-label="Left Align">
+										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+									</button>
+									<button type="button" class="btn btn-danger"
+										aria-label="Left Align">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+									</button>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#desplegable-izq"
-									href="#collapse12">Usuario123</a>
-							</h4>
-						</div>
-						<div id="collapse12" class="panel-collapse collapse">
-							<div class="panel-body">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt
-								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-								commodo consequat.</div>
-							<div class="panel-footer panel-footer-reporte">
-								<div class="usuario-reporta">Usuario que reporta: Nick</div>
-								<button type="button" class="btn btn-success"
-									aria-label="Left Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-danger"
-									aria-label="Left Align">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-								</button>
-							</div>
-						</div>
-					</div>
+					</c:forEach>					
 				</div>
 			</div>
 		</div>
@@ -74,44 +46,30 @@
 		<h4>Resueltos</h4>
 			<div class="mycontent-right">
 				<div class="panel-group" id="desplegable-der">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#desplegable-der"
-									href="#collapse21">Pepito Fernanadez</a>
-							</h4>
-						</div>
-						<div id="collapse21" class="panel-collapse collapse">
-							<div class="panel-body">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt
-								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-								commodo consequat.</div>
-							<div class="panel-footer panel-footer-reporte">
-								<div class="usuario-reporta">Usuario que reporta: Nick</div>
-								<span class="label label-success">Aceptado</span>
+					<c:forEach items="${reportes_vistos}" var="vistos"> 
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#desplegable-izq"
+										href="#${vistos.id}">${vistos.reportado}</a>
+								</h4>
+							</div>
+							<div id="${vistos.id}" class="panel-collapse collapse">
+								<div class="panel-body">${vistos.comentario}</div>
+								<div class="panel-footer panel-footer-reporte">
+									<div class="usuario-reporta">Usuario que reporta: ${vistos.reportador}</div>
+									<c:choose>
+									    <c:when test="${vistos.baneado == 0}">
+									        <span class="label label-danger">Rechazado</span>
+									    </c:when>
+									    <c:otherwise>
+									        <span class="label label-success">Aceptado</span>
+									    </c:otherwise>
+									</c:choose>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#desplegable-der"
-									href="#collapse22">Usuario123</a>
-							</h4>
-						</div>
-						<div id="collapse22" class="panel-collapse collapse">
-							<div class="panel-body">Lorem ipsum dolor sit amet,
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt
-								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-								commodo consequat.</div>
-							<div class="panel-footer panel-footer-reporte">
-								<div class="usuario-reporta">Usuario que reporta: Nick</div>
-								<span class="label label-danger">Rechazado</span>
-							</div>
-						</div>
-					</div>
+					</c:forEach>	
 				</div>
 			</div>
 		</div>
