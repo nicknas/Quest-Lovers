@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import es.ucm.fdi.iw.model.Reporte;
+import es.ucm.fdi.iw.model.ReporteQueries;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
 
@@ -72,7 +74,11 @@ public class RootController {
 		return "match";
 	}
 	@GetMapping("/reportes")
-	public String reportes() {
+	public String reportes(Model m) {
+		List<Reporte> listaNuevos = ReporteQueries.findNoVistos(entityManager);
+		m.addAttribute("reportes_nuevos", listaNuevos);
+		List<Reporte> listaVistos = ReporteQueries.findVistos(entityManager);
+		m.addAttribute("reportes_vistos", listaVistos);
 		return "reportes";
   }
 	@GetMapping("/messages") 

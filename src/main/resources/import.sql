@@ -7,3 +7,7 @@ INSERT INTO user(id,enabled,login,password,roles, ciudad, edad, resumen, email) 
 --editor2-->editor2
 INSERT INTO user(id,enabled,login,password,roles, ciudad, edad, resumen, email) VALUES (4, 1, 'editor2', '$2a$10$URS0jZF3NS7tL2OuEKXJDuempTTXQnaMwrQNll.fFw.m9AIWqUG72', 'EDITOR', 'Barcelona', 41, 'Resumen', 'editor2@editor2.com');
 
+INSERT INTO reporte(id, reportador, reportado, comentario, visto, baneado) VALUES (1, 'Pepe', 'Ana Maria', 'Reportada_por_pesada', 0, 0);
+INSERT INTO reporte(id, reportador, reportado, comentario, visto, baneado) VALUES (2, 'Laura', 'Miguel', 'Motivo_del_reporte', 0, 0);
+INSERT INTO reporte(id, reportador, reportado, comentario, visto, baneado) VALUES (3, 'Luis', 'Patricia', 'Motivo_del_reporte', 1, 0);
+INSERT INTO reporte(id, reportador, reportado, comentario, visto, baneado) VALUES (4, 'Sandra', 'Roberto', 'Motivo_del_reporte', 1, 1);
