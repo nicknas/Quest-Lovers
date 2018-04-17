@@ -11,3 +11,9 @@ INSERT INTO reporte(id, reportador, reportado, comentario, visto, baneado) VALUE
 INSERT INTO reporte(id, reportador, reportado, comentario, visto, baneado) VALUES (2, 'Laura', 'Miguel', 'Motivo_del_reporte', 0, 0);
 INSERT INTO reporte(id, reportador, reportado, comentario, visto, baneado) VALUES (3, 'Luis', 'Patricia', 'Motivo_del_reporte', 1, 0);
 INSERT INTO reporte(id, reportador, reportado, comentario, visto, baneado) VALUES (4, 'Sandra', 'Roberto', 'Motivo_del_reporte', 1, 1);
+
+
+INSERT INTO quest(id, titulo, descripcion, url) VALUES (1, 'Titulo Quest1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation', 'url_del_json');
+INSERT INTO quest(id, titulo, descripcion, url) VALUES (2, 'Titulo Quest2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation', 'url_del_json');
+INSERT INTO quest(id, titulo, descripcion, url) VALUES (3, 'Titulo Quest3', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation', 'url_del_json');
+INSERT INTO quest(id, titulo, descripcion, url) VALUES (4, 'Titulo Quest4', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation', 'url_del_json');

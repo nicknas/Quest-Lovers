@@ -10,17 +10,21 @@
     </hr>
     <div class="quests-container row">
         <div class="col-xs-12 quest">
-            <h3>Titulo de la Quest</h3>
+            <h3>Todas nuestras Quests disponibles</h3>
             <ul class="list-quest">
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
+            	<c:forEach items="${all_quests}" var="quests">
+	                <li class="quest col-md-3 col-xs-12">
+	                    <div  id="${quests.id}" class="quest-container tile">
+	                        <h6>${quests.titulo}</h6>
+	                        <p>${quests.descripcion}</p>
+	                        <form action="/hacer_quest?id=${quests.id}" method="GET">
+	                        	<input type="hidden" name="id" value="${quests.id}">
+	                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
+	                        </form>
+	                    </div>
+	                </li>
+	            </c:forEach> 
+	            <!--    
                 <li class="quest  col-md-3 col-xs-12">
                     <div class="quest-container tile">
                         <h6>title</h6>
@@ -84,6 +88,7 @@
                         </form>
                     </div>
                 </li>
+                -->
             </ul>
         </div>
     </div>
