@@ -60,25 +60,9 @@ public class AdminController {
 		
 		return "admin";	
 	}
-		
-	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	@Transactional
-	public String addUser(
-			@RequestParam String login, 
-			@RequestParam String password, 
-			@RequestParam(required=false) String isAdmin, Model m) {
-		User u = new User();
-		u.setLogin(login);
-		u.setPassword(passwordEncoder.encode(password));
-		u.setRoles("on".equals(isAdmin) ? "ADMIN,USER" : "USER");
-		entityManager.persist(u);
-		
-		entityManager.flush();
-		m.addAttribute("users", entityManager
-				.createQuery("select u from User u").getResultList());
-		
-		return "admin";
-	}
+	
+	
+	
 	
 	/**
 	 * Returns a users' photo
