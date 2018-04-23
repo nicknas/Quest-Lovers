@@ -7,12 +7,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import es.ucm.fdi.iw.model.Quest;
+import es.ucm.fdi.iw.model.QuestQueries;
 import es.ucm.fdi.iw.model.Reporte;
 import es.ucm.fdi.iw.model.ReporteQueries;
 import es.ucm.fdi.iw.model.User;
@@ -22,6 +29,9 @@ import es.ucm.fdi.iw.model.UserQueries;
 public class RootController {
 
 	private static Logger log = Logger.getLogger(RootController.class);
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -54,7 +64,10 @@ public class RootController {
 	}
 		
 	@GetMapping("/quest")
-	public String quest() {
+	public String quest(Model m) {
+		List<Quest> listaQuests = QuestQueries.findAllQuests(entityManager);
+		m.addAttribute("all_quests", listaQuests);
+		
 		return "quest";
 	}
 	@GetMapping("/matches")
@@ -102,5 +115,5 @@ public class RootController {
 	public String quest_admin(){
 		return "quest_admin";
 	}
-	
+		
 }
