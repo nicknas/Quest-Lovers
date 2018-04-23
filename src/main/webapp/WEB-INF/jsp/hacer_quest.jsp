@@ -6,6 +6,9 @@
 
 <%@ include file="../jspf/header.jspf"%>
 
+
+<script src="${s}/js/jquery.questhandler.js"> </script>
+
 <div class="starter-template">
 	
 	<div class="tile">

@@ -28,7 +28,7 @@
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="Edad">Edad</label>  
 		  <div class="col-md-4">
-		  <input id="Edad" name="Edad" placeholder="Edad" class="form-control input-md" type="text">
+		  <input id="edad" name="edad" placeholder="Edad" class="form-control input-md" type="text">
 		  <span class="help-block">Introduzca su edad</span>  
 		  </div>
 		</div>
@@ -37,7 +37,7 @@
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="resumen">Resumen</label>
 		  <div class="col-md-4">                     
-		    <textarea class="form-control" id="resumen" name="resumen">Introduzca un resumen sobre ti para presentarte</textarea>
+		    <textarea class="form-control input-md" id="resumen" name="resumen" placeholder="Introduzca un resumen sobre ti para presentarte"></textarea>
 		  </div>
 		</div>
 		

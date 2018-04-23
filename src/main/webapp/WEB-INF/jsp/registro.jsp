@@ -14,8 +14,8 @@
 	            <legend>Please Sign Up</legend>
 	            <div class="form-group">
 		            <input class="form-control login-field" value=""
-						placeholder="Enter your username" id="username" type="text" name="username"/>
-					<label class="login-field-icon fui-user" for="username"></label> 
+						placeholder="Enter your username" id="user" type="text" name="user"/>
+					<label class="login-field-icon fui-user" for="user"></label> 
 		        </div>    
 		        <div class="form-group">
 		        	<input class="form-control login-field" value="" placeholder="Password" id="password" name="password" type="password">
@@ -25,6 +25,25 @@
 		        	<input class="form-control login-field" value="" placeholder="Repeat your password" id="password2" name="password2" type="password">
              		<label class="login-field-icon fui-lock" for="password2"></label>
 	            </div>
+	            <div class="form-group">
+		            <input class="form-control login-field" value=""
+						placeholder="Ciudad" id="ciudad" type="text" name="ciudad"/>
+					<label class="login-field-icon fui-user" for="ciudad"></label> 
+		        </div>
+		        <div class="form-group">
+		            <input class="form-control login-field" value=""
+						placeholder="Edad" id="edad" type="int" name="edad"/>
+					<label class="login-field-icon fui-user" for="edad"></label> 
+		        </div>
+		        <div class="form-group">
+		 			<input id="ciudad" name="resumen" placeholder="resumen" class="form-control input-md" type="text">
+					<label class="login-field-icon fui-user" for="resumen"></label>						
+		 		</div>
+		 		<div class="form-group">
+		            <input class="form-control login-field" value=""
+						placeholder="E-mail" id="email" type="text" name="email"/>
+					<label class="login-field-icon fui-user" for="email"></label> 
+		        </div>
 	            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	 
 	            <div class="form-actions">

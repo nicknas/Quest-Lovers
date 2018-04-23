@@ -18,6 +18,10 @@
     <link href="${s}/css/flat-ui.css" rel="stylesheet">
     <link href="${s}/css/flat-ui.min.css" rel="stylesheet">
     <link href="${s}/css/estilos.css" rel="stylesheet">
+    
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="${s}/js/jquery.min.js"></script>
+    
   </head>
   <body>
   
