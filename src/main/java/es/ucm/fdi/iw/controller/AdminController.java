@@ -61,40 +61,7 @@ public class AdminController {
 		return "admin";	
 	}
 	
-	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	@Transactional
-	public String addUser(
-			@RequestParam String user, 
-			@RequestParam String password,
-			@RequestParam String password2,
-			@RequestParam String email,
-			@RequestParam int edad,
-			@RequestParam String ciudad,
-			@RequestParam String resumen,
-		
-			@RequestParam(required=false) String isAdmin, Model m) {
-		User u = new User();
-		if(!password.equals(password2)) {
-			return "error";
-		} else {
-			u.setLogin(user);
-			u.setPassword(passwordEncoder.encode(password));
-			u.setCiudad(ciudad);
-			u.setEnabled((byte) 1);
-			u.setEdad(edad);
-			u.setEmail(email);
-			u.setResumen(resumen);
-			u.setRoles("USER");
-			
-			entityManager.persist(u);
-			
-			entityManager.flush();
-			
-			m.addAttribute("users", entityManager
-					.createQuery("select u from User u").getResultList());
-			return "/login";
-		}
-	}
+	
 	
 	
 	/**
