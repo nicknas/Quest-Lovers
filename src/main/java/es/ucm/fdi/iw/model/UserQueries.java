@@ -14,7 +14,7 @@ public class UserQueries {
 	
 	public static User findWithName(EntityManager entityManager, String name) {
 		try {
-			User p = entityManager.createQuery("from User t where t.name = :name", User.class)
+			User p = entityManager.createQuery("from User t where t.login = :name", User.class)
 					.setParameter("name", name)
 					.getSingleResult();
 
