@@ -69,6 +69,7 @@ public class AdminController {
 	 * @param id of user to get photo from
 	 * @return
 	 */
+	/*
 	@RequestMapping(value="/photo/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
 	public void userPhoto(@PathVariable("id") String id, 
 			HttpServletResponse response) {
@@ -86,13 +87,14 @@ public class AdminController {
 	    	log.info("Error retrieving file: " + f + " -- " + ioe.getMessage());
 	    }
 	}
-	
+	*/
 	/**
 	 * Uploads a photo for a user
 	 * @param id of user 
 	 * @param photo to upload
 	 * @return
 	 */
+	/*
 	@RequestMapping(value="/photo/{id}", method=RequestMethod.POST)
     public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
     		@PathVariable("id") String id){
@@ -113,6 +115,7 @@ public class AdminController {
             return "You failed to upload a photo for " + id + " because the file was empty.";
         }
 	}
+	*/
 	@RequestMapping(value = "/addEditor", method = RequestMethod.POST)
 	@Transactional
 	public String addEditor(

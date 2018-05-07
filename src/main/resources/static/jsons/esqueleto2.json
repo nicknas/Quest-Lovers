@@ -1,0 +1,144 @@
+{
+    "quest": {
+        "id": 2,
+        "titulo": "pueba1",
+        "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "preguntas": {
+            "initial": {
+                "tipo": "preguntaInitial",
+                "texto": "Ves por la calle a la persona que te gusta¿Que haces?",
+                "respID": ["r1", "r2", "r3"]
+            },
+            "p1": {
+                "tipo": "pregunta",
+                "texto": "Te para la otra persona y te dice hombre cuanto tiempo¿Tomas un cafe?",
+                "respID": ["r4", "r5", "r6"]
+            },
+            "p2": {
+                "tipo": "pregunta",
+                "texto": "pregunta2",
+                "respID": ["r7","r8","r9"]
+            },
+            "p3": {
+                "tipo": "pregunta",
+                "texto": "pregunta3",
+                "respID": ["f1", "f2", "f3"]
+            },
+            "p4": {
+                "tipo": "pregunta",
+                "texto": "pregunta 4",
+                "respID": [1, 2, 3]
+            },
+            "p5": {
+                "tipo": "pregunta",
+                "texto": "pregunta 5",
+                "respID": [1, 2, 3]
+            },
+            "p6": {
+                "tipo": "pregunta",
+                "texto": "pregunta 6",
+                "respID": [1, 2, 3]
+            },
+            "p7": {
+                "tipo": "pregunta",
+                "texto": "pregunta 7",
+                "respID": [1, 2, 3]
+            },
+            "p8": {
+                "tipo": "pregunta",
+                "texto": "pregunta 8",
+                "respID": [1, 2, 3]
+            },
+            "p9": {
+                "tipo": "pregunta",
+                "texto": "pregunta 9",
+                "respID": [1, 2, 3]
+            },
+            "p10": {
+                "tipo": "pregunta",
+                "texto": "pregunta 7",
+                "respID": [1, 2, 3]
+            },
+            "p11": {
+                "tipo": "pregunta",
+                "texto": "pregunta 8",
+                "respID": [1, 2, 3]
+            },
+            "p12": {
+                "tipo": "pregunta",
+                "texto": "pregunta 9",
+                "respID": [1, 2, 3]
+            },
+            "r1": {
+                "tipo": "respuesta",
+                "texto": "Paso de largo",
+                "respID": "p1"
+            },
+            "r2": {
+                "tipo": "respuesta",
+                "texto": "Saludo cordialmente",
+                "respID": "p2"
+            },
+            "r3": {
+                "tipo": "respuesta",
+                "texto": "Le insulto",
+                "respID": "f1"
+            },
+            "r4": {
+                "tipo": "respuesta",
+                "texto": "Si por supuesto",
+                "respID": "f2"
+            },
+            "r5": {
+                "tipo": "respuesta",
+                "texto": "respuesta 5",
+                "respID": "p5"
+            },
+            "r6": {
+                "tipo": "respuesta",
+                "texto": "respuesta 6",
+                "respID": "p6"
+            },
+            "r7": {
+                "tipo": "respuesta",
+                "texto": "respuesta 7",
+                "respID": "p7"
+            },
+            "r8": {
+                "tipo": "respuesta",
+                "texto": "respuesta 8",
+                "respID": "p8"
+            },
+            "r9": {
+                "tipo": "respuesta",
+                "texto": "respuesta 9",
+                "respID": "p9"
+            },
+            "r10": {
+                "tipo": "respuesta",
+                "texto": "respuesta 10",
+                "respID": "p2"
+            },
+            "r11": {
+                "tipo": "respuesta",
+                "texto": "respuesta 11",
+                "respID": "p2"
+            },
+            "f1": {
+                "tipo": "final",
+                "texto": "final1",
+                "solution": "desagradable 1"
+            },
+            "f2": {
+                "tipo": "final",
+                "texto": "Has conseguido quedar con la persona que te gusta",
+                "solution": "agradable 2"
+            },
+            "f3": {
+                "tipo": "final",
+                "texto": "final3",
+                "respID": "p2"
+            }
+        }
+    }
+}
