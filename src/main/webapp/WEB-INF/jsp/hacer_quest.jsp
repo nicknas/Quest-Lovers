@@ -29,10 +29,9 @@
 					<a class="btn btn-block btn-main-color questopt r3" href="#"></a>
 				</div>
 			</div>
-			<div class="row final hidden">
-				<div class="col-md-4 col-xs-12">
+			<div class="row final hidden ">
+			
 					<p>Has terminado</p>
-				</div>
 				<button value="terminar" class="btn btn-block btn-main-color">Terminar </button>
 					
 
