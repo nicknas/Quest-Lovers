@@ -38,7 +38,7 @@ jQuery(document).ready(function(){
 	     			jQuery("div.botones_respuestas").addClass("hidden");
 	     			jQuery("div.final").removeClass("hidden");
 	     			jQuery("p.quest-snipped-text").addClass("hidden");
-	     			
+
 	     		}else{
 	     			jQuery("p.quest-snipped-text").text(eval(pregunta));
 		     		jQuery.each(eval(respuestas),function(i,obj, json = data){
