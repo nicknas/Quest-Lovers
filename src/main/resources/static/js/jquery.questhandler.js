@@ -23,8 +23,10 @@ jQuery(document).ready(function(){
 	         jQuery("p.quest-snipped-text").text(data.quest.preguntas.initial.texto);
 	         jQuery.each(data.quest.preguntas.initial.respID,function(i,obj, json = data){
 	        	 var respContext = eval("json.quest.preguntas."+obj);
+	        	 jQuery("a.r"+(i+1)).removeClass("hidden");
 	        	 jQuery("a.r"+(i+1)).text(respContext.texto);
 	        	 jQuery("a.r"+(i+1)).attr("respID",respContext.respID);
+	        	 jQuery("a.r"+(i+2)).addClass("hidden");
 	        	 
 	         });
 	         
@@ -37,15 +39,17 @@ jQuery(document).ready(function(){
 	     		if(tipo=="final"){
 	     			jQuery("div.botones_respuestas").addClass("hidden");
 	     			jQuery("div.final").removeClass("hidden");
+	     			jQuery("div.final p").text(eval("data.quest.preguntas."+jQuery(this).attr("respID")+".texto"));
 	     			jQuery("p.quest-snipped-text").addClass("hidden");
 
 	     		}else{
 	     			jQuery("p.quest-snipped-text").text(eval(pregunta));
 		     		jQuery.each(eval(respuestas),function(i,obj, json = data){
 			        	 var respContext = eval("json.quest.preguntas."+obj);
+			        	 jQuery("a.r"+(i+1)).removeClass("hidden");
 			        	 jQuery("a.r"+(i+1)).text(respContext.texto);
 			        	 jQuery("a.r"+(i+1)).attr("respID",respContext.respID);
-			        	 
+			        	 jQuery("a.r"+(i+2)).addClass("hidden");
 			         });
 	     		}
 	     	});
