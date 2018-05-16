@@ -26,7 +26,7 @@
             },
             "p4": {
                 "tipo": "pregunta",
-                "texto": "Yendo por el camino luminoso, escuchais que los asesinos os estan siguiendo. Te entra un poco el pánico, al igual que tu pareja. Veis que hay una conexion hacia el camino oscuro que visteis antes, ¿que podrias hacer?",
+                "texto": "Yendo por el camino luminoso, escuchais que los asesinos os están siguiendo. Te entra un poco el pánico, al igual que tu pareja. Veis que hay una conexion hacia el camino oscuro que visteis antes, ¿que podrias hacer?",
                 "respID": ["r12","r13"]
             },
             "r1": {

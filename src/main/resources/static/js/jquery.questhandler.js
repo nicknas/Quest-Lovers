@@ -21,16 +21,24 @@ jQuery(document).ready(function(){
 	         console.log(data );
 	         if(data.quest.titulo !== undefined && data.quest.titulo !== null) jQuery(QUEST_TITTLE_CSS).text(data.quest.titulo);
 	         jQuery("p.quest-snipped-text").text(data.quest.preguntas.initial.texto);
+	         jQuery(".botones_respuestas").empty();
+        	 if (eval("data.quest.preguntas.initial.respID").length == 2){
+        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-md-offset-2 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#'></a></div>");
+        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#'></a></div>");
+        	 }
+        	 else if (eval("data.quest.preguntas.initial.respID").length == 3){
+        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#' ></a></div>");
+        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#' ></a></div>");
+        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r3' href='#' ></a></div>");
+        	 }
 	         jQuery.each(data.quest.preguntas.initial.respID,function(i,obj, json = data){
+	        	 
 	        	 var respContext = eval("json.quest.preguntas."+obj);
-	        	 jQuery("a.r"+(i+1)).removeClass("hidden");
 	        	 jQuery("a.r"+(i+1)).text(respContext.texto);
 	        	 jQuery("a.r"+(i+1)).attr("respID",respContext.respID);
-	        	 jQuery("a.r"+(i+2)).addClass("hidden");
-	        	 
 	         });
 	         
-	         jQuery("a.questopt").click(function(datajson = data){
+	         jQuery(document).on("click", "a.questopt", function(datajson = data){
 	     		console.log("hemos llegado");
 	     		var pregunta = "data.quest.preguntas."+jQuery(this).attr("respID")+".texto";
 	     		var respuestas = "data.quest.preguntas."+jQuery(this).attr("respID")+".respID";
@@ -43,13 +51,21 @@ jQuery(document).ready(function(){
 	     			jQuery("p.quest-snipped-text").addClass("hidden");
 
 	     		}else{
+	     			jQuery(".botones_respuestas").empty();
+		        	 if (eval(respuestas).length == 2){
+		        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-md-offset-2 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#'></a></div>");
+		        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#'></a></div>");
+		        	 }
+		        	 else if (eval(respuestas).length == 3){
+		        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#' ></a></div>");
+		        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#' ></a></div>");
+		        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r3' href='#' ></a></div>");
+		        	 }
 	     			jQuery("p.quest-snipped-text").text(eval(pregunta));
 		     		jQuery.each(eval(respuestas),function(i,obj, json = data){
 			        	 var respContext = eval("json.quest.preguntas."+obj);
-			        	 jQuery("a.r"+(i+1)).removeClass("hidden");
 			        	 jQuery("a.r"+(i+1)).text(respContext.texto);
 			        	 jQuery("a.r"+(i+1)).attr("respID",respContext.respID);
-			        	 jQuery("a.r"+(i+2)).addClass("hidden");
 			         });
 	     		}
 	     	});
