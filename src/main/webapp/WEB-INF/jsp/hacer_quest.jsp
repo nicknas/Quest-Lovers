@@ -7,8 +7,6 @@
 <%@ include file="../jspf/header.jspf"%>
 
 
-<script src="${s}/js/jquery.questhandler.js"> </script>
-
 <div class="starter-template">
 	
 	<div class="tile">
@@ -29,12 +27,11 @@
 					<a class="btn btn-block btn-main-color questopt r3" href="#"></a>
 				</div>
 			</div>
-			<div class="row final hidden ">
-			
+            <div class="row final hidden">
+                <div class="col-md-12 col-xs-12">
 					<p>Has terminado</p>
+            </div>
 				<button value="terminar" class="btn btn-block btn-main-color">Terminar </button>
-					
-
 			</div>
 		</div>
 	</div>
@@ -42,4 +39,5 @@
 	<%@ include file="../jspf/authinfo.jspf"%>		
 </div>
 
+<script src="${s}/js/jquery.questhandler.js"> </script>
 <%@ include file="../jspf/footer.jspf"%>
