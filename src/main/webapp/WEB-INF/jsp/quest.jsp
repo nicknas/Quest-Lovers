@@ -24,71 +24,7 @@
 	                    </div>
 	                </li>
 	            </c:forEach> 
-	            <!--    
-                <li class="quest  col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest  col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest  col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                -->
+	           
             </ul>
         </div>
     </div>
