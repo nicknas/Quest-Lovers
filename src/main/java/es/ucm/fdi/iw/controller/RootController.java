@@ -104,8 +104,14 @@ public class RootController {
 			m.addAttribute("user", u);
 		return "user";
 	}
+	
 	@GetMapping("/hacer_quest")
-	public String hacer_quest() {
+	public String hacer_quest(Model m, Authentication authentication, HttpServletRequest request) {
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
+		m.addAttribute("user_actual", u);
+		String idQuest=request.getParameter("id");		
+		Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
+		m.addAttribute("quest_actual", q);
 		return "hacer_quest";
 	}
 	@GetMapping("/match")

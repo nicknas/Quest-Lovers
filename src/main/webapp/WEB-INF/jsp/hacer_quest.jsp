@@ -32,9 +32,11 @@
 					<p>Has terminado</p>
             </div>
             <form action="/terminar_quest" method="GET">
-            	<input type="hidden" name="id_quest" value="1">
-            	<input type="hidden" name="id_user" value="2">
-            	<input type="hidden" name="resultado" value="Triste">
+            	<c:set var="usuario" value="${user_actual.id}"/>
+            	<c:set var="quest" value="${quest_actual.id}"/>
+            	<input type="hidden" name="id_quest" value=${quest}>
+            	<input type="hidden" name="id_user" value=${usuario}>
+            	<input class="input resultado" type="hidden" name="resultado">
 				<button value="terminar" type="submit" class="btn btn-block btn-main-color">Terminar </button>
 			</form>	
 			</div>

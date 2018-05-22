@@ -7,11 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.apache.log4j.Logger;
 
 @Entity
 public class Quest {
+	@OneToMany(mappedBy="idQuest")
 	private long id;
 	private String titulo;
 	private String descripcion;

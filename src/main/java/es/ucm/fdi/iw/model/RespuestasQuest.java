@@ -14,7 +14,9 @@ import org.apache.log4j.Logger;
 @Entity
 public class RespuestasQuest {
 	private long id;
+	@ManyToOne(targetEntity=Quest.class)
 	private long idQuest;
+	@ManyToOne(targetEntity=User.class)
 	private long idUser;
 	private String resultado;
 	
@@ -27,14 +29,14 @@ public class RespuestasQuest {
 	public void setId(long id) {
 		this.id = id;
 	}
-	@ManyToOne(targetEntity=Quest.class)
+	
 	public long getIdQuest() {
 		return idQuest;
 	}
 	public void setIdQuest(long idQuest) {
 		this.idQuest = idQuest;
 	}
-	@ManyToOne(targetEntity=User.class)
+	
 	public long getIdUser() {
 		return idUser;
 	}
