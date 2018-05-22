@@ -31,7 +31,12 @@
                 <div class="col-md-12 col-xs-12">
 					<p>Has terminado</p>
             </div>
-				<button value="terminar" class="btn btn-block btn-main-color">Terminar </button>
+            <form action="/terminar_quest" method="GET">
+            	<input type="hidden" name="id_quest" value="1">
+            	<input type="hidden" name="id_user" value="2">
+            	<input type="hidden" name="resultado" value="Triste">
+				<button value="terminar" type="submit" class="btn btn-block btn-main-color">Terminar </button>
+			</form>	
 			</div>
 		</div>
 	</div>
