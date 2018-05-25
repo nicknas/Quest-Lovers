@@ -31,14 +31,14 @@ jQuery(document).ready(function(){
         		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#' ></a></div>");
         		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r3' href='#' ></a></div>");
         	 }
-	         jQuery.each(data.quest.preguntas.initial.respID,function(i,obj, json = data){
+	         jQuery.each(data.quest.preguntas.initial.respID,function(i,obj){
 	        	 
-	        	 var respContext = eval("json.quest.preguntas."+obj);
+	        	 var respContext = eval("data.quest.preguntas."+obj);
 	        	 jQuery("a.r"+(i+1)).text(respContext.texto);
 	        	 jQuery("a.r"+(i+1)).attr("respID",respContext.respID);
 	         });
 	         
-	         jQuery(document).on("click", "a.questopt", function(datajson = data){
+	         jQuery(document).on("click", "a.questopt", function(i,obj){
 	     		console.log("hemos llegado");
 	     		var pregunta = "data.quest.preguntas."+jQuery(this).attr("respID")+".texto";
 	     		var respuestas = "data.quest.preguntas."+jQuery(this).attr("respID")+".respID";
@@ -47,6 +47,7 @@ jQuery(document).ready(function(){
 	     		if(tipo=="final"){
 	     			jQuery("div.botones_respuestas").addClass("hidden");
 	     			jQuery("div.final").removeClass("hidden");
+	     			jQuery("input.resultado").attr("value", eval("data.quest.preguntas."+jQuery(this).attr("respID")+".solution"));
 	     			jQuery("div.final p").text(eval("data.quest.preguntas."+jQuery(this).attr("respID")+".texto"));
 	     			jQuery("p.quest-snipped-text").addClass("hidden");
 
@@ -62,8 +63,8 @@ jQuery(document).ready(function(){
 		        		 jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r3' href='#' ></a></div>");
 		        	 }
 	     			jQuery("p.quest-snipped-text").text(eval(pregunta));
-		     		jQuery.each(eval(respuestas),function(i,obj, json = data){
-			        	 var respContext = eval("json.quest.preguntas."+obj);
+		     		jQuery.each(eval(respuestas),function(i,obj){
+			        	 var respContext = eval("data.quest.preguntas."+obj);
 			        	 jQuery("a.r"+(i+1)).text(respContext.texto);
 			        	 jQuery("a.r"+(i+1)).attr("respID",respContext.respID);
 			         });

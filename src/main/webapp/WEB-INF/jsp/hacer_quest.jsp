@@ -27,11 +27,18 @@
 					<a class="btn btn-block btn-main-color questopt r3" href="#"></a>
 				</div>
 			</div>
-			<div class="row final hidden">
-				<div class="col-md-12 col-xs-12">
+            <div class="row final hidden">
+                <div class="col-md-12 col-xs-12">
 					<p>Has terminado</p>
-				</div>
-				<button value="terminar" class="btn btn-block btn-main-color">Terminar </button>
+            </div>
+            <form action="/terminar_quest" method="GET">
+            	<c:set var="usuario" value="${user_actual.id}"/>
+            	<c:set var="quest" value="${quest_actual.id}"/>
+            	<input type="hidden" name="id_quest" value=${quest}>
+            	<input type="hidden" name="id_user" value=${usuario}>
+            	<input class="input resultado" type="hidden" name="resultado">
+				<button value="terminar" type="submit" class="btn btn-block btn-main-color">Terminar </button>
+			</form>	
 			</div>
 		</div>
 	</div>

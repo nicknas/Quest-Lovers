@@ -43,6 +43,7 @@ import es.ucm.fdi.iw.model.Reporte;
 import es.ucm.fdi.iw.model.ReporteQueries;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
+import es.ucm.fdi.iw.model.RespuestasQuest;
 
 @Controller	
 public class RootController {
@@ -103,8 +104,14 @@ public class RootController {
 			m.addAttribute("user", u);
 		return "user";
 	}
+	
 	@GetMapping("/hacer_quest")
-	public String hacer_quest() {
+	public String hacer_quest(Model m, Authentication authentication, HttpServletRequest request) {
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
+		m.addAttribute("user_actual", u);
+		String idQuest=request.getParameter("id");		
+		Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
+		m.addAttribute("quest_actual", q);
 		return "hacer_quest";
 	}
 	@GetMapping("/match")
@@ -173,6 +180,20 @@ public class RootController {
 					.createQuery("select u from User u").getResultList());
 			return "/login";
 		}
+	}
+	@Transactional
+	@GetMapping("/terminar_quest")
+	@ResponseBody
+	public String terminar_quest(Model m, HttpServletRequest request) {
+		String id_quest =request.getParameter("id_quest");
+		String id_user = request.getParameter("id_user");
+		String resultado = request.getParameter("resultado");
+		RespuestasQuest r = new RespuestasQuest();
+		r.setIdUser(Integer.parseInt(id_user));
+		r.setIdQuest(Integer.parseInt(id_quest));
+		r.setResultado(resultado);
+		entityManager.persist(r);
+		return "quest";
 	}
 	
 	@Transactional
