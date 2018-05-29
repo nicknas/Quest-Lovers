@@ -94,6 +94,12 @@ public class RootController {
 		
 		return "quest";
 	}
+	@RequestMapping(value = "/get_quest", method = RequestMethod.POST)
+	public String get_quest_by_id(HttpServletRequest request) {
+		long id = Long.parseLong(request.getParameter("id"));
+		Quest q = QuestQueries.findQuestById(entityManager, id);
+		return q.getUrl();
+	}
 	@GetMapping("/matches")
 	public String matches() {
 		return "matches";

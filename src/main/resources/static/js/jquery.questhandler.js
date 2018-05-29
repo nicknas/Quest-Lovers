@@ -4,12 +4,12 @@ jQuery(document).ready(function(){
 	var id = getParam("id");
 	 var data;
 	 var datajson;
-	 var url= "static/jsons/esqueleto"+ id +".json";
+	 var url= "/get_quest";
 	jQuery.ajax({
 	    // En data puedes utilizar un objeto JSON, un array o un query string
-	    data:data,
+	    data: id,
 	    //Cambiar a type: POST si necesario
-	    type: "GET",
+	    type: "POST",
 	    // Formato de datos que se espera en la respuesta
 	    dataType: "json",
 	    // URL a la que se enviará la solicitud Ajax
