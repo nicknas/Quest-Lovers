@@ -7,9 +7,9 @@
 <%@ include file="../jspf/header.jspf"%>
 
 <div class="starter-template">
-	
+	<img src="${s}/img/perfil.jpg" class="img-center" alt="1">
 	<hr/>
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+<%-- 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
 		  <!-- Indicators -->
 		  <ol class="carousel-indicators">
 		    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -41,25 +41,24 @@
 		    <span class="glyphicon glyphicon-chevron-right"></span>
 		    <span class="sr-only">Next</span>
 		  </a>
-	</div>
+	</div> --%>
 	
 	<hr/>
 	<div class="demo-type-example">
 	     <span class="demo-text-note">Nombre</span>
-	     <p>Nombre de usuario</p>
+	     <p>${user.login}</p>
     </div>
     <div class="demo-type-example">
 	     <span class="demo-text-note">Edad</span>
-	     <p>25</p>
+	     <p>${user.edad}</p>
     </div>
     <div class="demo-type-example">
 	     <span class="demo-text-note">Ciudad</span>
-	     <p>Madrid</p>
+	     <p>${user.ciudad}</p>
     </div>
     <div class="demo-type-example">
 	     <span class="demo-text-note">Información</span>
-		<p>Cum sociis natoque penatibus et magnis dis parturient montes,
-			nascetur ridiculus mus.</p>
+		<p>${user.resumen}</p>
 	</div>
     
     <hr/>

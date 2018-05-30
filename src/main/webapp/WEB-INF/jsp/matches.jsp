@@ -18,8 +18,8 @@
 			<div class="col-md-4 col-xs-12">
 				<div class="tile">
 					<h2>${matches.login}</h2>
-					<a href="/match">
-						<img src="${s}/img/perfil.jpg" class="img-rounded img-responsive img-center">
+					<a href="/match?id=${matches.id}">
+						<img src="photo/${matches.login}" class="img-rounded img-responsive img-center">
 					</a>
 					<p>${matches.resumen}</p>
 				</div>

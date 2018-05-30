@@ -134,8 +134,16 @@ public class RootController {
 		m.addAttribute("quest_actual", q);
 		return "hacer_quest";
 	}
-	@GetMapping("/match")
-	public String match() {
+
+	@RequestMapping(value = "/match", method = RequestMethod.GET)
+	@Transactional
+	public String match(
+			@RequestParam int id, Model m
+			) {
+		User u = UserQueries.findWithId(entityManager, id);
+		
+		m.addAttribute("user", u);
+		
 		return "match";
 	}
 	@GetMapping("/reportes")

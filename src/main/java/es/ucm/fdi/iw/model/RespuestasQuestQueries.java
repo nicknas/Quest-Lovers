@@ -26,7 +26,7 @@ public class RespuestasQuestQueries {
 	}
 	public static List<RespuestasQuest> findQuestsByRespuesta(EntityManager entityManager, String respuesta) {//id_quest
 		try {
-			List<RespuestasQuest> u = entityManager.createQuery("select distinct * from RespuestasQuest t where t.resultado = :resultado", RespuestasQuest.class).setParameter("resultado", respuesta).getResultList();
+			List<RespuestasQuest> u = entityManager.createQuery("from RespuestasQuest t where t.resultado = :resultado", RespuestasQuest.class).setParameter("resultado", respuesta).getResultList();
 			return u;
 			
 		} catch (Exception e) {
