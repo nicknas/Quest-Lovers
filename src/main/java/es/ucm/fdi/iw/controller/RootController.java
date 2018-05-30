@@ -94,16 +94,20 @@ public class RootController {
 		
 		return "quest";
 	}
-	@RequestMapping(value = "/get_quest", method = RequestMethod.POST)
-	public String get_quest_by_id(HttpServletRequest request) {
+	
+	@RequestMapping(value = "/get_quest_url", method = RequestMethod.POST)
+	@ResponseBody
+	public String get_quest_url(HttpServletRequest request) {
 		long id = Long.parseLong(request.getParameter("id"));
 		Quest q = QuestQueries.findQuestById(entityManager, id);
 		return q.getUrl();
 	}
+	
 	@GetMapping("/matches")
 	public String matches() {
 		return "matches";
 	}
+	
 	@GetMapping("/user")
 	public String user(Model m, Authentication authentication) {	
 			User u = UserQueries.findWithName(entityManager, authentication.getName());
@@ -111,12 +115,16 @@ public class RootController {
 		return "user";
 	}
 	
+	@Transactional
 	@GetMapping("/hacer_quest")
 	public String hacer_quest(Model m, Authentication authentication, HttpServletRequest request) {
 		User u = UserQueries.findWithName(entityManager, authentication.getName());
 		m.addAttribute("user_actual", u);
 		String idQuest=request.getParameter("id");		
 		Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
+		q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
+		entityManager.persist(q);
+		entityManager.flush();
 		m.addAttribute("quest_actual", q);
 		return "hacer_quest";
 	}
