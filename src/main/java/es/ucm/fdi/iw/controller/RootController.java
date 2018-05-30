@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.QuestQueries;
 import es.ucm.fdi.iw.model.Reporte;
@@ -44,6 +45,7 @@ import es.ucm.fdi.iw.model.ReporteQueries;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
 import es.ucm.fdi.iw.model.RespuestasQuest;
+import es.ucm.fdi.iw.model.RespuestasQuestQueries;
 
 @Controller	
 public class RootController {
@@ -65,8 +67,13 @@ public class RootController {
     }
 
 	@GetMapping({"/", "/index"})
-	public String root(Model model, Principal principal) {
-		log.info(principal.getName() + " de tipo " + principal.getClass());		
+	public String root(Model model, Principal principal, Authentication authentication) {
+		log.info(principal.getName() + " de tipo " + principal.getClass());	
+		if(authentication.isAuthenticated()) {
+			User u = UserQueries.findWithName(entityManager, authentication.getName());
+			model.addAttribute("user_actual",u);
+		}
+		
 		// org.springframework.security.core.userdetails.User
 		return "home";
 	}
@@ -193,6 +200,13 @@ public class RootController {
 		r.setIdQuest(Integer.parseInt(id_quest));
 		r.setResultado(resultado);
 		entityManager.persist(r);
+		List<User> listaMatches = RespuestasQuestQueries.findQuestsByRespuesta(entityManager, resultado);
+		for(int i = 0; i<listaMatches.size();i++) {
+			Match a = new Match();
+			a.setIdUser1(Integer.parseInt(id_user));
+			a.setIdUser2(listaMatches.get(i).getId());
+			entityManager.persist(a);
+		}
 		return "quest";
 	}
 	

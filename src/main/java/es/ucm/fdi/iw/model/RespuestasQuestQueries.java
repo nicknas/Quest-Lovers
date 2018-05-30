@@ -22,6 +22,16 @@ public class RespuestasQuestQueries {
 			return null;
 		}
 	}
+	public static List<User> findQuestsByRespuesta(EntityManager entityManager, String respuesta) {
+		try {
+			List<User> u = entityManager.createQuery("from RespuestasQueries t where t.resultado = :resultado", User.class).setParameter("resultado", respuesta).getResultList();
+			return u;
+			
+		} catch (Exception e) {
+			log.info("Error",e);
+			return null;
+		}
+	}
 	
 	
 }
