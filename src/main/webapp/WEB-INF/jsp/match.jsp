@@ -62,7 +62,7 @@
 	</div>
     
     <hr/>
-	<a href="#fakelink" class="btn btn-block btn-lg btn-info">Enviar mensaje</a>
+	<a href="/chat?id=${match.id}" class="btn btn-block btn-lg btn-info">Enviar mensaje</a>
 	
 	
 	<%@ include file="../jspf/authinfo.jspf"%>		

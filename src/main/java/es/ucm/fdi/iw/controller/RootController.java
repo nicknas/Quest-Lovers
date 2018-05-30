@@ -69,10 +69,12 @@ public class RootController {
     }
 	
 	@GetMapping("/chat")
-	public String chat(Model model, HttpServletRequest request) {
-		model.addAttribute("endpoint", request.getRequestURL().toString()
+	@RequestMapping(value = "/chat", method=RequestMethod.GET)
+	public String chat(Model model, HttpServletRequest request,@RequestParam int id ) {
+		/*model.addAttribute("endpoint", request.getRequestURL().toString()
 				.replaceFirst("[^:]*", "ws")
-				.replace("chat", "chatsocket"));
+				.replace("chat", "chatsocket"));*/
+		model.addAttribute("endpoint", id);
 System.out.println(request.getRequestURL().toString());
 		return "chat";
 	}	
@@ -148,10 +150,14 @@ System.out.println(request.getRequestURL().toString());
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
 	@Transactional
 	public String match(
-			@RequestParam int id, Model m
+			@RequestParam int id, Model m, Authentication authentication
 			) {
 		User u = UserQueries.findWithId(entityManager, id);
+		User user_actual = UserQueries.findWithName(entityManager, authentication.getName());
 		
+		Match match = MatchQueries.findMatchId(entityManager, u.getId(), user_actual.getId());
+		
+		m.addAttribute("match", match);
 		m.addAttribute("user", u);
 		
 		return "match";

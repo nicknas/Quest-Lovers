@@ -33,6 +33,18 @@ public class MatchQueries {
 			return null;
 		}
 	}
+	public static Match findMatchId(EntityManager entityManager, int id_user1, int id_user2) {
+		try {
+			Match m = entityManager.createQuery("from Match m where m.idUser1 = :id_user1 and m.idUser2 = :id_user2", Match.class).setParameter("id_user1", id_user1).setParameter("id_user2", id_user2).getSingleResult();
+			
+			
+			return m;
+			
+		} catch (Exception e) {
+			log.info("No hay matches para esos usuarios",e);
+			return null;
+		}
+	}
 	
 	
 	
