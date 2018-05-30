@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.controller.ChatSocketHandler;
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchQueries;
 import es.ucm.fdi.iw.model.Quest;
@@ -66,7 +67,16 @@ public class RootController {
     public void addAttributes(Model model) {
         model.addAttribute("s", "/static");
     }
-
+	
+	@GetMapping("/chat")
+	public String chat(Model model, HttpServletRequest request) {
+		model.addAttribute("endpoint", request.getRequestURL().toString()
+				.replaceFirst("[^:]*", "ws")
+				.replace("chat", "chatsocket"));
+System.out.println(request.getRequestURL().toString());
+		return "chat";
+	}	
+	
 	@GetMapping({"/", "/index"})
 	public String root(Model model, Principal principal) {
 		log.info(principal.getName() + " de tipo " + principal.getClass());		
