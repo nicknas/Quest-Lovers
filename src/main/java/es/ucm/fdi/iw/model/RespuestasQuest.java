@@ -13,34 +13,34 @@ import org.apache.log4j.Logger;
 
 @Entity
 public class RespuestasQuest {
-	private long id;
+	private int id;
 	@ManyToOne(targetEntity=Quest.class)
-	private long idQuest;
+	private int idQuest;
 	@ManyToOne(targetEntity=User.class)
-	private long idUser;
+	private int idUser;
 	private String resultado;
 	
 	@Id
 	@GeneratedValue
 	@Column(unique=true)
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
-	public long getIdQuest() {
+	public int getIdQuest() {
 		return idQuest;
 	}
-	public void setIdQuest(long idQuest) {
+	public void setIdQuest(int idQuest) {
 		this.idQuest = idQuest;
 	}
 	
-	public long getIdUser() {
+	public int getIdUser() {
 		return idUser;
 	}
-	public void setIdUser(long idUser) {
+	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
 	public String getResultado() {

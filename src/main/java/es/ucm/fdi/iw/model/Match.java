@@ -14,31 +14,31 @@ import org.apache.log4j.Logger;
 @Entity
 public class Match {
 	
-	private long id;
+	private int id;
 	@ManyToOne(targetEntity=User.class)
-	private long idUser1;
+	private int idUser1;
 	@ManyToOne(targetEntity=User.class)
-	private long idUser2;
+	private int idUser2;
 	
 	@Id
 	@GeneratedValue
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
-	public long getIdUser1() {
+	public int getIdUser1() {
 		return idUser1;
 	}
-	public void setIdUser1(long idUser1) {
+	public void setIdUser1(int idUser1) {
 		this.idUser1 = idUser1;
 	}
-	public long getIdUser2() {
+	public int getIdUser2() {
 		return idUser2;
 	}
-	public void setIdUser2(long idUser2) {
+	public void setIdUser2(int idUser2) {
 		this.idUser2 = idUser2;
 	}
 	

@@ -37,6 +37,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.model.Match;
+import es.ucm.fdi.iw.model.MatchQueries;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.QuestQueries;
 import es.ucm.fdi.iw.model.Reporte;
@@ -44,6 +46,7 @@ import es.ucm.fdi.iw.model.ReporteQueries;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
 import es.ucm.fdi.iw.model.RespuestasQuest;
+import es.ucm.fdi.iw.model.RespuestasQuestQueries;
 
 @Controller	
 public class RootController {
@@ -104,7 +107,10 @@ public class RootController {
 	}
 	
 	@GetMapping("/matches")
-	public String matches() {
+	public String matches(Model m, Authentication authentication) {
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
+		List<User> lista_matches = MatchQueries.findMatchesUser(entityManager,u.getId());
+		m.addAttribute("lista_matches", lista_matches);
 		return "matches";
 	}
 	
@@ -197,7 +203,6 @@ public class RootController {
 	}
 	@Transactional
 	@GetMapping("/terminar_quest")
-	@ResponseBody
 	public String terminar_quest(Model m, HttpServletRequest request) {
 		String id_quest =request.getParameter("id_quest");
 		String id_user = request.getParameter("id_user");
@@ -207,6 +212,17 @@ public class RootController {
 		r.setIdQuest(Integer.parseInt(id_quest));
 		r.setResultado(resultado);
 		entityManager.persist(r);
+		List<RespuestasQuest> listaMatches = RespuestasQuestQueries.findQuestsByRespuesta(entityManager, resultado);
+		if(listaMatches!=null) {
+			for(int i = 0; i<listaMatches.size();i++) {
+				Match a = new Match();
+				if(listaMatches.get(i).getIdUser()!= Integer.parseInt(id_user)) {
+					a.setIdUser1(Integer.parseInt(id_user));
+					a.setIdUser2(listaMatches.get(i).getIdUser());
+					entityManager.persist(a);
+				}
+			}
+		}
 		return "quest";
 	}
 	
