@@ -23,5 +23,17 @@ public class QuestQueries {
 		}
 	}
 	
+	public static Quest findQuestById(EntityManager entityManager, long idQuest) {
+		try {
+			Quest r = entityManager.createQuery("from Quest q where q.id = :id_Quest", Quest.class).setParameter("id_Quest",idQuest).getSingleResult();
+
+			return r;
+			
+		} catch (Exception e) {
+			log.info("No hay Quests",e);
+			return null;
+		}
+	}
+	
 	
 }

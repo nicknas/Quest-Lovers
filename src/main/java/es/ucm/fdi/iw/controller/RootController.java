@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,12 +38,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.controller.ChatSocketHandler;
+import es.ucm.fdi.iw.model.Match;
+import es.ucm.fdi.iw.model.MatchQueries;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.QuestQueries;
 import es.ucm.fdi.iw.model.Reporte;
 import es.ucm.fdi.iw.model.ReporteQueries;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
+import es.ucm.fdi.iw.model.RespuestasQuest;
+import es.ucm.fdi.iw.model.RespuestasQuestQueries;
 
 @Controller	
 public class RootController {
@@ -62,7 +68,18 @@ public class RootController {
     public void addAttributes(Model model) {
         model.addAttribute("s", "/static");
     }
-
+	
+	@GetMapping("/chat")
+	@RequestMapping(value = "/chat", method=RequestMethod.GET)
+	public String chat(Model model, HttpServletRequest request,@RequestParam int id ) {
+		/*model.addAttribute("endpoint", request.getRequestURL().toString()
+				.replaceFirst("[^:]*", "ws")
+				.replace("chat", "chatsocket"));*/
+		model.addAttribute("endpoint", id);
+System.out.println(request.getRequestURL().toString());
+		return "chat";
+	}	
+	
 	@GetMapping({"/", "/index"})
 	public String root(Model model, Principal principal) {
 		log.info(principal.getName() + " de tipo " + principal.getClass());		
@@ -93,22 +110,57 @@ public class RootController {
 		
 		return "quest";
 	}
+	
+	@RequestMapping(value = "/get_quest_url", method = RequestMethod.POST)
+	@ResponseBody
+	public String get_quest_url(HttpServletRequest request) {
+		long id = Long.parseLong(request.getParameter("id"));
+		Quest q = QuestQueries.findQuestById(entityManager, id);
+		return q.getUrl();
+	}
+	
 	@GetMapping("/matches")
-	public String matches() {
+	public String matches(Model m, Authentication authentication) {
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
+		Set<User> lista_matches = MatchQueries.findMatchesUser(entityManager,u.getId());
+		m.addAttribute("lista_matches", lista_matches);
 		return "matches";
 	}
+	
 	@GetMapping("/user")
 	public String user(Model m, Authentication authentication) {	
 			User u = UserQueries.findWithName(entityManager, authentication.getName());
 			m.addAttribute("user", u);
 		return "user";
 	}
+	
+	@Transactional
 	@GetMapping("/hacer_quest")
-	public String hacer_quest() {
+	public String hacer_quest(Model m, Authentication authentication, HttpServletRequest request) {
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
+		m.addAttribute("user_actual", u);
+		String idQuest=request.getParameter("id");		
+		Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
+		q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
+		entityManager.persist(q);
+		entityManager.flush();
+		m.addAttribute("quest_actual", q);
 		return "hacer_quest";
 	}
-	@GetMapping("/match")
-	public String match() {
+
+	@RequestMapping(value = "/match", method = RequestMethod.GET)
+	@Transactional
+	public String match(
+			@RequestParam int id, Model m, Authentication authentication
+			) {
+		User u = UserQueries.findWithId(entityManager, id);
+		User user_actual = UserQueries.findWithName(entityManager, authentication.getName());
+		
+		Match match = MatchQueries.findMatchId(entityManager, u.getId(), user_actual.getId());
+		
+		m.addAttribute("match", match);
+		m.addAttribute("user", u);
+		
 		return "match";
 	}
 	@GetMapping("/reportes")
@@ -173,6 +225,32 @@ public class RootController {
 					.createQuery("select u from User u").getResultList());
 			return "/login";
 		}
+	}
+	@Transactional
+	@GetMapping("/terminar_quest")
+	public String terminar_quest(Model m, HttpServletRequest request) {
+		String id_quest =request.getParameter("id_quest");
+		String id_user = request.getParameter("id_user");
+		String resultado = request.getParameter("resultado");
+		RespuestasQuest r = new RespuestasQuest();
+		r.setIdUser(Integer.parseInt(id_user));
+		r.setIdQuest(Integer.parseInt(id_quest));
+		r.setResultado(resultado);
+		entityManager.persist(r);
+		List<RespuestasQuest> listaMatches = RespuestasQuestQueries.findQuestsByRespuesta(entityManager, resultado);
+		if(listaMatches!=null) {
+			for(int i = 0; i<listaMatches.size();i++) {
+				Match a = new Match();
+				if(listaMatches.get(i).getIdUser()!= Integer.parseInt(id_user)) {
+					if(!MatchQueries.existeMatch(entityManager, Integer.parseInt(id_user), listaMatches.get(i).getIdUser())) {
+						a.setIdUser1(Integer.parseInt(id_user));
+						a.setIdUser2(listaMatches.get(i).getIdUser());
+						entityManager.persist(a);
+					}
+				}
+			}
+		}
+		return "quest";
 	}
 	
 	@Transactional

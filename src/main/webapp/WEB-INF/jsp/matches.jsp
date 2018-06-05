@@ -14,54 +14,18 @@
 
 	<hr/>
 	<div class="row">
-		<div class="col-md-4 col-xs-12">
-			<div class="tile">
-				<h2>Usuario</h2>
-				<a href="/match">
-					<img src="${s}/img/perfil.jpg" class="img-rounded img-responsive img-center">
-				</a>
-				<p>Foto y algunos datos basicos del match</p>
+		<c:forEach items="${lista_matches}" var="matches">
+			<div class="col-md-4 col-xs-12">
+				<div class="tile">
+					<h2>${matches.login}</h2>
+					<a href="/match?id=${matches.id}">
+						<img src="photo/${matches.login}" class="img-rounded img-responsive img-center">
+					</a>
+					<p>${matches.resumen}</p>
+				</div>
+				
 			</div>
-			
-		</div>
-		
-		<div class="col-md-4 col-xs-12">
-			<div class="tile">
-				<h2>Usuario</h2>
-				<img src="${s}/img/perfil.jpg" class="img-rounded img-responsive img-center">
-				<p>Foto y algunos datos basicos del match</p>
-			</div>	
-		</div>
-		<div class="col-md-4 col-xs-12">
-			<div class="tile">
-				<h2>Usuario</h2>
-				<img src="${s}/img/perfil.jpg" class="img-rounded img-responsive img-center">		
-				<p>Foto y algunos datos basicos del match</p>
-			</div>	
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4 col-xs-12">
-			<div class="tile">
-				<h2>Usuario</h2>
-				<img src="${s}/img/perfil.jpg" class="img-rounded img-responsive img-center">
-				<p>Foto y algunos datos basicos del match</p>
-			</div>	
-		</div>
-		<div class="col-md-4 col-xs-12">
-			<div class="tile">
-				<h2>Usuario</h2>
-				<img src="${s}/img/perfil.jpg" class="img-rounded img-responsive img-center">
-				<p>Foto y algunos datos basicos del match</p>
-			</div>	
-		</div>
-		<div class="col-md-4 col-xs-12">
-			<div class="tile">
-				<h2>Usuario</h2>
-				<img src="${s}/img/perfil.jpg" class="img-rounded img-responsive img-center">
-				<p>Foto y algunos datos basicos del match</p>
-			</div>	
-		</div>
+		</c:forEach>
 	</div>
 </div>
 	

@@ -24,6 +24,7 @@
 
 /* The Close Button */
 .close-img-match {
+  cursor: pointer;
   color: white;
   position: absolute;
   top: 10px;

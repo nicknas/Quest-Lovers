@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-	private long id;
+	private int id;
 	private String login;
 	private String password;
 	private String roles; // split by , to separate roles
@@ -19,11 +19,11 @@ public class User {
 	
 	@Id
 	@GeneratedValue
-	public long getId() {
+	public int getId() {
 	return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}	
 

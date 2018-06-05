@@ -38,7 +38,7 @@ public class UserQueries {
 		}
 	}
 	
-	public static User findWithId(EntityManager entityManager, long id) {
+	public static User findWithId(EntityManager entityManager, int id) {
 		try {
 			User p = entityManager.createQuery("from User t where t.id = :id", User.class)
 					.setParameter("id", id)
