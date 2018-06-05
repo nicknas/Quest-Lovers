@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -121,7 +122,7 @@ System.out.println(request.getRequestURL().toString());
 	@GetMapping("/matches")
 	public String matches(Model m, Authentication authentication) {
 		User u = UserQueries.findWithName(entityManager, authentication.getName());
-		List<User> lista_matches = MatchQueries.findMatchesUser(entityManager,u.getId());
+		Set<User> lista_matches = MatchQueries.findMatchesUser(entityManager,u.getId());
 		m.addAttribute("lista_matches", lista_matches);
 		return "matches";
 	}
@@ -241,9 +242,11 @@ System.out.println(request.getRequestURL().toString());
 			for(int i = 0; i<listaMatches.size();i++) {
 				Match a = new Match();
 				if(listaMatches.get(i).getIdUser()!= Integer.parseInt(id_user)) {
-					a.setIdUser1(Integer.parseInt(id_user));
-					a.setIdUser2(listaMatches.get(i).getIdUser());
-					entityManager.persist(a);
+					if(!MatchQueries.existeMatch(entityManager, Integer.parseInt(id_user), listaMatches.get(i).getIdUser())) {
+						a.setIdUser1(Integer.parseInt(id_user));
+						a.setIdUser2(listaMatches.get(i).getIdUser());
+						entityManager.persist(a);
+					}
 				}
 			}
 		}
