@@ -34,7 +34,7 @@ public class ReporteQueries {
 	}
 	
 	
-	public static Reporte findReporteById(EntityManager entityManager, int idReporte) {
+	public static Reporte findReporteById(EntityManager entityManager, long idReporte) {
 		try {
 			Reporte r = entityManager.createQuery("from Reporte t where t.id = :idReporte", Reporte.class).setParameter("idReporte", idReporte).getSingleResult();
 			return r;

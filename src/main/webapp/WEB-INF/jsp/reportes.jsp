@@ -29,7 +29,8 @@
 									<div class="usuario-reporta">Usuario que reporta: ${nuevos.reportador.getLogin()}</div>
 										<div class="row">
 											<div class="col-sm-6">
-												<form action="/confirmar_reporte" method="POST">
+												<form action="/confirmar_reporte" method="GET">
+													<input type="hidden" name="id" value="${nuevos.id}">
 													<input type="hidden" name="baneado" value="1">
 													<button type="submit" class="btn btn-success" aria-label="Left Align">
 														<span class="glyphicon glyphicon-ok"> Banear usuario</span>
@@ -37,7 +38,8 @@
 												</form>
 											</div>
 											<div class="col-sm-6">
-												<form action="confirmar_reporte" method="POST">	
+												<form action="/confirmar_reporte" method="GET">	
+													<input type="hidden" name="id" value="${nuevos.id}">
 													<input type="hidden" name="baneado" value="0">
 													<button type="submit" class="btn btn-danger" aria-label="Left Align">
 														<span class="glyphicon glyphicon-remove"> No banear usuario</span>

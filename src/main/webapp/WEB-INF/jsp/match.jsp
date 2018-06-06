@@ -63,7 +63,7 @@
     
     <hr/>
 	
-	<a href="/chat?id=${match.id}" class="btn btn-block btn-lg btn-info">Enviar mensaje</a>
+	<a href="/chat" class="btn btn-block btn-lg btn-info">Enviar mensaje</a>
 	<c:set var="usuario" value="${user_actual.id}"/>
 	<div class="panel-group">
 		<div class="panel panel-default">

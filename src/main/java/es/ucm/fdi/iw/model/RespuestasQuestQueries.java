@@ -35,5 +35,16 @@ public class RespuestasQuestQueries {
 		}
 	}
 	
+	public static List<RespuestasQuest> findQuestsByUser(EntityManager entityManager, int idUser) {//id_quest
+		try {
+			List<RespuestasQuest> u = entityManager.createQuery("from RespuestasQuest t where t.idUser = :idUser", RespuestasQuest.class).setParameter("idUser", idUser).getResultList();
+			return u;
+			
+		} catch (Exception e) {
+			log.info("Error",e);
+			return null;
+		}
+	}
+	
 	
 }

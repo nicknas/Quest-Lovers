@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -70,13 +71,15 @@ public class RootController {
     }
 	
 	@GetMapping("/chat")
-	@RequestMapping(value = "/chat", method=RequestMethod.GET)
-	public String chat(Model model, HttpServletRequest request,@RequestParam int id ) {
+	@RequestMapping(value = "/chat")
+	public String chat(Model model, HttpServletRequest request) {
 		/*model.addAttribute("endpoint", request.getRequestURL().toString()
 				.replaceFirst("[^:]*", "ws")
 				.replace("chat", "chatsocket"));*/
-		model.addAttribute("endpoint", id);
-System.out.println(request.getRequestURL().toString());
+		//model.addAttribute("endpoint", id);
+			model.addAttribute("endpoint", request.getRequestURL().toString()
+					.replaceFirst("[^:]*", "ws")
+					.replace("chat", "chatsocket"));
 		return "chat";
 	}	
 	
@@ -104,9 +107,10 @@ System.out.println(request.getRequestURL().toString());
 	}
 		
 	@GetMapping("/quest")
-	public String quest(Model m) {
+	public String quest(Model m, Authentication authentication) {
 		List<Quest> listaQuests = QuestQueries.findAllQuests(entityManager);
 		m.addAttribute("all_quests", listaQuests);
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
 		
 		return "quest";
 	}
@@ -140,12 +144,25 @@ System.out.println(request.getRequestURL().toString());
 		User u = UserQueries.findWithName(entityManager, authentication.getName());
 		m.addAttribute("user_actual", u);
 		String idQuest=request.getParameter("id");		
-		Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
-		q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
-		entityManager.persist(q);
-		entityManager.flush();
-		m.addAttribute("quest_actual", q);
-		return "hacer_quest";
+		
+		List<RespuestasQuest> listaQuestsUser = RespuestasQuestQueries.findQuestsByUser(entityManager, u.getId());
+		List<Integer> lista = new ArrayList<>();
+		if(listaQuestsUser.size()!=0) {
+			for(int i =0;i< listaQuestsUser.size(); i++) {
+				lista.add(listaQuestsUser.get(i).getIdQuest());
+			}
+		}
+		if(lista.contains(Integer.parseInt(idQuest))) {
+			return "Ya has respondido esta quest";
+		} else {
+			Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
+			q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
+			entityManager.persist(q);
+			entityManager.flush();
+			m.addAttribute("quest_actual", q);
+			return "hacer_quest";
+			
+		}
 	}
 
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
@@ -252,6 +269,30 @@ System.out.println(request.getRequestURL().toString());
 			}
 		}
 		return "quest";
+	}
+	
+	@Transactional
+	@GetMapping("/confirmar_reporte")
+	public String confirmar_reporte(Model m, HttpServletRequest request) {
+		long id_reporte =Integer.parseInt(request.getParameter("id"));
+		int baneado = Integer.parseInt(request.getParameter("baneado"));
+		Reporte r = ReporteQueries.findReporteById(entityManager, id_reporte);
+		User u = r.getReportado();
+		
+		if(baneado == 1) {
+			r.setBaneado((byte) 1); 
+
+			u.setEnabled((byte) 0);
+		}else {
+			r.setBaneado((byte) 0);
+		}
+		r.setVisto((byte) 1);
+		entityManager.merge(r);
+		entityManager.merge(u);
+		
+		
+		
+		return "redirect:/reportes";
 	}
 	
 	@Transactional
