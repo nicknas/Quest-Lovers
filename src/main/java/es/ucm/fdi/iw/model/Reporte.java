@@ -4,13 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Null;
 
 @Entity
 public class Reporte {
 	private long id;
-	private String reportador;
-	private String reportado;
+	private User reportador;
+	private User reportado;
 	private String comentario;
 	private byte visto;//a 0 si no se ha visto
 	//probar nullable
@@ -25,20 +26,21 @@ public class Reporte {
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public String getReportador() {
+	@ManyToOne(targetEntity=User.class)
+	public User getReportador() {
 		return reportador;
 	}
-
-	public void setReportador(String reportador) {
+	
+	public void setReportador(User reportador) {
 		this.reportador = reportador;
 	}
 
-	public String getReportado() {
+	@ManyToOne(targetEntity=User.class)
+	public User getReportado() {
 		return reportado;
 	}
-
-	public void setReportado(String reportado) {
+	
+	public void setReportado(User reportado) {
 		this.reportado = reportado;
 	}
 

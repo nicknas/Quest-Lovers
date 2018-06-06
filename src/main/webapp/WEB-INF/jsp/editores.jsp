@@ -60,7 +60,7 @@
 									<label class="col-md-3 control-label" for="edad">Edad</label>
 									<div class="col-md-7">
 										<input id="ciudad" name="edad" placeholder="edad"
-											class="form-control input-md" type="text">
+											class="form-control input-md" type="number">
 									</div>
 								</div>
 
@@ -101,7 +101,7 @@
 				<div class="panel-footer">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
 					<button type="submit" id="btn-guardar-editor" class="btn btn-success">Guardar</button>
-					<button type="cancel" id="btn-cancelar-editor" class="btn btn-danger">Cancelar</button>
+					<button type="reset" id="btn-cancelar-editor" class="btn btn-danger">Cancelar</button>
 					</form>
 				</div>
 			</div>

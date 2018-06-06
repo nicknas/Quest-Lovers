@@ -20,21 +20,31 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent="#desplegable-izq"
-										href="#${nuevos.id}">${nuevos.reportado}</a>
+										href="#${nuevos.id}">${nuevos.reportado.getLogin()}</a>
 								</h4>
 							</div>
 							<div id="${nuevos.id}" class="panel-collapse collapse">
 								<div class="panel-body">${nuevos.comentario}</div>
 								<div class="panel-footer panel-footer-reporte">
-									<div class="usuario-reporta">Usuario que reporta: ${nuevos.reportador}</div>
-									<button type="button" class="btn btn-success"
-										aria-label="Left Align">
-										<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-									</button>
-									<button type="button" class="btn btn-danger"
-										aria-label="Left Align">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-									</button>
+									<div class="usuario-reporta">Usuario que reporta: ${nuevos.reportador.getLogin()}</div>
+										<div class="row">
+											<div class="col-sm-6">
+												<form action="/confirmar_reporte" method="POST">
+													<input type="hidden" name="baneado" value="1">
+													<button type="submit" class="btn btn-success" aria-label="Left Align">
+														<span class="glyphicon glyphicon-ok"> Banear usuario</span>
+													</button>
+												</form>
+											</div>
+											<div class="col-sm-6">
+												<form action="confirmar_reporte" method="POST">	
+													<input type="hidden" name="baneado" value="0">
+													<button type="submit" class="btn btn-danger" aria-label="Left Align">
+														<span class="glyphicon glyphicon-remove"> No banear usuario</span>
+													</button>
+												</form>	
+											</div>
+										</div>
 								</div>
 							</div>
 						</div>
@@ -51,13 +61,13 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent="#desplegable-izq"
-										href="#${vistos.id}">${vistos.reportado}</a>
+										href="#${vistos.id}">${vistos.reportado.getLogin()}</a>
 								</h4>
 							</div>
 							<div id="${vistos.id}" class="panel-collapse collapse">
 								<div class="panel-body">${vistos.comentario}</div>
 								<div class="panel-footer panel-footer-reporte">
-									<div class="usuario-reporta">Usuario que reporta: ${vistos.reportador}</div>
+									<div class="usuario-reporta">Usuario que reporta: ${vistos.reportador.getLogin()}</div>
 									<c:choose>
 									    <c:when test="${vistos.baneado == 0}">
 									        <span class="label label-danger">Rechazado</span>

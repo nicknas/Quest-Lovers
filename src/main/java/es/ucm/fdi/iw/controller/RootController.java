@@ -160,6 +160,7 @@ System.out.println(request.getRequestURL().toString());
 		
 		m.addAttribute("match", match);
 		m.addAttribute("user", u);
+		m.addAttribute("user_actual", user_actual);
 		
 		return "match";
 	}
@@ -251,6 +252,25 @@ System.out.println(request.getRequestURL().toString());
 			}
 		}
 		return "quest";
+	}
+	
+	@Transactional
+	@GetMapping("/reportar")
+	public String reportar(Model m, HttpServletRequest request) {
+		String id_reportador =request.getParameter("id1");
+		String id_reportado = request.getParameter("id2");
+		String motivo = request.getParameter("m");
+		User reportador = UserQueries.findWithId(entityManager, Integer.parseInt(id_reportador));
+		User reportado = UserQueries.findWithId(entityManager, Integer.parseInt(id_reportado));
+		Reporte reporte = new Reporte();
+		reporte.setComentario(motivo);
+		reporte.setReportado(reportado);
+		reporte.setReportador(reportador);
+		reporte.setVisto((byte) 0);
+		reporte.setBaneado((byte) 0);
+		entityManager.persist(reporte);
+		
+		return "/";
 	}
 	
 	@Transactional

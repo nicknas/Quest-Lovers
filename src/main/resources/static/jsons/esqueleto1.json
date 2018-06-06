@@ -1,144 +1,160 @@
 {
-	"quest": {
-		"id": 1,
-		"titulo": "pueba1",
-		"descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		"preguntas": {
-			"initial": {
-				"tipo": "preguntaInitial",
-				"texto": "me encuentro un perrito �que hago? pi",
-				"respID": ["r1", "r2", "r3"]
-			},
-			"p1": {
-				"tipo": "pregunta",
-				"texto": "pregunta1",
-				"respID": ["r4", "r5", "r6"]
-			},
-			"p2": {
-				"tipo": "pregunta",
-				"texto": "pregunta2",
-				"respID": ["r7","r8","r9"]
-			},
-			"p3": {
-				"tipo": "pregunta",
-				"texto": "pregunta3",
-				"respID": ["f1", "f2", "f3"]
-			},
-			"p4": {
-				"tipo": "pregunta",
-				"texto": "pregunta 4",
-				"respID": [1, 2, 3]
-			},
-			"p5": {
-				"tipo": "pregunta",
-				"texto": "pregunta 5",
-				"respID": [1, 2, 3]
-			},
-			"p6": {
-				"tipo": "pregunta",
-				"texto": "pregunta 6",
-				"respID": [1, 2, 3]
-			},
-			"p7": {
-				"tipo": "pregunta",
-				"texto": "pregunta 7",
-				"respID": [1, 2, 3]
-			},
-			"p8": {
-				"tipo": "pregunta",
-				"texto": "pregunta 8",
-				"respID": [1, 2, 3]
-			},
-			"p9": {
-				"tipo": "pregunta",
-				"texto": "pregunta 9",
-				"respID": [1, 2, 3]
-			},
-			"p10": {
-				"tipo": "pregunta",
-				"texto": "pregunta 7",
-				"respID": [1, 2, 3]
-			},
-			"p11": {
-				"tipo": "pregunta",
-				"texto": "pregunta 8",
-				"respID": [1, 2, 3]
-			},
-			"p12": {
-				"tipo": "pregunta",
-				"texto": "pregunta 9",
-				"respID": [1, 2, 3]
-			},
-			"r1": {
-				"tipo": "respuesta",
-				"texto": "respuesta 1",
-				"respID": "p1"
-			},
-			"r2": {
-				"tipo": "respuesta",
-				"texto": "respuesta 2",
-				"respID": "p2"
-			},
-			"r3": {
-				"tipo": "respuesta",
-				"texto": "respuesta 3",
-				"respID": "p3"
-			},
-			"r4": {
-				"tipo": "respuesta",
-				"texto": "respuesta 4",
-				"respID": "p4"
-			},
-			"r5": {
-				"tipo": "respuesta",
-				"texto": "respuesta 5",
-				"respID": "p5"
-			},
-			"r6": {
-				"tipo": "respuesta",
-				"texto": "respuesta 6",
-				"respID": "p6"
-			},
-			"r7": {
-				"tipo": "respuesta",
-				"texto": "respuesta 7",
-				"respID": "p7"
-			},
-			"r8": {
-				"tipo": "respuesta",
-				"texto": "respuesta 8",
-				"respID": "p8"
-			},
-			"r9": {
-				"tipo": "respuesta",
-				"texto": "respuesta 9",
-				"respID": "p9"
-			},
-			"r10": {
-				"tipo": "respuesta",
-				"texto": "respuesta 10",
-				"respID": "p2"
-			},
-			"r11": {
-				"tipo": "respuesta",
-				"texto": "respuesta 11",
-				"respID": "p2"
-			},
-			"f1": {
-				"tipo": "final",
-				"texto": "final1",
-				"respID": "p2"
-			},
-			"f2": {
-				"tipo": "final",
-				"texto": "final2",
-				"respID": "p2"
-			},
-			"f3": {
-				"tipo": "final",
-				"texto": "final3",
-				"respID": "p2"
-			}
-		}
-	}
+    "quest": {
+        "id": 4,
+        "titulo": "Un dia movidito",
+        "descripcion": "Es un viernes por la tarde, la ciudad no está mal, pero en una semana todavía no conocía a nadie. Había visto ese cartel de fiesta del Jazz en la calle suerte,  también quería pasear por el centro ya que todavía no he visto nada. Me visto rápidamente para salir, quiero aprovechar el día cuando de repente…",
+        "preguntas": {
+            "initial": {
+                "tipo": "preguntaInitial",
+                "texto": "Suena el teléfono, es aquel compañero de trabajo con el que intercambiaste el teléfono, era algo inquietante y nervioso,  pero no conocía a nadie y no quería empezar con mal pie en el trabajo, así que intercambiamos teléfonos. + Hola, buenas hoy vamos a ir a tomar algo unos amigos por la zona del ”bugueláss”,¿?Te apetece venir? ",
+                "respID": ["r1", "r2", "r3"]
+            },
+            "p1": {
+                "tipo": "pregunta",
+                "texto": "Nos encontramos todos en la salida del metro, me presento a sus amigos y amigas, todos parecían simpáticos. Entramos en un bar y después de un par de rondas uno de ellos hizo mención sobre el evento de jazz, así que decidimos ir. La mayoría habían ido en moto así que ofrecieron un casco a lo que conteste…",
+                "respID": ["r4", "r5"]
+            },
+            "p2": {
+                "tipo": "pregunta",
+                "texto": "¿El centro realmente era pequeño, así que me perdí entre las  calles, camine y camine hasta que me llamo la atención un sitio de aspecto añejo donde una pareja joven acababa de entrar..",
+                "respID": ["r6", "r7"]
+            },
+            "p3": {
+                "tipo": "pregunta",
+                "texto": "Fui directamente al sitio de jazz, todavía no había mucha gente, pero tenía un ambiente realmente “cool”, me senté en  una mesa vacía y pedí…",
+                "respID": ["r11", "r12"]
+            },
+            "p4": {
+                "tipo": "pregunta",
+                "texto": "Una vez ahi, entramos en el sitio, estaba muy animado todos estaban a su bola asi que...",
+                "respID": ["r8", "r9", "r10"]
+            },
+            "p5": {
+                "tipo": "pregunta",
+                "texto": "Al entrar me encuentro a mi compañero de trabajo, me saluda efusivamente y me dice que habia salido la idea de ir a un evento de jazz, y ahi estaban. Habia caminado hasta el lugar sin darme cuenta, una vez ahi estan todos a su bola asi que...",
+                "respID": ["r8", "r9", "r10"]
+            },
+            "p6": {
+                "tipo": "pregunta",
+                "texto": "Al poco tiempo, ví a mi compañero de trabajo que salía del sitio que no me daba buena espina, me saludó y animo a entrar, me iba a presentar a sus amigos. Decidi irme con el total no habia nada que hacer, Todo el mundo estaba a su bola asi que...",
+                "respID": ["r8", "r9", "r10"]
+            },
+            "p7": {
+                "tipo": "pregunta",
+                "texto": "pregunta 7",
+                "respID": [1, 2, 3]
+            },
+            "p8": {
+                "tipo": "pregunta",
+                "texto": "pregunta 8",
+                "respID": [1, 2, 3]
+            },
+            "p9": {
+                "tipo": "pregunta",
+                "texto": "pregunta 9",
+                "respID": [1, 2, 3]
+            },
+            "p10": {
+                "tipo": "pregunta",
+                "texto": "pregunta 7",
+                "respID": [1, 2, 3]
+            },
+            "p11": {
+                "tipo": "pregunta",
+                "texto": "pregunta 8",
+                "respID": [1, 2, 3]
+            },
+            "p12": {
+                "tipo": "pregunta",
+                "texto": "pregunta 9",
+                "respID": [1, 2, 3]
+            },
+            "r1": {
+                "tipo": "respuesta",
+                "texto": "Por supuesto, estará bien salir un poco y despejarme",
+                "respID": "p1"
+            },
+            "r2": {
+                "tipo": "respuesta",
+                "texto": "No gracias, voy a ver el centro, me apetece conocer un poco mas la ciudad",
+                "respID": "p2"
+            },
+            "r3": {
+                "tipo": "respuesta",
+                "texto": "He visto que hay un festival de jazz, y tenia pensado ir...",
+                "respID": "p3"
+            },
+            "r4": {
+                "tipo": "respuesta",
+                "texto": "Prefiero ir andando no me fio mucho de las motos",
+                "respID": "p4"
+            },
+            "r5": {
+                "tipo": "respuesta",
+                "texto": "Vamos!",
+                "respID": "p4"
+            },
+            "r6": {
+                "tipo": "respuesta",
+                "texto": "Decidi entrar, total no tenía nada que perder.",
+                "respID": "p5"
+            },
+            "r7": {
+                "tipo": "respuesta",
+                "texto": "Me siento en la terraza que hay enfrente y me tomo algo, ademas no me da buena espina el sitio...",
+                "respID": "p6"
+            },
+            "r8": {
+                "tipo": "respuesta",
+                "texto": "Me quedo mirando el espectaculo, esta muy entretenido",
+                "respID": "p7"
+            },
+            "r9": {
+                "tipo": "respuesta",
+                "texto": "Hay una persona del grupo que me ha llamado la atención y por lo poco que ha hablado tenemos cosas en comun",
+                "respID": "p8"
+            },
+            "r10": {
+                "tipo": "respuesta",
+                "texto": "La mayoria del grupo estan hablan riendose y bromeando. Me meto de lleno",
+                "respID": "p9"
+            },
+            "r11": {
+                "tipo": "respuesta",
+                "texto": "Agua esta bién",
+                "respID": "p10"
+            },
+            "r12": {
+                "tipo": "respuesta",
+                "texto": "Una cerveza bien fresca",
+                "respID": "p2"
+            },
+            "r13": {
+                "tipo": "respuesta",
+                "texto": "Viajes",
+                "respID": "p2"
+            },
+            "r14": {
+                "tipo": "respuesta",
+                "texto": "Arte",
+                "respID": "p2"
+            },
+            "f1": {
+                "tipo": "final",
+                "texto": "Fui andando, y di un paseo ",
+                "solution": "desagradable 1"
+            },
+            "f2": {
+                "tipo": "final",
+                "texto": "Has conseguido quedar con la persona que te gusta",
+                "solution": "agradable 2"
+            },
+            "f3": {
+                "tipo": "final",
+                "texto": "final3",
+                "respID": "p2"
+            }
+        }
+    }
 }
+

@@ -62,7 +62,31 @@
 	</div>
     
     <hr/>
+	
 	<a href="/chat?id=${match.id}" class="btn btn-block btn-lg btn-info">Enviar mensaje</a>
+	<c:set var="usuario" value="${user_actual.id}"/>
+	<div class="panel-group">
+		<div class="panel panel-default">
+				<h3 class="panel-title btn btn-block btn-lg btn-danger">
+					Reportar usuario&nbsp;&nbsp;
+					<button class="btn-circle" data-toggle="collapse"
+						data-target="#collapse1">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+				</h3>
+			<div id="collapse1" class="panel-collapse collapse">
+				<div class="panel-body">
+					<form action="/reportar" method="GET">
+						<input type="hidden" name="id1" value=${usuario}>
+						<input type="hidden" name="id2" value=${user.id}>
+						<textarea class="form-control input-md" id="m" name="m">Introduzca la razón del reporte</textarea>
+						<button type="submit" class="btn btn-succes">Enviar reporte</button>
+					</form>				
+				</div>
+			</div>
+	</div>		
+	
+	
 	
 	
 	<%@ include file="../jspf/authinfo.jspf"%>		

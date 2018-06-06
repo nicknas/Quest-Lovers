@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 public class ReporteQueries {
 
 	private static Logger log = Logger.getLogger(ReporteQueries.class);
-
 	
 	public static List<Reporte> findNoVistos(EntityManager entityManager) {
 		try {
@@ -30,6 +29,18 @@ public class ReporteQueries {
 			
 		} catch (Exception e) {
 			log.info("No hay reportes vistos",e);
+			return null;
+		}
+	}
+	
+	
+	public static Reporte findReporteById(EntityManager entityManager, int idReporte) {
+		try {
+			Reporte r = entityManager.createQuery("from Reporte t where t.id = :idReporte", Reporte.class).setParameter("idReporte", idReporte).getSingleResult();
+			return r;
+			
+		} catch (Exception e) {
+			log.info("No existe ese reporte",e);
 			return null;
 		}
 	}
