@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.mvcMatchers("/photo/**").hasRole("USER")
         		.mvcMatchers("/admin").hasRole("ADMIN")
 				.mvcMatchers("/editores").hasRole("ADMIN")
+				.mvcMatchers("/reportes").hasRole("ADMIN")
         		.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()
