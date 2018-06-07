@@ -5,7 +5,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <%@ include file="../jspf/header.jspf"%>
-
+<!-- 
 <script>
 window.onload = function() {
 	// code in here will only be executed when page fully loaded
@@ -34,6 +34,31 @@ window.onload = function() {
 	<form id="escrito">
 	<input id="texto" size="80" placeholder="escribe algo y pulsa enter para enviarlo"/>
 	</form>
+</div>
+-->
+
+
+<div class="starter-template">
+	<h1>Chat</h1>
+<!-- 
+	<c:forEach items="${conversacion.texto}" var="mensaje">
+		<p> ${mensaje}</p>
+	
+	</c:forEach>
+	
+
+	<c:set var="conversacion" value="${conversacion}"></c:set>
+	-->
+	<form action="/enviar_mensaje" method="GET">
+	
+		<input name="id" type="hidden" value="${conversacion.id}"/>
+		<input id="texto1" name="texto1" size="80" placeholder="escribe algo y pulsa enter para enviarlo"/>
+		<button type="submit">Enviar</button>
+	</form>
+	
+
+
+
 </div>
 
 <%@ include file="../jspf/footer.jspf"%>

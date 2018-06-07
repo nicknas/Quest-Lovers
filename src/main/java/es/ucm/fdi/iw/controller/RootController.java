@@ -42,6 +42,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.controller.ChatSocketHandler;
+import es.ucm.fdi.iw.model.Conversacion;
+import es.ucm.fdi.iw.model.ConversacionQueries;
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchQueries;
 import es.ucm.fdi.iw.model.Quest;
@@ -72,17 +74,34 @@ public class RootController {
         model.addAttribute("s", "/static");
     }
 	
+	@Transactional
 	@GetMapping("/chat")
 	@RequestMapping(value = "/chat")
-	public String chat(Model model, HttpServletRequest request) {
+	public String chat(Model model, HttpServletRequest request, Authentication authentication) {
 		/*model.addAttribute("endpoint", request.getRequestURL().toString()
 				.replaceFirst("[^:]*", "ws")
-				.replace("chat", "chatsocket"));*/
-		//model.addAttribute("endpoint", id);
-			model.addAttribute("endpoint", request.getRequestURL().toString()
+				.replace("chat", "chatsocket"));
+		model.addAttribute("endpoint", id);
+			model.addAttribute("endpoint", authentication.getPrincipal().toString()
 					.replaceFirst("[^:]*", "ws")
 					.replace("chat", "chatsocket"));
+					*/
+		int user1 = Integer.parseInt((request.getParameter("u1")));		
+		int user2 = Integer.parseInt((request.getParameter("u2")));
+		
+		
+		if(!ConversacionQueries.existeConversacion(entityManager, user1,user2)) {
+			User u1 = UserQueries.findWithId(entityManager, user1);
+			User u2 = UserQueries.findWithId(entityManager, user2);
+						
+			ConversacionQueries.crearConversacion(entityManager, u1, u2);
+		}	
+		
+		Conversacion c = ConversacionQueries.findConversacion(entityManager, user1, user2);		
+
+		model.addAttribute("conversacion", c);
 		return "chat";
+		
 	}	
 	
 	@GetMapping({"/", "/index"})
@@ -130,6 +149,7 @@ public class RootController {
 		User u = UserQueries.findWithName(entityManager, authentication.getName());
 		Set<User> lista_matches = MatchQueries.findMatchesUser(entityManager,u.getId());
 		m.addAttribute("lista_matches", lista_matches);
+		m.addAttribute("user_actual", u);
 		return "matches";
 	}
 	
@@ -296,9 +316,22 @@ public class RootController {
 		
 		return "redirect:/reportes";
 	}
+	@Transactional
+	@GetMapping("/enviar_mensaje")
+	public String enviar_mensaje(Model m, HttpServletRequest request) {
+		String id_conversacion =request.getParameter("id");
+		String texto = request.getParameter("texto1");
+		Conversacion c = ConversacionQueries.findConversacionById(entityManager, Integer.parseInt((id_conversacion)));
+		c.setTexto(texto);
+		entityManager.merge(c);
+		
+		
+		return "/chat";
+	}
 	
 	@Transactional
 	@GetMapping("/reportar")
+	@ResponseBody
 	public String reportar(Model m, HttpServletRequest request) {
 		String id_reportador =request.getParameter("id1");
 		String id_reportado = request.getParameter("id2");

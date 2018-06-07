@@ -22,6 +22,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Bean
     public WebSocketHandler chatHandler() {
-        return new ChatSocketHandler();
+        return new ChatSocketHandler(); 
     }
 }
