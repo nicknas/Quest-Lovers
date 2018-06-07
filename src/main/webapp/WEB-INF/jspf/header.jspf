@@ -37,9 +37,10 @@
   </div>
   <div class="collapse navbar-collapse" id="navbar-collapse-01">
     <ul class="nav navbar-nav">
-		
-		<sec:authorize access="hasRole('ADMIN')">
+		<sec:authorize access="isAnonymous()">
 			<li><a href="/login">Login</a></li>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ADMIN')">
 	      	<li><a href="/quest_admin">Quests</a></li>
 	      	<li><a href="/editores">Editores</a></li>
 	      	<li><a href="/reportes">Reportes</a></li>
@@ -47,7 +48,6 @@
 	      	<li><a href="/logout">Logout</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasRole('USER')">
-	  	  <li><a href="/login">Login</a></li>
 	      <li><a href="/user">Mi Cuenta</a></li>
 	      <li><a href="/quest">Mis Quests</a></li>
 	      <li><a href="/messages">Mis Mensajes</a></li>

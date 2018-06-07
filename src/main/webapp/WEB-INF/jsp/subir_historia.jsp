@@ -27,7 +27,7 @@
 		  <label class="col-md-4 control-label" for="descripcion">Descripción</label>
 		  <div class="col-md-4">                     
 		    <textarea class="form-control input-md" id="descripcion" name="descripcion"></textarea>
-		  	<span class="help-block">Introduzca una descripción de la historia/span>
+		  	<span class="help-block">Introduzca una descripción de la historia</span>
 		  </div>
 		</div>
 		
