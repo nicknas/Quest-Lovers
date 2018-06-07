@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -331,6 +333,7 @@ public class RootController {
 		return "/login";
 	}
 	
+	
 	@RequestMapping(value="/photo/{id}", method=RequestMethod.POST)
     public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
     		@PathVariable("id") String id){
@@ -411,6 +414,50 @@ public class RootController {
 					.createQuery("select u from User u").getResultList());
 			return "/login";
 		
+	}
+	
+	@GetMapping("/subir_historia")
+	public String subirHistoria(){
+		return "subir_historia";
+	}
+	
+	@Transactional
+	@RequestMapping(value = "/add_quest", method=RequestMethod.POST)
+	public String addQuest(HttpServletRequest request, 
+			@RequestParam MultipartFile historia, 
+			@RequestParam String nombre_historia, 
+			@RequestParam String descripcion){
+		if (!historia.isEmpty() && historia.getContentType().equals("application/json")) {
+			Quest q = new Quest();
+			q.setTitulo(nombre_historia);
+			q.setDescripcion(descripcion);
+			List<Quest> queryList = QuestQueries.findAllQuests(entityManager);
+			q.setId(queryList.get(queryList.size()-1).getId() + 1);
+			q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
+			entityManager.merge(q);
+			entityManager.flush();
+			Path filePath = Paths.get(request.getSession().getServletContext().getRealPath("/"));
+			File file = new File (filePath.getParent().toString() + "/resources", q.getUrl());
+			try {
+				if (!file.exists()) {
+					file.createNewFile();
+				}
+				 byte[] bytes = historia.getBytes();
+	                BufferedOutputStream stream =
+	                        new BufferedOutputStream(
+	                        		new FileOutputStream(file));
+	                stream.write(bytes);
+	                stream.close();
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			log.info("NO OK");
+			log.info(historia.getContentType());
+		}
+		return "subir_historia";
 	}
 	
 }

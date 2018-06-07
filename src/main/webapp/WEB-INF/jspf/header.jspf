@@ -56,7 +56,7 @@
 	    </sec:authorize>
 	    <sec:authorize access="hasRole('EDITOR')">
 	    	<li><a href="#">Mis Historias</a></li> 
-	    	<li><a href="#">Subir Historia</a></li> 
+	    	<li><a href="/subir_historia">Subir Historia</a></li> 
 	     	<li><a href="/user">Mi Cuenta</a></li>          
 	      	<li><a href="/logout">Logout</a></li>
 		</sec:authorize>
