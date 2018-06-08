@@ -428,18 +428,16 @@ public class RootController {
 			@RequestParam String nombre_historia, 
 			@RequestParam String descripcion){
 		if (!historia.isEmpty() && historia.getContentType().equals("application/json")) {
-			// Quest q = new Quest();
-			// q.setTitulo(nombre_historia);
-			// q.setDescripcion(descripcion);
-			File quest_folder = localData.getFolder("quest");
-			log.info(quest_folder.getAbsolutePath());
-			/*List<Quest> queryList = QuestQueries.findAllQuests(entityManager);
-			q.setId(queryList.get(queryList.size()-1).getId() + 1);
-			q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
-			entityManager.merge(q);
+			Quest q = new Quest();
+			q.setTitulo(nombre_historia);
+			q.setDescripcion(descripcion);
+			q.setUrl("/tmp/iw/quest/" + "esqueleto" + q.getId() + ".json");
+			entityManager.persist(q);
 			entityManager.flush();
-			Path filePath = Paths.get(request.getSession().getServletContext().getRealPath("/"));
-			File file = new File (filePath.getParent().toString() + "/resources", q.getUrl());
+			
+			File quest_folder = localData.getFolder("quest");
+			File file = localData.getFile("quest", "esqueleto" + q.getId() + ".json");
+			// log.info(quest_folder.getAbsolutePath());
 			try {
 				if (!file.exists()) {
 					file.createNewFile();
@@ -453,7 +451,7 @@ public class RootController {
 			} catch (IllegalStateException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
 		}
 		else {
 			log.info("NO OK");
