@@ -1,6 +1,16 @@
 .quest{
 	background-color:#fff;
 }
+.receiver{
+	text-align: left;
+}
+.sender{
+	text-align:right;
+}
+.cuadro_chat{
+	border: 1px solid blue;
+}
+
 .list-quest{
 	list-style:none;
 }

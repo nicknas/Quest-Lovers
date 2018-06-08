@@ -5,8 +5,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <%@ include file="../jspf/header.jspf"%>
-<!-- 
-<script>
+
+<!--<script>
 window.onload = function() {
 	// code in here will only be executed when page fully loaded
 	console.log("entered into chat");
@@ -15,7 +15,7 @@ window.onload = function() {
 	$("#escrito").submit(function (e) {
 		var t = $("#texto").val();
 		socket.send(t);
-		$("#texto").val("");
+		$("#texto1").val("");
 		e.preventDefault(); // avoid actual submit
 	});
 	socket.onmessage = function(e) {
@@ -23,13 +23,14 @@ window.onload = function() {
 		ta.val(ta.val() + '\n' + e.data);
 	}
 }
-</script>
+</script>-->
 
-<div class="starter-template">
+<!-- <div class="starter-template">
 	<h1>Chat</h1>
 	<p class="lead">Ejemplo de uso de websockets</p>
 
 	<textarea id="recibido" cols="80" rows="10">
+	
 	</textarea>
 	<form id="escrito">
 	<input id="texto" size="80" placeholder="escribe algo y pulsa enter para enviarlo"/>
@@ -49,7 +50,20 @@ window.onload = function() {
 
 	<c:set var="conversacion" value="${conversacion}"></c:set>
 	-->
-	<form action="/enviar_mensaje" method="GET">
+	<div class="row">
+		<div class="col-xs-12 cuadro_chat" id="recibido" cols="80" rows="10">
+			<c:forEach items="${lista_mensajes}" var="mensaje">
+				<c:if test="${mensaje.sender.getId() == user_actual.id}">
+					<p class="sender col-xs-12">${mensaje.sender.getLogin()}: ${mensaje.getTexto()}</p>
+				</c:if>	
+				<c:if test="${mensaje.sender.getId() != user_actual.id}">
+					<p class="receiver col-xs-12">${mensaje.sender.getLogin()}: ${mensaje.getTexto()}</p>
+				</c:if>	
+			</c:forEach>
+		</div>
+	</div>
+	<form id="escrito" action="/enviar_mensaje" method="POST">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		<input name="user" type="hidden" value="${user_actual.id}"/>
 		<input name="id" type="hidden" value="${conversacion.id}"/>
 		<input id="texto1" name="texto1" size="80" placeholder="escribe algo y pulsa enter para enviarlo"/>
