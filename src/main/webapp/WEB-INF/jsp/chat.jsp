@@ -54,22 +54,28 @@ window.onload = function() {
 		<div class="col-xs-12 cuadro_chat" id="recibido" cols="80" rows="10">
 			<c:forEach items="${lista_mensajes}" var="mensaje">
 				<c:if test="${mensaje.sender.getId() == user_actual.id}">
-					<p class="sender col-xs-12">${mensaje.sender.getLogin()}: ${mensaje.getTexto()}</p>
+					<div class="row">
+						<div class="sender">${mensaje.sender.getLogin()}: ${mensaje.getTexto()}</div>
+					</div>
 				</c:if>	
 				<c:if test="${mensaje.sender.getId() != user_actual.id}">
-					<p class="receiver col-xs-12">${mensaje.sender.getLogin()}: ${mensaje.getTexto()}</p>
+					<div class="row">
+						<div class="receiver">${mensaje.sender.getLogin()}: ${mensaje.getTexto()}</div>
+					</div>
 				</c:if>	
 			</c:forEach>
 		</div>
 	</div>
-	<form id="escrito" action="/enviar_mensaje" method="POST">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		<input name="user" type="hidden" value="${user_actual.id}"/>
-		<input name="id" type="hidden" value="${conversacion.id}"/>
-		<input id="texto1" name="texto1" size="80" placeholder="escribe algo y pulsa enter para enviarlo"/>
-		<button type="submit">Enviar</button>
-	</form>
-	
+	<div class="input-group col-xs-12">
+		<form id="escrito"  action="/enviar_mensaje" method="POST">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<input name="user" type="hidden" value="${user_actual.id}"/>
+			<input name="id" type="hidden" value="${conversacion.id}"/>
+			<input id="texto1" name="texto1" size="80" placeholder="escribe algo y pulsa enter para enviarlo"/>
+			<button class="btn btn-sendmsg" type="submit">Enviar</button>
+		</form>
+	</div>
+
 
 
 
