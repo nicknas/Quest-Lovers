@@ -75,4 +75,10 @@ public class Conversacion {
 		this.mensajes = mensajes;
 	}
 	
+	public void setMensajes(MensajeChat mensaje) {
+		List<MensajeChat> lista = this.mensajes;
+		lista.add(mensaje);
+		this.mensajes = lista;
+	}
+	
 }

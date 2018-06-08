@@ -50,7 +50,7 @@ window.onload = function() {
 	<c:set var="conversacion" value="${conversacion}"></c:set>
 	-->
 	<form action="/enviar_mensaje" method="GET">
-	
+		<input name="user" type="hidden" value="${user_actual.id}"/>
 		<input name="id" type="hidden" value="${conversacion.id}"/>
 		<input id="texto1" name="texto1" size="80" placeholder="escribe algo y pulsa enter para enviarlo"/>
 		<button type="submit">Enviar</button>

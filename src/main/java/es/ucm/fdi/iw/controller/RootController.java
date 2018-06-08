@@ -46,6 +46,7 @@ import es.ucm.fdi.iw.model.Conversacion;
 import es.ucm.fdi.iw.model.ConversacionQueries;
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchQueries;
+import es.ucm.fdi.iw.model.MensajeChat;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.QuestQueries;
 import es.ucm.fdi.iw.model.Reporte;
@@ -88,7 +89,7 @@ public class RootController {
 					*/
 		int user1 = Integer.parseInt((request.getParameter("u1")));		
 		int user2 = Integer.parseInt((request.getParameter("u2")));
-		
+		User user_actual = UserQueries.findWithName(entityManager, authentication.getPrincipal().toString());
 		
 		if(!ConversacionQueries.existeConversacion(entityManager, user1,user2)) {
 			User u1 = UserQueries.findWithId(entityManager, user1);
@@ -100,6 +101,7 @@ public class RootController {
 		Conversacion c = ConversacionQueries.findConversacion(entityManager, user1, user2);		
 
 		model.addAttribute("conversacion", c);
+		model.addAttribute("user_actual", user_actual);
 		return "chat";
 		
 	}	
@@ -321,8 +323,14 @@ public class RootController {
 	public String enviar_mensaje(Model m, HttpServletRequest request) {
 		String id_conversacion =request.getParameter("id");
 		String texto = request.getParameter("texto1");
+		String id_user_actual = request.getParameter("user");
+		MensajeChat mensaje = new MensajeChat();
+		mensaje.setSender(UserQueries.findWithId(entityManager, Integer.parseInt(id_user_actual)));
+		mensaje.setTexto(texto);
+		
 		Conversacion c = ConversacionQueries.findConversacionById(entityManager, Integer.parseInt((id_conversacion)));
 		c.setTexto(texto);
+		c.setMensajes(mensaje);
 		entityManager.merge(c);
 		
 		
