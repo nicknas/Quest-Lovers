@@ -136,6 +136,7 @@ public class RootController {
 	public String user(Model m, Authentication authentication) {	
 			User u = UserQueries.findWithName(entityManager, authentication.getName());
 			m.addAttribute("user", u);
+			m.addAttribute("usuario", u.getLogin());
 		return "user";
 	}
 	
@@ -329,18 +330,23 @@ public class RootController {
 		return "/login";
 	}
 	
-	
+	@Transactional
 	@RequestMapping(value="/photo/{id}", method=RequestMethod.POST)
     public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
     		@PathVariable("id") String id){
         if (!photo.isEmpty()) {
             try {
                 byte[] bytes = photo.getBytes();
+                User u = UserQueries.findWithName(entityManager, id);
+                int numPhotos = u.getNumPhotos() + 1;
                 BufferedOutputStream stream =
                         new BufferedOutputStream(
-                        		new FileOutputStream(localData.getFile("user", id)));
+                        		new FileOutputStream(localData.getFile("user", id + "-" + Integer.toString(numPhotos))));
                 stream.write(bytes);
-                stream.close();
+                stream.close();    
+                u.setNumPhotos(numPhotos);
+                entityManager.merge(u);
+                entityManager.flush();
                 return "You successfully uploaded " + id + 
                 		" into " + localData.getFile("user", id).getAbsolutePath() + "!";
             } catch (Exception e) {
@@ -351,10 +357,10 @@ public class RootController {
         }
 	}
 	
-	@RequestMapping(value="/photo/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public void userPhoto(@PathVariable("id") String id, 
+	@RequestMapping(value="/photo/{id}/{photo_id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public void userPhoto(@PathVariable("id") String id, @PathVariable("photo_id") int photo_id,
 			HttpServletResponse response) {
-	    File f = localData.getFile("user", id);
+	    File f = localData.getFile("user", id + "-" + photo_id);
 	    InputStream in = null;
 	    try {
 		    if (f.exists()) {

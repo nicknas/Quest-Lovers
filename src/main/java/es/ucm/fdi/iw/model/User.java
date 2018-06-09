@@ -15,6 +15,7 @@ public class User {
 	private int edad;
 	private String resumen;
 	private String email;
+	private int num_photos;
 	private byte enabled;
 	
 	@Id
@@ -90,5 +91,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Column(columnDefinition="INTEGER DEFAULT 0")
+	public int getNumPhotos() {
+		return this.num_photos;
+	}
+	
+	public void setNumPhotos(int num_photos) {
+		this.num_photos = num_photos;
 	}
 }
