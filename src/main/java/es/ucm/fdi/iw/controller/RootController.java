@@ -8,9 +8,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,11 +39,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.controller.ChatSocketHandler;
+import es.ucm.fdi.iw.model.Conversacion;
+import es.ucm.fdi.iw.model.ConversacionQueries;
 import es.ucm.fdi.iw.model.Match;
 import es.ucm.fdi.iw.model.MatchQueries;
+import es.ucm.fdi.iw.model.MensajeChat;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.QuestQueries;
 import es.ucm.fdi.iw.model.Reporte;
@@ -68,17 +76,40 @@ public class RootController {
         model.addAttribute("s", "/static");
     }
 	
+	@Transactional
 	@GetMapping("/chat")
 	@RequestMapping(value = "/chat")
-	public String chat(Model model, HttpServletRequest request) {
+	public String chat(Model model, HttpServletRequest request, Authentication authentication) {
 		/*model.addAttribute("endpoint", request.getRequestURL().toString()
 				.replaceFirst("[^:]*", "ws")
-				.replace("chat", "chatsocket"));*/
-		//model.addAttribute("endpoint", id);
-			model.addAttribute("endpoint", request.getRequestURL().toString()
+				.replace("chat", "chatsocket"));
+		model.addAttribute("endpoint", id);
+			model.addAttribute("endpoint", authentication.getPrincipal().toString()
 					.replaceFirst("[^:]*", "ws")
 					.replace("chat", "chatsocket"));
+					*/
+		int user1 = Integer.parseInt((request.getParameter("u1")));		
+		int user2 = Integer.parseInt((request.getParameter("u2")));
+		User user_actual = UserQueries.findWithName(entityManager, authentication.getName());
+		
+		if(!ConversacionQueries.existeConversacion(entityManager, user1,user2)&&!ConversacionQueries.existeConversacion(entityManager, user2,user1)) {
+			User u1 = UserQueries.findWithId(entityManager, user1);
+			User u2 = UserQueries.findWithId(entityManager, user2);
+						
+			ConversacionQueries.crearConversacion(entityManager, u1, u2);
+		}	
+		
+		Conversacion c = ConversacionQueries.findConversacion(entityManager, user1, user2);		
+		if(c==null) {
+			c = ConversacionQueries.findConversacion(entityManager, user2, user1);
+		}
+		List<MensajeChat> lista = ConversacionQueries.findMensajes(entityManager, c);
+		
+		model.addAttribute("lista_mensajes", lista);
+		model.addAttribute("conversacion", c);
+		model.addAttribute("user_actual", user_actual);
 		return "chat";
+		
 	}	
 	
 	@GetMapping({"/", "/index"})
@@ -189,7 +220,13 @@ public class RootController {
 		return "reportes";
   }
 	@GetMapping("/messages") 
-	public String messages(){
+	public String messages(Model m, Authentication authentication){
+		User user_actual = UserQueries.findWithName(entityManager, authentication.getName());
+		
+		List<Conversacion> lista_conversaciones = ConversacionQueries.findConversacionesUser(entityManager, user_actual.getId());
+		
+		m.addAttribute("lista", lista_conversaciones);
+		
 		return "messages";
 	}
 	
@@ -288,15 +325,43 @@ public class RootController {
 		r.setVisto((byte) 1);
 		entityManager.merge(r);
 		entityManager.merge(u);
-		
-		
+
 		
 		return "redirect:/reportes";
 	}
 	
+	@RequestMapping(value="/enviar_mensaje", method=RequestMethod.POST)
+	@Transactional
+	public RedirectView enviar_mensaje(Model m,
+			@RequestParam String id,
+			@RequestParam String texto1,
+			@RequestParam String user) {
+		MensajeChat mensaje = new MensajeChat();
+		mensaje.setSender(UserQueries.findWithId(entityManager, Integer.parseInt(user)));
+		mensaje.setTexto(texto1);
+		
+		Conversacion c = ConversacionQueries.findConversacionById(entityManager, Integer.parseInt((id)));
+		//List<MensajeChat> lista = ConversacionQueries.findMensajes(entityManager, c);
+		//c.setTexto(texto1);
+		c.setMensajes(mensaje);
+		
+		
+		entityManager.persist(mensaje);
+		entityManager.merge(c);
+		int es = c.getUser1().getId();
+		int es2 = c.getUser2().getId();
+		String aux = "/chat?u1=7&u2=8";
+		/*aux.concat(Integer.toString(es));
+		aux.concat("&u2=");
+		aux.concat(Integer.toString(es2));*/
+		//return "/chat?u1="+c.getUser1().getId()+"&u2="+c.getUser2().getId();
+		return new RedirectView(aux);
+	}
+	
 	@Transactional
 	@GetMapping("/reportar")
-	public String reportar(Model m, HttpServletRequest request) {
+	@ResponseBody
+	public RedirectView reportar(Model m, HttpServletRequest request) {
 		String id_reportador =request.getParameter("id1");
 		String id_reportado = request.getParameter("id2");
 		String motivo = request.getParameter("m");
@@ -310,7 +375,7 @@ public class RootController {
 		reporte.setBaneado((byte) 0);
 		entityManager.persist(reporte);
 		
-		return "/";
+		return new RedirectView("/matches");
 	}
 	
 	@Transactional
