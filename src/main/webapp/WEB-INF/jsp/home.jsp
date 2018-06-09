@@ -12,12 +12,30 @@
 	<sec:authorize access="hasRole('USER')">
 	<div class="row">
 		<div class="col-sm-6 col-xs-12">
-			<p>Tienes Quests que hacer</p>
+			<div class="userpan">
+				<p>Tienes nuevas Quests?</p>
+				<a href="/quest">Mis Quests</a>
+			</div>	
+		</div>
+		<div class="col-sm-6 col-xs-12 ">
+			<div class="userpan">
+				<p>¡Mira tus Mensajes</p>
+				<a href="/messages">Mis Mensajes</a>
+			</div>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row last">
 		<div class="col-sm-6 col-xs-12">
-			<p>Quieres hablar con alguien?</p>
+			<div class="userpan">
+				<p>O mira si tienes alguien nuevo con quien hablar</p>
+				<a href="/quest">Mis Quests</a>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xs-12 ">
+			<div class="userpan">
+				<p>Actualiza tu perfil</p>
+				<a href="/user">Mi Cuenta</a>
+			</div>
 		</div>
 	</div>
 	
