@@ -1,5 +1,10 @@
 <%@ page pageEncoding="UTF-8"%>
 </div> <!-- /.container -->
+<div class="footer">
+    <div class="banner b1">
+    	<span>IW - UCM 2018 - QUEST-LOVERS ®</span>
+   	</div>
+</div>
           
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${s}/js/jquery.min.js"></script>
