@@ -46,8 +46,8 @@
             },
             "p8": {
                 "tipo": "pregunta",
-                "texto": "pregunta 8",
-                "respID": [1, 2, 3]
+                "texto": "Asi que empece hablar con esa persona, tenia conversacion interesante,pero habia algo que me inquietaba asi que...",
+                "respID": ["f1", "f2"]
             },
             "p9": {
                 "tipo": "pregunta",
@@ -107,17 +107,17 @@
             "r8": {
                 "tipo": "respuesta",
                 "texto": "Me quedo mirando el espectaculo, esta muy entretenido",
-                "respID": "p7"
+                "respID": "f1"
             },
             "r9": {
                 "tipo": "respuesta",
-                "texto": "Hay una persona del grupo que me ha llamado la atención y por lo poco que ha hablado tenemos cosas en comun",
-                "respID": "p8"
+                "texto": "Hay una persona del grupo que me ha llamado la atención y por lo poco que ha hablado tenemos cosas en comun,",
+                "respID": "f3"
             },
             "r10": {
                 "tipo": "respuesta",
                 "texto": "La mayoria del grupo estan hablan riendose y bromeando. Me meto de lleno",
-                "respID": "p9"
+                "respID": "f2"
             },
             "r11": {
                 "tipo": "respuesta",
@@ -141,18 +141,18 @@
             },
             "f1": {
                 "tipo": "final",
-                "texto": "Fui andando, y di un paseo ",
+                "texto": "No te has relacionado mucho prefieres estar tranquilo y a tu bola",
                 "solution": "desagradable 1"
             },
             "f2": {
                 "tipo": "final",
-                "texto": "Has conseguido quedar con la persona que te gusta",
-                "solution": "agradable 2"
+                "texto": "Eres una persona sociable, ese dia hiciste buenos amigos",
+                "solution": "agradable 1"
             },
             "f3": {
                 "tipo": "final",
-                "texto": "final3",
-                "respID": "p2"
+                "texto": "Hablas con la persona que te gusta e intercambiais telefonos",
+                "respID": "enamoradizo 1"
             }
         }
     }
