@@ -8,13 +8,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -117,20 +113,23 @@ public class RootController {
 		return "quest";
 	}
 	
-	@RequestMapping(value = "/get_quest_url", method = RequestMethod.POST)
-	@ResponseBody
-	public String get_quest_url(HttpServletRequest request) {
+	@RequestMapping(value = "/get_quest", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void get_quest_url(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
 		Quest q = QuestQueries.findQuestById(entityManager, id);
-		return q.getUrl();
-	}
-	
-	@GetMapping("/matches")
-	public String matches(Model m, Authentication authentication) {
-		User u = UserQueries.findWithName(entityManager, authentication.getName());
-		Set<User> lista_matches = MatchQueries.findMatchesUser(entityManager,u.getId());
-		m.addAttribute("lista_matches", lista_matches);
-		return "matches";
+		File f = localData.getFile("quest", q.getUrl());
+		InputStream in = null;
+	    try {
+		    if (f.exists()) {
+		    	in = new BufferedInputStream(new FileInputStream(f));
+		    } else {
+		    	in = new BufferedInputStream(
+		    			this.getClass().getClassLoader().getResourceAsStream("unknown-user.jpg"));
+		    }
+	    	FileCopyUtils.copy(in, response.getOutputStream());
+	    } catch (IOException ioe) {
+	    	log.info("Error retrieving file: " + f + " -- " + ioe.getMessage());
+	    }
 	}
 	
 	@GetMapping("/user")
@@ -158,9 +157,6 @@ public class RootController {
 			return "Ya has respondido esta quest";
 		} else {
 			Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
-			q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
-			entityManager.persist(q);
-			entityManager.flush();
 			m.addAttribute("quest_actual", q);
 			return "hacer_quest";
 			
@@ -430,13 +426,13 @@ public class RootController {
 		if (!historia.isEmpty() && historia.getContentType().equals("application/json")) {
 			Quest q = new Quest();
 			q.setTitulo(nombre_historia);
-			q.setDescripcion(descripcion);
-			q.setUrl("/tmp/iw/quest/" + "esqueleto" + q.getId() + ".json");
+			q.setDescripcion(descripcion);	
 			entityManager.persist(q);
 			entityManager.flush();
-			
-			File quest_folder = localData.getFolder("quest");
-			File file = localData.getFile("quest", "esqueleto" + q.getId() + ".json");
+			q.setUrl("esqueleto" + q.getId() + ".json");	
+			entityManager.merge(q);
+			entityManager.flush();
+			File file = localData.getFile("quest", q.getUrl());
 			// log.info(quest_folder.getAbsolutePath());
 			try {
 				if (!file.exists()) {
@@ -452,6 +448,7 @@ public class RootController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 		else {
 			log.info("NO OK");
