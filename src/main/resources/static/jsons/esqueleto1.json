@@ -151,7 +151,7 @@
             },
             "f3": {
                 "tipo": "final",
-                "texto": "Hablas con la persona que te gusta e intercambiais telefonos",
+                "texto": "Hablas con la persona que te gusta e intercambiais telefonos ",
                 "respID": "enamoradizo 1"
             }
         }
