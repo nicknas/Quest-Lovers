@@ -7,8 +7,8 @@
 <%@ include file="../jspf/header.jspf"%>
 
 <div class="starter-template">
-	<h1>Home</h1>
-	<p class="lead">Bienvenido a casa</p>
+	<h1>Bienvenido</h1>
+	<p class="lead">Bienvenido <sec:authentication property="principal.username"/></p> 
 
 	<%@ include file="../jspf/authinfo.jspf"%>		
 </div>
