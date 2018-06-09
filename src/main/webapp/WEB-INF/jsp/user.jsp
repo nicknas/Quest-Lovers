@@ -133,7 +133,8 @@
 				</div> 
 			</c:when>
 			<c:otherwise>
-				<img class="img-responsive img-center col-md-4 col-md-offset-4" src="/photo/${usuario}/0">
+				<div class="col-md-4"></div>
+				<img class="col-md-4 img-responsive" src="/photo/${usuario}/0">
 			</c:otherwise>
 		</c:choose>
 	</div>
