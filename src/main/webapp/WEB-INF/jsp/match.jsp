@@ -55,8 +55,7 @@
 				</div> 
 			</c:when>
 			<c:otherwise>
-				<div class="col-md-4"></div>
-				<img class="col-md-4 img-responsive" src="/photo/${user.getLogin()}/0">
+				<img class="img-responsive" src="/photo/${user.getLogin()}/0">
 			</c:otherwise>
 		</c:choose>
 	<hr/>
