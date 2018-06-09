@@ -19,7 +19,7 @@
 				<div class="tile">
 					<h2>${matches.login}</h2>
 					<a href="/match?id=${matches.id}">
-						<img src="photo/${matches.login}" class="img-rounded img-responsive img-center">
+						<img src="/photo/${matches.login}/1" class="img-rounded img-responsive img-center">
 					</a>
 					<p>${matches.resumen}</p>
 				</div>
