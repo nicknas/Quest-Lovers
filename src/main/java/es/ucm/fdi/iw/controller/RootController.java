@@ -195,7 +195,7 @@ public class RootController {
 			}
 		}
 		if(lista.contains(Integer.parseInt(idQuest))) {
-			return "Ya has respondido esta quest";
+			return "/error";
 		} else {
 			Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
 			m.addAttribute("quest_actual", q);
@@ -359,7 +359,7 @@ public class RootController {
 		entityManager.merge(c);
 		int es = c.getUser1().getId();
 		int es2 = c.getUser2().getId();
-		String aux = "/chat?u1=7&u2=8";
+		String aux = "/chat?u1="+es+"&u2="+es2;
 		/*aux.concat(Integer.toString(es));
 		aux.concat("&u2=");
 		aux.concat(Integer.toString(es2));*/
