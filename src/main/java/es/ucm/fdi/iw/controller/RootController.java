@@ -125,6 +125,15 @@ public class RootController {
 		return "login";
 	}
 	
+	@GetMapping("/matches")
+	public String matches(Model m, Authentication authentication) {
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
+		Set<User> lista_matches = MatchQueries.findMatchesUser(entityManager,u.getId());
+		m.addAttribute("lista_matches", lista_matches);
+		m.addAttribute("user_actual", u);
+		return "matches";
+	}
+	
 	@GetMapping("/logout")
 	public String logout() {
 		return "logout";
