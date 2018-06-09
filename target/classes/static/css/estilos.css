@@ -1,3 +1,28 @@
+
+html, body{
+   height: 100%;
+}
+.container{
+    min-height: calc(100% - 183px);
+}
+.footer{
+    height: 100px;
+    background-color: #13c1ac;
+}
+.banner{
+    margin-top: 20px;
+    float: right;
+    font-family: Lato,Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-right: 5%;
+    border-bottom: 1px solid white;
+    color: white;
+}
+.navbar {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
 .quest{
 	background-color:#fff;
 }
@@ -90,6 +115,7 @@
 .btn-main-color{
 	color: #FFF;
 	background-color: #13c1ac;
+    margin-bottom: 10px;
 }
 .input-group{
 	background-color: white;

@@ -9,7 +9,20 @@
 <div class="starter-template">
 	<h1>Bienvenido</h1>
 	<p class="lead">Bienvenido <sec:authentication property="principal.username"/></p> 
-
+	<sec:authorize access="hasRole('USER')">
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+			<p>Tienes Quests que hacer</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+			<p>Quieres hablar con alguien?</p>
+		</div>
+	</div>
+	
+	</sec:authorize>
+	
 	<%@ include file="../jspf/authinfo.jspf"%>		
 </div>
 
