@@ -1,0 +1,114 @@
+{
+    "quest": {
+        "id": 3,
+        "titulo": "Aventura en el bosque",
+        "descripcion": "Ponte en situación. Imagina que un grupo de asesinos os secuestran a ti y a una persona más y escapais encontrandoos en un bosque, ¿cómo harías para salir de allí?",
+        "preguntas": {
+            "initial": {
+                "tipo": "preguntaInitial",
+                "texto": "Entrando al bosque, de repente notas el sonido de unos pasos. Tu compañero/a te dice que puede ser de un animal y que lo mejor es ir despacio y en silencio. ¿Que harías?",
+                "respID": ["r1", "r2", "r3"]
+            },
+            "p1": {
+                "tipo": "pregunta",
+                "texto": "Vais ambos con cuidado por el bosque hasta que poco a poco escuchais más fuerte esos pasos. Al fondo veis las sombras de los asesinos y veis que podeis esconderos en un arbusto o seguir dos caminos: uno bastante oscuro y lleno de árboles y otro bastante luminoso y llano. ¿Que le dirías a tu compañero/a?",
+                "respID": ["r4", "r5", "r6"]
+            },
+            "p2": {
+                "tipo": "pregunta",
+                "texto": "Escondiendoos en el arbusto, los asesinos se acercan hacia vosotros y os acorralan. ¿Qué vas a hacer?",
+                "respID": ["r7","r8","r9"]
+            },
+            "p3": {
+                "tipo": "pregunta",
+                "texto": "Yendo por el camino oscuro, veis en el horizonte una pequeña luz. Pensais que puede ser el final del camino, ¿Que es lo que podriais hacer?",
+                "respID": ["r10","r11"]
+            },
+            "p4": {
+                "tipo": "pregunta",
+                "texto": "Yendo por el camino luminoso, escuchais que los asesinos os están siguiendo. Te entra un poco el pánico, al igual que tu pareja. Veis que hay una conexion hacia el camino oscuro que visteis antes, ¿que podrias hacer?",
+                "respID": ["r12","r13"]
+            },
+            "r1": {
+                "tipo": "respuesta",
+                "texto": "Le hago caso y vamos los dos en silencio",
+                "respID": "p1"
+            },
+            "r2": {
+                "tipo": "respuesta",
+                "texto": "Prefiero huir corriendo, aunque mi compañero no quiera",
+                "respID": "f1"
+            },
+            "r3": {
+                "tipo": "respuesta",
+                "texto": "Intento convencerle que la mejor opción es huir rápido, pero sin hacer ruido",
+                "respID": "p1"
+            },
+            "r4": {
+                "tipo": "respuesta",
+                "texto": "Lo mejor es escondernos en un arbusto cercano y mirar que van a hacer",
+                "respID": "p2"
+            },
+            "r5": {
+                "tipo": "respuesta",
+                "texto": "Irnos por el camino oscuro",
+                "respID": "p3"
+            },
+            "r6": {
+                "tipo": "respuesta",
+                "texto": "Irnos por el camino luminoso",
+                "respID": "p4"
+            },
+            "r7": {
+                "tipo": "respuesta",
+                "texto": "Agarrar una piedra y tirarla hacia un costado para confundir a los asesinos",
+                "respID": "f2"
+            },
+            "r8": {
+                "tipo": "respuesta",
+                "texto": "Abrazarte a tu compañero/a y esperar a que haya suerte en que no os encuentren",
+                "respID": "f2"
+            },
+            "r9": {
+                "tipo": "respuesta",
+                "texto": "Le dices que lo mejor es combatir con ellos, por lo que salis del escondite y atacais",
+                "respID": "f2"
+            },
+            "r10": {
+                "tipo": "respuesta",
+                "texto": "Confías en que puede ser el fin del camino y convences a tu pareja que hay que ir allí",
+                "respID": "f3"
+            },
+            "r11": {
+                "tipo": "respuesta",
+                "texto": "Te da mala espina, por lo que quieres volver para atrás e ir por el camino luminoso",
+                "respID": "p4"
+            },
+            "r12": {
+                "tipo": "respuesta",
+                "texto": "Piensas que a lo mejor la mejor opción es irte por aquel camino oscuro y perder de vista a los asesinos",
+                "respID": "p3"
+            },
+            "r13": {
+                "tipo": "respuesta",
+                "texto": "Decidís seguir corriendo hasta llegar al final de ese camino",
+                "respID": "f2"
+            },
+            "f1": {
+                "tipo": "final",
+                "texto": "Te vas corriendo y tu compañero prefiere esconderse e irse despacio. Mal asunto, esos pasos eran de los asesinos, por lo que te encuentran y te matan.",
+                "solution": "desagradable 3"
+            },
+            "f2": {
+                "tipo": "final",
+                "texto": "Tu y tu compañero/a acabais muriendo. Al menos lo hicisteis colaborando mutuamente",
+                "solution": "desagradable 1"
+            },
+            "f3": {
+                "tipo": "final",
+                "texto": "Enhorabuena, conseguisteis alcanzar la salida del bosque y dejar atrás a los asesinos confiando siempre en tu pareja.",
+                "respID": "agradable 1"
+            }
+        }
+    }
+}

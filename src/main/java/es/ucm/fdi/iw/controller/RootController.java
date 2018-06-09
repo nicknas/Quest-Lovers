@@ -144,27 +144,30 @@ public class RootController {
 		return "quest";
 	}
 	
-	@RequestMapping(value = "/get_quest_url", method = RequestMethod.POST)
-	@ResponseBody
-	public String get_quest_url(HttpServletRequest request) {
+	@RequestMapping(value = "/get_quest", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void get_quest_url(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
 		Quest q = QuestQueries.findQuestById(entityManager, id);
-		return q.getUrl();
-	}
-	
-	@GetMapping("/matches")
-	public String matches(Model m, Authentication authentication) {
-		User u = UserQueries.findWithName(entityManager, authentication.getName());
-		Set<User> lista_matches = MatchQueries.findMatchesUser(entityManager,u.getId());
-		m.addAttribute("lista_matches", lista_matches);
-		m.addAttribute("user_actual", u);
-		return "matches";
+		File f = localData.getFile("quest", q.getUrl());
+		InputStream in = null;
+	    try {
+		    if (f.exists()) {
+		    	in = new BufferedInputStream(new FileInputStream(f));
+		    } else {
+		    	in = new BufferedInputStream(
+		    			this.getClass().getClassLoader().getResourceAsStream("unknown-user.jpg"));
+		    }
+	    	FileCopyUtils.copy(in, response.getOutputStream());
+	    } catch (IOException ioe) {
+	    	log.info("Error retrieving file: " + f + " -- " + ioe.getMessage());
+	    }
 	}
 	
 	@GetMapping("/user")
 	public String user(Model m, Authentication authentication) {	
 			User u = UserQueries.findWithName(entityManager, authentication.getName());
 			m.addAttribute("user", u);
+			m.addAttribute("usuario", u.getLogin());
 		return "user";
 	}
 	
@@ -186,9 +189,6 @@ public class RootController {
 			return "Ya has respondido esta quest";
 		} else {
 			Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
-			q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
-			entityManager.persist(q);
-			entityManager.flush();
 			m.addAttribute("quest_actual", q);
 			return "hacer_quest";
 			
@@ -395,18 +395,23 @@ public class RootController {
 		return "/login";
 	}
 	
-	
+	@Transactional
 	@RequestMapping(value="/photo/{id}", method=RequestMethod.POST)
     public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
     		@PathVariable("id") String id){
         if (!photo.isEmpty()) {
             try {
                 byte[] bytes = photo.getBytes();
+                User u = UserQueries.findWithName(entityManager, id);
+                int numPhotos = u.getNumPhotos() + 1;
                 BufferedOutputStream stream =
                         new BufferedOutputStream(
-                        		new FileOutputStream(localData.getFile("user", id)));
+                        		new FileOutputStream(localData.getFile("user", id + "-" + Integer.toString(numPhotos))));
                 stream.write(bytes);
-                stream.close();
+                stream.close();    
+                u.setNumPhotos(numPhotos);
+                entityManager.merge(u);
+                entityManager.flush();
                 return "You successfully uploaded " + id + 
                 		" into " + localData.getFile("user", id).getAbsolutePath() + "!";
             } catch (Exception e) {
@@ -417,10 +422,10 @@ public class RootController {
         }
 	}
 	
-	@RequestMapping(value="/photo/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public void userPhoto(@PathVariable("id") String id, 
+	@RequestMapping(value="/photo/{id}/{photo_id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public void userPhoto(@PathVariable("id") String id, @PathVariable("photo_id") int photo_id,
 			HttpServletResponse response) {
-	    File f = localData.getFile("user", id);
+	    File f = localData.getFile("user", id + "-" + photo_id);
 	    InputStream in = null;
 	    try {
 		    if (f.exists()) {
@@ -492,14 +497,14 @@ public class RootController {
 		if (!historia.isEmpty() && historia.getContentType().equals("application/json")) {
 			Quest q = new Quest();
 			q.setTitulo(nombre_historia);
-			q.setDescripcion(descripcion);
-			List<Quest> queryList = QuestQueries.findAllQuests(entityManager);
-			q.setId(queryList.get(queryList.size()-1).getId() + 1);
-			q.setUrl("/static/jsons/" + "esqueleto" + q.getId() + ".json");
+			q.setDescripcion(descripcion);	
+			entityManager.persist(q);
+			entityManager.flush();
+			q.setUrl("esqueleto" + q.getId() + ".json");	
 			entityManager.merge(q);
 			entityManager.flush();
-			Path filePath = Paths.get(request.getSession().getServletContext().getRealPath("/"));
-			File file = new File (filePath.getParent().toString() + "/resources", q.getUrl());
+			File file = localData.getFile("quest", q.getUrl());
+			// log.info(quest_folder.getAbsolutePath());
 			try {
 				if (!file.exists()) {
 					file.createNewFile();
@@ -514,6 +519,7 @@ public class RootController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 		else {
 			log.info("NO OK");
