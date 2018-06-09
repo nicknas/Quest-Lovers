@@ -60,7 +60,13 @@ public class ConversacionQueries {
 			Conversacion m = entityManager.createQuery("from Conversacion m where m.user1 = :id_user1 and m.user2 = :id_user2", Conversacion.class).setParameter("id_user1", u1).setParameter("id_user2", u2).getSingleResult();
 			//Conversacion m2 = entityManager.createQuery("from Conversacion m where m.user1 = :id_user2 and m.user2 = :id_user1", Conversacion.class).setParameter("id_user1", id_user1).setParameter("id_user2", id_user2).getSingleResult();
 			if(m==null) {
-				return false;
+				try {
+					m = entityManager.createQuery("from Conversacion m where m.user1 = :id_user1 and m.user2 = :id_user2", Conversacion.class).setParameter("id_user1", u2).setParameter("id_user2", u1).getSingleResult();
+					return true;
+				}catch(Exception e) {
+					log.info("No hay conversacion para esos usuarios",e);
+					return false;					
+				}
 			}else {
 				return true;
 			}
