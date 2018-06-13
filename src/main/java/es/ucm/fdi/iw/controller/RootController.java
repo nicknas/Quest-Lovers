@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.controller.ChatSocketHandler;
 import es.ucm.fdi.iw.model.Conversacion;
@@ -502,11 +503,14 @@ public class RootController {
 	public String addQuest(HttpServletRequest request, 
 			@RequestParam MultipartFile historia, 
 			@RequestParam String nombre_historia, 
-			@RequestParam String descripcion){
+			@RequestParam String descripcion,
+			Authentication authentication){
 		if (!historia.isEmpty() && historia.getContentType().equals("application/json")) {
 			Quest q = new Quest();
 			q.setTitulo(nombre_historia);
-			q.setDescripcion(descripcion);	
+			q.setDescripcion(descripcion);
+			User u = UserQueries.findWithName(entityManager, authentication.getName());
+			q.setEditor_fk(u);
 			entityManager.persist(q);
 			entityManager.flush();
 			q.setUrl("esqueleto" + q.getId() + ".json");	
@@ -535,6 +539,33 @@ public class RootController {
 			log.info(historia.getContentType());
 		}
 		return "subir_historia";
+	}
+	
+	@GetMapping("/mis_historias")
+	public String getMyQuests(Authentication authentication, Model model, HttpServletRequest request) {
+		List<Quest> questList = QuestQueries.findQuestsByEditorName(entityManager, authentication.getName());
+		model.addAttribute("questList", questList);
+		boolean success = Boolean.parseBoolean(request.getParameter("success"));
+		if (success) {
+			model.addAttribute("success_message", "La quest se ha borrado correctamente");
+		}
+		return "mis_historias";
+	}
+	
+	@Transactional
+	@RequestMapping(value="/borrar_quest", method=RequestMethod.POST)
+	@ResponseBody
+	public RedirectView deleteQuest(HttpServletRequest request) {
+		long questId = Long.parseLong(request.getParameter("id_quest"));
+		Quest q = QuestQueries.findQuestById(entityManager, questId);
+		entityManager.remove(q);
+		entityManager.flush();
+		return new RedirectView("/mis_historias?success=true");
+	}
+	
+	@GetMapping("/subir_historia_guiada")
+	public String getSubirHistoriaGuiada() {
+		return "subir_historia_guiada";
 	}
 	
 }

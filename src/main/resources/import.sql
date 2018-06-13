@@ -6,6 +6,7 @@ INSERT INTO USER VALUES(6,'Madrid',24,'joselito@gmail.com',1,'joselito',2,'$2a$1
 INSERT INTO USER VALUES(7,'Madrid',22,'luisrubito@hotmail.com',1,'luisrubio',2,'$2a$10$VrhwgkC4gP.v4CXCFNFXT.3Vhyxc03zRwZUAc6QL2Ij8a5OsScbLW','Bater\u00eda en un grupo de rock','USER')
 INSERT INTO USER VALUES(8,'Madrid',28,'jaime@skater.com',1,'jaime',2,'$2a$10$RoDsswKPNDl9DQ1Zw8Cij.F4BVz8jybe0.bA4WJTFYbzhTHq8bBM.','Skater profesional busco una chica que le guste viajar','USER')
 INSERT INTO USER VALUES(9,'Barcelona',19,'sariita@live.com',1,'sariita',0,'$2a$10$eKbujK16U4YmYs5KiavqWOgYcKt3jQRgmcDshEGrAPZfyHW9sG2MO','Busco alguien con quien recorrer el mundo','USER')
+
 INSERT INTO MENSAJE_CHAT VALUES(1,'Hola Alicia!',7)
 INSERT INTO MENSAJE_CHAT VALUES(2,'Hola luis!',5)
 INSERT INTO MENSAJE_CHAT VALUES(3,'Te apetece tomar algo?',5)
@@ -24,8 +25,9 @@ INSERT INTO MATCH VALUES(3,9,5)
 INSERT INTO MATCH VALUES(4,9,7)
 INSERT INTO MATCH VALUES(5,7,6)
 
-INSERT INTO QUEST VALUES(2,'Es un viernes por la tarde, la ciudad no está mal, pero en una semana todavía no conocía a nadie, había visto ese cartel de fiesta del Jazz en la calle suerte','Un dia movidito','esqueleto2.json')
-INSERT INTO QUEST VALUES(3,'Ponte en situación. Imagina que un grupo de asesinos os secuestran a ti y a una persona más y escapais encontrandoos en un bosque, qué harías para salir de allí?','Aventura en el bosque','esqueleto3.json')
+INSERT INTO QUEST(id, descripcion, titulo, url, editor_fk) VALUES(1,'Es un viernes por la tarde, la ciudad no está mal, pero en una semana todavía no conocía a nadie, había visto ese cartel de fiesta del Jazz en la calle suerte','Un dia movidito','esqueleto1.json', 3)
+INSERT INTO QUEST(id, descripcion, titulo, url, editor_fk) VALUES(2,'Ponte en situación. Imagina que un grupo de asesinos os secuestran a ti y a una persona más y escapais encontrandoos en un bosque, qué harías para salir de allí?','Aventura en el bosque','esqueleto3.json', 4)
+
 INSERT INTO REPORTE VALUES(1,0,'Me está acosando',1,7,5)
 INSERT INTO REPORTE VALUES(2,0,'Me han copiado el perfil',0,5,9)
 INSERT INTO RESPUESTAS_QUEST VALUES(1,2,6,'desagradable 1')

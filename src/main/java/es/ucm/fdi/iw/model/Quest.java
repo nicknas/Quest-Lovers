@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.apache.log4j.Logger;
@@ -19,7 +21,7 @@ public class Quest {
 	private String titulo;
 	private String descripcion;
 	private String url;//url del json que contiene la quest
-	
+	private User editor_fk;
 	
 	@Id
 	@GeneratedValue
@@ -56,6 +58,14 @@ public class Quest {
 		this.url = url;
 	}	
 	
+	@ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "editor_fk", referencedColumnName = "id")
+	public User getEditor_fk() {
+		return this.editor_fk;
+	}
 	
+	public void setEditor_fk(User id) {
+		this.editor_fk = id;
+	}
 
 }
