@@ -80,5 +80,5 @@ window.onload = function() {
 
 
 </div>
-
+<script src="${s}/js/jquery.injectprotect.js"> </script>
 <%@ include file="../jspf/footer.jspf"%>

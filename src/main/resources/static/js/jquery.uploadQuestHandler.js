@@ -4,7 +4,7 @@ var nombre_finales = new Map();
 var index_pregunta = 0;
 var index_final = 0;
 var links_finales = 0;
-var num_respuestas = 0;
+var num_preguntas = 0;
 	jQuery(document).on("click", "#buttonStart", function(){
 		if (!jQuery("#nombre_historia").val() || !jQuery("#descripcion").val()){
 			if (!jQuery("#nombre_historia").val()){
@@ -69,16 +69,15 @@ var num_respuestas = 0;
 		});
 		jQuery(".form-group").remove();
 		jQuery("legend").text("Preguntas");
-		num_respuestas = 1;
+		num_preguntas = 1;
 		nombre_preguntas.forEach(function(value, key, map){
 			jQuery("fieldset").append('<div class="form-group"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta"></textarea></div></div>');
-			jQuery("fieldset").append('<div class="form-group" id="blockRespuesta'+ num_respuestas +'"><div class="form-group"><label class="col-md-6 control-label" for="numResponse'+ num_respuestas +'">Número de respuestas</label><div class="col-md-2"><select class="form-control numResponses" id="numResponse'+ num_respuestas +'"><option>1</option><option>2</option><option>3</option></select></div></div></div>');
-			jQuery("#blockRespuesta" + num_respuestas).append('<div class="form-group respuestasBlock'+ num_respuestas +'"><label class="col-md-6 control-label">Nombre de la respuesta '+ num_respuestas +'</label><div class="col-md-6"><input class="form-control input-md respuesta" type="text"/></div></div>');
-			jQuery("#blockRespuesta" + num_respuestas).append('<div class="form-group linkResponseBlock'+ num_respuestas +'"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
-			num_respuestas++;
+			jQuery("fieldset").append('<div class="form-group" id="blockRespuesta'+ num_preguntas +'"><div class="form-group"><label class="col-md-6 control-label" for="numResponse'+ num_preguntas +'">Número de respuestas</label><div class="col-md-2"><select class="form-control numResponses" id="numResponse'+ num_preguntas +'"><option>1</option><option>2</option><option>3</option></select></div></div></div>');
+			jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group respuestasBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Nombre de la respuesta 1</label><div class="col-md-6"><input class="form-control input-md respuesta" type="text"/></div></div>');
+			jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group linkResponseBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
+			num_preguntas++;
 		});
 		jQuery(".linkResponses").each(function(i){
-			var id = i + 1;
 			var linkResponse = jQuery(this);
 			linkResponse.empty();
 			nombre_preguntas.forEach(function(value, key, map){
@@ -101,38 +100,38 @@ var num_respuestas = 0;
 		jQuery("fieldset").append('<div class="form-group" id="finButton"><label class="col-md-4 control-label" for="buttonFinales"></label><div class="col-md-4 col-md-offset-4"><input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" /><button id="buttonFinales" type="button" name="buttonFinales" class="btn btn-info ">Ir a los finales</button></div></div>');
 	});
 	jQuery(document).on("change", ".numResponses", function(){
-		var id_pregunta = jQuery(this).attr("id");
+		var numResponse = jQuery(this);
+		var id_pregunta = numResponse.attr("id");
 		id_pregunta = id_pregunta[id_pregunta.length - 1];
-		jQuery(".respuestaBlock" + id_pregunta).each(function(){
-			jQuery(this).remove();
-			num_respuestas--;
-		});
-		jQuery(".linkResponseBlock" + id_block).remove();
-		var numRespTotal = num_respuestas + parseInt(jQuery(this).find("option:selected").text());
-		while (num_respuestas < numRespTotal){
-			jQuery("#blockRespuesta" + num_respuestas).append('<div class="form-group respuestaBlock'+ num_respuestas +'"><label class="col-md-6 control-label" for="r'+ num_respuestas +'">Nombre de la respuesta '+ num_respuestas +'</label><div class="col-md-6"><input id="r'+ num_respuestas +'" name="r'+ num_respuestas +'" class="form-control input-md respuesta" type="text"/></div></div>');
-			jQuery("#blockRespuesta" + num_respuestas).append('<div class="form-group linkResponseBlock'+ num_respuestas +'"><label class="col-md-6 control-label" for="linkResponse'+ num_respuestas +'">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses" id="linkResponse'+ num_respuestas +'"></select></div></div>');
-			num_respuestas++;
-			jQuery(".linkResponses").each(function(i){
-				var id = i + 1;
-				jQuery("#linkResponse" + id).empty();
+		jQuery(".respuestasBlock" + id_pregunta).remove();
+		jQuery(".linkResponseBlock" + id_pregunta).remove();
+		var numRespTotal = parseInt(numResponse.find("option:selected").text());
+		for (var i = 1; i <= numRespTotal; i++){
+			jQuery("#blockRespuesta" + id_pregunta).append('<div class="form-group respuestasBlock'+ id_pregunta +'"><label class="col-md-6 control-label">Nombre de la respuesta '+ i +'</label><div class="col-md-6"><input class="form-control input-md respuesta" type="text"/></div></div>');
+			jQuery("#blockRespuesta" + id_pregunta).append('<div class="form-group linkResponseBlock'+ id_pregunta +'"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
+			jQuery(".linkResponseBlock" + id_pregunta + " .linkResponses").each(function(){
+				var linkResponse = jQuery(this);
+				linkResponse.empty();
 				nombre_preguntas.forEach(function(value, key, map){
-					if (i == 0){
+					if (id_pregunta == 1){
 						if (key != "initial"){
-							jQuery("#linkResponse" + id).append('<option>'+ value +'</option>');
+							linkResponse.append('<option>'+ value +'</option>');
 						}
 					}
 					else {
-						if (key != ("p" + i)){
-							jQuery("#linkResponse" + id).append('<option>'+ value +'</option>');
+						if (key != ("p" + parseInt(id_pregunta - 1))){
+							linkResponse.append('<option>'+ value +'</option>');
 						}
 					}
 				});
 				nombre_finales.forEach(function(value, key, map){
-					jQuery("#linkResponse" + id).append('<option>'+ value +'</option>');
+					linkResponse.append('<option>'+ value +'</option>');
 				});
 			});
 		}
+	});
+	jQuery(document).on("click", "#buttonFinales", function(){
+		jQuery(".")
 	});
 	
 	

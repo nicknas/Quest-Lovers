@@ -474,22 +474,25 @@ public class RootController {
 			@RequestParam String resumen,
 		
 			@RequestParam(required=false) String isAdmin, Model m) {
-		User u = new User();
+			
+		User u = UserQueries.findWithName(entityManager, user);
+		if( u!= null) {
 			u.setLogin(user);
-			//u.setPassword(passwordEncoder.encode(password));
 			u.setCiudad(ciudad);
-			u.setEnabled((byte) 1);
 			u.setEdad(edad);
 			u.setEmail(email);
 			u.setResumen(resumen);
-			
+
 			entityManager.merge(u);
-			
+
 			entityManager.flush();
-			
-			m.addAttribute("users", entityManager
-					.createQuery("select u from User u").getResultList());
-			return "/login";
+
+			m.addAttribute("user", u);
+			return "/user";	
+		} else {
+			return "Error al buscar usuario";
+		}
+		
 		
 	}
 	
