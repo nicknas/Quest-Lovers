@@ -495,7 +495,7 @@ public class RootController {
 	
 	@GetMapping("/subir_historia")
 	public String subirHistoria(){
-		return "subir_historia";
+		return "/subir_historia";
 	}
 	
 	@Transactional
