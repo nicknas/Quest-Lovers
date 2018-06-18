@@ -120,14 +120,22 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${editores}" var="u">
-			<tr>
-				<td><input type="checkbox" class="checkbox-editor"></td>
-				<td>${u.id}</td>
-				<td>${u.login}</td>
-				<td>${u.email}</td>
-				<td>${u.ciudad}</td>
-				<td>${u.password}</td>
-			</tr>	
+			<form action ="/admin/deleteEditor" method="POST">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				<input name="id" id="id" value="${u.id}" type="hidden"/>
+				<tr>
+					<td><button type="submit" class="btn btn-danger" aria-label="Left Align">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+					</td>
+					
+					<td>${u.id}</td>
+					<td>${u.login}</td>
+					<td>${u.email}</td>
+					<td>${u.ciudad}</td>
+					<td>${u.password}</td>
+				</tr>
+			</form>		
 		</c:forEach>	
 		</tbody>
 	</table>

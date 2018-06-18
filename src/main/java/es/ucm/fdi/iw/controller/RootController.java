@@ -41,7 +41,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
-
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.controller.ChatSocketHandler;
 import es.ucm.fdi.iw.model.Conversacion;
@@ -57,6 +56,8 @@ import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
 import es.ucm.fdi.iw.model.RespuestasQuest;
 import es.ucm.fdi.iw.model.RespuestasQuestQueries;
+
+import org.owasp.encoder.Encode;
 
 @Controller	
 public class RootController {
@@ -272,13 +273,13 @@ public class RootController {
 		if(!password.equals(password2)) {
 			return "error";
 		} else {
-			u.setLogin(user);
-			u.setPassword(passwordEncoder.encode(password));
-			u.setCiudad(ciudad);
+			u.setLogin(scapedparameter(user));
+			u.setPassword(passwordEncoder.encode(scapedparameter(password)));
+			u.setCiudad(scapedparameter(ciudad));
 			u.setEnabled((byte) 1);
 			u.setEdad(edad);
-			u.setEmail(email);
-			u.setResumen(resumen);
+			u.setEmail(scapedparameter(email));
+			u.setResumen(scapedparameter(resumen));
 			u.setRoles("USER");
 			
 			entityManager.persist(u);
@@ -346,6 +347,9 @@ public class RootController {
 			@RequestParam String id,
 			@RequestParam String texto1,
 			@RequestParam String user) {
+		id = scapedparameter(id);
+		texto1 = scapedparameter(texto1);
+		user = scapedparameter(user);
 		MensajeChat mensaje = new MensajeChat();
 		mensaje.setSender(UserQueries.findWithId(entityManager, Integer.parseInt(user)));
 		mensaje.setTexto(texto1);
@@ -477,11 +481,11 @@ public class RootController {
 			
 		User u = UserQueries.findWithName(entityManager, user);
 		if( u!= null) {
-			u.setLogin(user);
-			u.setCiudad(ciudad);
+			u.setLogin(scapedparameter(user));
+			u.setCiudad(scapedparameter(ciudad));
 			u.setEdad(edad);
-			u.setEmail(email);
-			u.setResumen(resumen);
+			u.setEmail(scapedparameter(email));
+			u.setResumen(scapedparameter(resumen));
 
 			entityManager.merge(u);
 
@@ -498,7 +502,7 @@ public class RootController {
 	
 	@GetMapping("/subir_historia")
 	public String subirHistoria(){
-		return "/subir_historia";
+		return "subir_historia";
 	}
 	
 	@Transactional
@@ -506,14 +510,11 @@ public class RootController {
 	public String addQuest(HttpServletRequest request, 
 			@RequestParam MultipartFile historia, 
 			@RequestParam String nombre_historia, 
-			@RequestParam String descripcion,
-			Authentication authentication){
+			@RequestParam String descripcion){
 		if (!historia.isEmpty() && historia.getContentType().equals("application/json")) {
 			Quest q = new Quest();
 			q.setTitulo(nombre_historia);
-			q.setDescripcion(descripcion);
-			User u = UserQueries.findWithName(entityManager, authentication.getName());
-			q.setEditor_fk(u);
+			q.setDescripcion(descripcion);	
 			entityManager.persist(q);
 			entityManager.flush();
 			q.setUrl("esqueleto" + q.getId() + ".json");	
@@ -571,4 +572,17 @@ public class RootController {
 		return "subir_historia_guiada";
 	}
 	
+	String scapedparameter(String parameterToScape) {
+		String e = Encode.forCDATA(parameterToScape);
+		e = Encode.forHtml(e);
+		e = Encode.forJavaScript(e);
+		e = Encode.forJava(e);
+		e = Encode.forCssString(e);
+		
+		return e;
+		
+	}
+	
 }
+
+
