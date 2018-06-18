@@ -149,5 +149,23 @@ public class AdminController {
 			return "editores";
 		}
 	}
+	
+	@RequestMapping(value = "/deleteEditor", method = RequestMethod.POST)
+	@Transactional
+	public String deleteEditor(
+			@RequestParam int id, Model m){
+			
+		User u = UserQueries.findWithId(entityManager, id);
+		if(u != null) {
+			entityManager.remove(u);
+			entityManager.flush();
+			List<User> lista = UserQueries.findEditores(entityManager);
+			m.addAttribute("editores", lista);
+			return "editores";
+		}
+		else {
+			return "error";
+		}
+	}
 }
 
