@@ -273,13 +273,13 @@ public class RootController {
 		if(!password.equals(password2)) {
 			return "error";
 		} else {
-			u.setLogin(user);
-			u.setPassword(passwordEncoder.encode(password));
-			u.setCiudad(ciudad);
+			u.setLogin(scapedparameter(user));
+			u.setPassword(passwordEncoder.encode(scapedparameter(password)));
+			u.setCiudad(scapedparameter(ciudad));
 			u.setEnabled((byte) 1);
 			u.setEdad(edad);
-			u.setEmail(email);
-			u.setResumen(resumen);
+			u.setEmail(scapedparameter(email));
+			u.setResumen(scapedparameter(resumen));
 			u.setRoles("USER");
 			
 			entityManager.persist(u);
