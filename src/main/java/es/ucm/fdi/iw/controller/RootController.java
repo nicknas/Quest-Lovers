@@ -57,6 +57,8 @@ import es.ucm.fdi.iw.model.UserQueries;
 import es.ucm.fdi.iw.model.RespuestasQuest;
 import es.ucm.fdi.iw.model.RespuestasQuestQueries;
 
+import org.owasp.encoder.Encode;
+
 @Controller	
 public class RootController {
 
@@ -345,6 +347,9 @@ public class RootController {
 			@RequestParam String id,
 			@RequestParam String texto1,
 			@RequestParam String user) {
+		id = scapedparameter(id);
+		texto1 = scapedparameter(texto1);
+		user = scapedparameter(user);
 		MensajeChat mensaje = new MensajeChat();
 		mensaje.setSender(UserQueries.findWithId(entityManager, Integer.parseInt(user)));
 		mensaje.setTexto(texto1);
@@ -476,11 +481,11 @@ public class RootController {
 			
 		User u = UserQueries.findWithName(entityManager, user);
 		if( u!= null) {
-			u.setLogin(user);
-			u.setCiudad(ciudad);
+			u.setLogin(scapedparameter(user));
+			u.setCiudad(scapedparameter(ciudad));
 			u.setEdad(edad);
-			u.setEmail(email);
-			u.setResumen(resumen);
+			u.setEmail(scapedparameter(email));
+			u.setResumen(scapedparameter(resumen));
 
 			entityManager.merge(u);
 
@@ -540,4 +545,17 @@ public class RootController {
 		return "subir_historia";
 	}
 	
+	
+	String scapedparameter(String parameterToScape) {
+		String e = Encode.forCDATA(parameterToScape);
+		e = Encode.forHtml(e);
+		e = Encode.forJavaScript(e);
+		e = Encode.forJava(e);
+		e = Encode.forCssString(e);
+		
+		return e;
+		
+	}
 }
+
+
