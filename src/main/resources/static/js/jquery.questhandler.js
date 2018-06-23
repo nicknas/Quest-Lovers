@@ -24,7 +24,10 @@ jQuery(document).ready(function(){
 			if(data.quest.titulo !== undefined && data.quest.titulo !== null) jQuery(QUEST_TITTLE_CSS).text(data.quest.titulo);
 			jQuery("p.quest-snipped-text").text(data.quest.preguntas.initial.texto);
 			jQuery(".botones_respuestas").empty();
-			if (eval("data.quest.preguntas.initial.respID").length == 2){
+			if (eval("data.quest.preguntas.initial.respID").length == 1){
+				jQuery(".botones_respuestas").append("<div><a class='btn btn-block btn-main-color questopt r1' href='#'></a></div>");
+			}
+			else if (eval("data.quest.preguntas.initial.respID").length == 2){
 				jQuery(".botones_respuestas").append("<div class='col-md-4 col-md-offset-2 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#'></a></div>");
 				jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#'></a></div>");
 			}
@@ -55,7 +58,10 @@ jQuery(document).ready(function(){
 
 				}else{
 					jQuery(".botones_respuestas").empty();
-					if (eval(respuestas).length == 2){
+					if (eval(respuestas).length == 1){
+						jQuery(".botones_respuestas").append("<div><a class='btn btn-block btn-main-color questopt r1' href='#'></a></div>");
+					}
+					else if (eval(respuestas).length == 2){
 						jQuery(".botones_respuestas").append("<div class='col-md-4 col-md-offset-2 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#'></a></div>");
 						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#'></a></div>");
 					}
