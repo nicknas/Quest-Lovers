@@ -34,12 +34,17 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.controller.ChatSocketHandler;
@@ -507,26 +512,50 @@ public class RootController {
 	
 	@Transactional
 	@RequestMapping(value = "/add_quest", method=RequestMethod.POST)
-	public String addQuest(HttpServletRequest request, 
-			@RequestParam MultipartFile historia, 
-			@RequestParam String nombre_historia, 
-			@RequestParam String descripcion){
-		if (!historia.isEmpty() && historia.getContentType().equals("application/json")) {
+	@ResponseBody
+	public String addQuest(@RequestBody String data, Authentication auth){
+		if (!data.isEmpty()) {
 			Quest q = new Quest();
-			q.setTitulo(nombre_historia);
+			JsonNode nodeJson = null;
+			ObjectMapper objectMapper = new ObjectMapper(); 
+			try {
+				nodeJson = objectMapper.readTree(data);
+			} catch (JsonProcessingException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			String titulo = null;
+			titulo = nodeJson.at("/quest/titulo").asText();
+			String descripcion = null;
+			descripcion = nodeJson.at("/quest/descripcion").asText();
+			q.setTitulo(titulo);
 			q.setDescripcion(descripcion);	
 			entityManager.persist(q);
 			entityManager.flush();
 			q.setUrl("esqueleto" + q.getId() + ".json");	
 			entityManager.merge(q);
 			entityManager.flush();
+			User u = UserQueries.findWithName(entityManager, auth.getName());
+			List<Quest> quests = QuestQueries.findQuestsByEditorName(entityManager, auth.getName());
+			if (quests == null) {
+				quests = new ArrayList<Quest>();
+			}
+			quests.add(q);
+			u.setQuestsEditor(quests);
+			entityManager.merge(u);
+			entityManager.flush();
+			q.setEditor_fk(u);
+			entityManager.merge(q);
+			entityManager.flush();
 			File file = localData.getFile("quest", q.getUrl());
-			// log.info(quest_folder.getAbsolutePath());
 			try {
 				if (!file.exists()) {
 					file.createNewFile();
 				}
-				 byte[] bytes = historia.getBytes();
+				 byte[] bytes = data.getBytes();
 	                BufferedOutputStream stream =
 	                        new BufferedOutputStream(
 	                        		new FileOutputStream(file));
@@ -536,15 +565,43 @@ public class RootController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return "ok";
 			
 		}
 		else {
-			log.info("NO OK");
-			log.info(historia.getContentType());
+			return "fail";
 		}
-		return "subir_historia";
+		
 	}
 	
+	@GetMapping("/mis_historias")
+	public String getMyQuests(Authentication authentication, Model model, HttpServletRequest request) {
+		List<Quest> questList = QuestQueries.findQuestsByEditorName(entityManager, authentication.getName());
+		model.addAttribute("questList", questList);
+		boolean success = Boolean.parseBoolean(request.getParameter("success"));
+		if (success) {
+			model.addAttribute("success_message", "La quest se ha borrado correctamente");
+		}
+		return "mis_historias";
+	}
+	
+	@Transactional
+	@RequestMapping(value="/borrar_quest", method=RequestMethod.POST)
+	@ResponseBody
+	public RedirectView deleteQuest(HttpServletRequest request) {
+		long questId = Long.parseLong(request.getParameter("id_quest"));
+		Quest q = QuestQueries.findQuestById(entityManager, questId);
+		File questFile = localData.getFile("quest", q.getUrl());
+		questFile.delete();
+		entityManager.remove(q);
+		entityManager.flush();
+		return new RedirectView("/mis_historias?success=true");
+	}
+	
+	@GetMapping("/subir_historia_guiada")
+	public String getSubirHistoriaGuiada() {
+		return "subir_historia_guiada";
+	}
 	
 	String scapedparameter(String parameterToScape) {
 		String e = Encode.forCDATA(parameterToScape);
@@ -556,6 +613,7 @@ public class RootController {
 		return e;
 		
 	}
+	
 }
 
 

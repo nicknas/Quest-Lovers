@@ -1,9 +1,12 @@
 package es.ucm.fdi.iw.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -17,6 +20,7 @@ public class User {
 	private String email;
 	private int num_photos;
 	private byte enabled;
+	private List<Quest> questsEditor;
 	
 	@Id
 	@GeneratedValue
@@ -101,4 +105,14 @@ public class User {
 	public void setNumPhotos(int num_photos) {
 		this.num_photos = num_photos;
 	}
+	
+	@OneToMany(mappedBy = "editor_fk")
+	public List<Quest> getQuestsEditor() {
+		return questsEditor;
+	}
+
+	public void setQuestsEditor(List<Quest> questsEditor) {
+		this.questsEditor = questsEditor;
+	}
+
 }

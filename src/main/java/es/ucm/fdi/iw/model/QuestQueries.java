@@ -35,5 +35,15 @@ public class QuestQueries {
 		}
 	}
 	
+	public static List<Quest> findQuestsByEditorName(EntityManager entityManager, String editorName){
+		try {
+			User u = UserQueries.findWithName(entityManager, editorName);
+			return u.getQuestsEditor();
+			
+		} catch (Exception e) {
+			log.info("No hay Quests",e);
+			return null;
+		}
+	}
 	
 }

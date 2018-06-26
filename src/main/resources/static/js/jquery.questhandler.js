@@ -24,14 +24,53 @@ jQuery(document).ready(function(){
 			if(data.quest.titulo !== undefined && data.quest.titulo !== null) jQuery(QUEST_TITTLE_CSS).text(data.quest.titulo);
 			jQuery("p.quest-snipped-text").text(data.quest.preguntas.initial.texto);
 			jQuery(".botones_respuestas").empty();
-			if (eval("data.quest.preguntas.initial.respID").length == 2){
-				jQuery(".botones_respuestas").append("<div class='col-md-4 col-md-offset-2 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#'></a></div>");
-				jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#'></a></div>");
+			if ((eval("data.quest.preguntas.initial.respID").length % 3) == 1){
+				var filas = parseInt(eval("data.quest.preguntas.initial.respID").length / 3);
+				var indice = 1;
+				for (var i = 0; i <= filas; i++){
+					if (i == filas){
+						jQuery(".botones_respuestas").append("<div><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#'></a></div>");
+					}
+					else {
+						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+						indice++;
+						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+						indice++;
+						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+						indice++;
+					}
+				}
 			}
-			else if (eval("data.quest.preguntas.initial.respID").length == 3){
-				jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#' ></a></div>");
-				jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#' ></a></div>");
-				jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r3' href='#' ></a></div>");
+			else if ((eval("data.quest.preguntas.initial.respID").length % 3) == 2){
+				var filas = parseInt(eval("data.quest.preguntas.initial.respID").length / 3);
+				var indice = 1;
+				for (var i = 0; i <= filas; i++){
+					if (i == filas){
+						jQuery(".botones_respuestas").append("<div class='col-md-4 col-md-offset-2 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#'></a></div>");
+						indice++;
+						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#'></a></div>");
+					}
+					else {
+						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+						indice++;
+						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+						indice++;
+						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+						indice++;
+					}
+				}
+			}
+			else if ((eval("data.quest.preguntas.initial.respID").length % 3) == 0){
+				var filas = parseInt(eval("data.quest.preguntas.initial.respID").length / 3);
+				var indice = 1;
+				for (var i = 0; i < filas; i++){
+					jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+					indice++;
+					jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+					indice++;
+					jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+					indice++;
+				}
 			}
 			jQuery.each(data.quest.preguntas.initial.respID,function(i,obj){
 
@@ -55,14 +94,53 @@ jQuery(document).ready(function(){
 
 				}else{
 					jQuery(".botones_respuestas").empty();
-					if (eval(respuestas).length == 2){
-						jQuery(".botones_respuestas").append("<div class='col-md-4 col-md-offset-2 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#'></a></div>");
-						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#'></a></div>");
+					if ((eval(respuestas).length % 3) == 1){
+						var filas = parseInt(eval(respuestas).length / 3);
+						var indice = 1;
+						for (var i = 0; i <= filas; i++){
+							if (i == filas){
+								jQuery(".botones_respuestas").append("<div><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#'></a></div>");
+							}
+							else {
+								jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+								indice++;
+								jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+								indice++;
+								jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+								indice++;
+							}
+						}
 					}
-					else if (eval(respuestas).length == 3){
-						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r1' href='#' ></a></div>");
-						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r2' href='#' ></a></div>");
-						jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r3' href='#' ></a></div>");
+					else if ((eval(respuestas).length % 3) == 2){
+						var filas = parseInt(eval(respuestas).length / 3);
+						var indice = 1;
+						for (var i = 0; i <= filas; i++){
+							if (i == filas){
+								jQuery(".botones_respuestas").append("<div class='col-md-4 col-md-offset-2 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#'></a></div>");
+								indice++;
+								jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#'></a></div>");
+							}
+							else {
+								jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+								indice++;
+								jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+								indice++;
+								jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+								indice++;
+							}
+						}
+					}
+					else if ((eval(respuestas).length % 3) == 0){
+						var filas = parseInt(eval(respuestas).length / 3);
+						var indice = 1;
+						for (var i = 0; i < filas; i++){
+							jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+							indice++;
+							jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+							indice++;
+							jQuery(".botones_respuestas").append("<div class='col-md-4 col-xs-12'><a class='btn btn-block btn-main-color questopt r"+ indice +"' href='#' ></a></div>");
+							indice++;
+						}
 					}
 					jQuery("p.quest-snipped-text").text(eval(pregunta));
 					jQuery.each(eval(respuestas),function(i,obj){

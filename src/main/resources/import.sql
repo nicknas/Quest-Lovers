@@ -6,6 +6,7 @@ INSERT INTO USER VALUES(6,'Madrid',24,'joselito@gmail.com',1,'joselito',2,'$2a$1
 INSERT INTO USER VALUES(7,'Madrid',22,'luisrubito@hotmail.com',1,'luisrubio',2,'$2a$10$VrhwgkC4gP.v4CXCFNFXT.3Vhyxc03zRwZUAc6QL2Ij8a5OsScbLW','Batería en un grupo de rock','USER')
 INSERT INTO USER VALUES(8,'Madrid',28,'jaime@skater.com',1,'jaime',2,'$2a$10$RoDsswKPNDl9DQ1Zw8Cij.F4BVz8jybe0.bA4WJTFYbzhTHq8bBM.','Skater profesional busco una chica que le guste viajar','USER')
 INSERT INTO USER VALUES(9,'Barcelona',19,'sariita@live.com',1,'sariita',0,'$2a$10$eKbujK16U4YmYs5KiavqWOgYcKt3jQRgmcDshEGrAPZfyHW9sG2MO','Busco alguien con quien recorrer el mundo','USER')
+
 INSERT INTO MENSAJE_CHAT VALUES(1,'Hola Alicia!',7)
 INSERT INTO MENSAJE_CHAT VALUES(2,'Hola luis!',5)
 INSERT INTO MENSAJE_CHAT VALUES(3,'Te apetece tomar algo?',5)
