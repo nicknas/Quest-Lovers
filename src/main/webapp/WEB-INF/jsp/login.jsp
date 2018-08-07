@@ -28,7 +28,7 @@
 	                	<button class="btn  btn-lg btn-block btn-main-color" type="submit" class="btn">Log in</button>
 	                </div>
 	                <div class="col-md-6 col-xs-12">
-	               	 <a href="/registro" class="btn  btn-lg btn-block btn-main-color"  class="btn">Sign up</a>
+	               	 <a href="/registro" class="btn  btn-lg btn-block btn-main-color"  class="btn">Register</a>
 	                </div>
 	            </div>
 	        </fieldset>

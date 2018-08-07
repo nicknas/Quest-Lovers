@@ -2,7 +2,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
-<sec:authorize access="isAnonymous()">
+<%-- <sec:authorize access="isAnonymous()">
 <div>
 	No estás registrado.
 </div>
@@ -21,4 +21,4 @@
 		hasRole('EDITOR')
 	</sec:authorize> -->
 </div>   
-</sec:authorize>
+</sec:authorize> --%>
