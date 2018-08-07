@@ -25,10 +25,10 @@
 	 
 	            <div class="form-actions">
 	            	<div class="col-md-6 col-xs-12">
-	                	<button class="btn  btn-lg btn-block btn-main-color" type="submit" class="btn">Log in</button>
+	                	<button class="btn  btn-lg btn-block btn-main-color" type="submit" class="btn">Sign in</button>
 	                </div>
 	                <div class="col-md-6 col-xs-12">
-	               	 <a href="/registro" class="btn  btn-lg btn-block btn-main-color"  class="btn">Register</a>
+	               	 <a href="/registro" class="btn  btn-lg btn-block btn-main-color"  class="btn">Sign up</a>
 	                </div>
 	            </div>
 	        </fieldset>
