@@ -12,14 +12,13 @@ jQuery(document).ready(function(){
 			headers.setRequestHeader(header, token);
 		},
 		data: {"id": id},
-		datatype: "json",
 		type: "POST",
 		url: url		 
 	})
 	.done(function (data, textStatus, jqXHR){
 		if (console && console.log){
 			console.log( "La solicitud de quest se ha completado correctamente." );
-			data = JSON.parse(data);
+			// data = JSON.parse(data);
 			console.log(data);
 			if(data.quest.titulo !== undefined && data.quest.titulo !== null) jQuery(QUEST_TITTLE_CSS).text(data.quest.titulo);
 			jQuery("p.quest-snipped-text").text(data.quest.preguntas.initial.texto);

@@ -161,11 +161,25 @@ public class RootController {
 	}
 	
 	@RequestMapping(value = "/get_quest", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void get_quest_url(HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody String get_quest_url(HttpServletRequest request, HttpServletResponse response) {
 		long id = Long.parseLong(request.getParameter("id"));
+		ObjectMapper o = new ObjectMapper();
+		String json = null;
+		
 		Quest q = QuestQueries.findQuestById(entityManager, id);
 		File f = localData.getFile("quest", q.getUrl());
-		InputStream in = null;
+		try {
+			JsonNode node = o.readTree(f);
+			json = node.toString();
+			
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*InputStream in = null;
 	    try {
 		    if (f.exists()) {
 		    	in = new BufferedInputStream(new FileInputStream(f));
@@ -176,7 +190,8 @@ public class RootController {
 	    	FileCopyUtils.copy(in, response.getOutputStream());
 	    } catch (IOException ioe) {
 	    	log.info("Error retrieving file: " + f + " -- " + ioe.getMessage());
-	    }
+	    }*/
+	    return json;
 	}
 	
 	@GetMapping("/user")
