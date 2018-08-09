@@ -14,7 +14,7 @@
     <meta name="_csrf" content="${_csrf.token}"/>
 	<meta name="_csrf_header" content="${_csrf.headerName}"/>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Aplicacion Web IW</title>
+    <title>Quest-Lovers</title>
 
     <!-- Bootstrap -->
     <link href="${s}/css/bootstrap.min.css" rel="stylesheet">

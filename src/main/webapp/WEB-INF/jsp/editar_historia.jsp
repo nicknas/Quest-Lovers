@@ -13,11 +13,13 @@
 		<!-- Form Name -->
 		<legend>Editar historia</legend>
 		
+		<input type="hidden" value="${id}" name="id_quest" />
+		
 		<!-- Text input-->
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="nombre_historia">Nombre de la historia</label>  
 		  <div class="col-md-4">
-		  <input id="nombre_historia" name="nombre_historia" class="form-control input-md" type="text">
+		  <input id="nombre_historia" value="${titulo}" name="nombre_historia" class="form-control input-md" type="text" />
 		  </div>
 		</div>
 		
@@ -25,7 +27,7 @@
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="descripcion">Descripción</label>
 		  <div class="col-md-4">                     
-		    <textarea class="form-control input-md" id="descripcion" name="descripcion"></textarea>
+		    <textarea class="form-control input-md" id="descripcion" name="descripcion"><c:out value="${descripcion}"></c:out></textarea>
 		  </div>
 		</div>
 		
@@ -34,14 +36,14 @@
 		  <label class="col-md-4 control-label" for="buttonStart"></label>  
 		  <div class="col-md-4">
 		  	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
-		    <button id="buttonStart" type="button" name="buttonStart" class="btn btn-info ">Siguiente</button>
+		    <button id="buttonQuestionsEndings" type="button" name="buttonQuestionsEndings" class="btn btn-info ">Siguiente</button>
 		  </div>
 		</div>
 		
 		</fieldset>
 	</form>
 </div>
-<script src="${s}/js/jquery.uploadQuestHandler.js"></script>
+<script src="${s}/js/jquery.editQuestHandler.js"></script>
 <%@ include file="../jspf/footer.jspf"%>
 
 

@@ -12,6 +12,7 @@ jQuery(document).ready(function(){
 			headers.setRequestHeader(header, token);
 		},
 		data: {"id": id},
+		datatype: "json",
 		type: "POST",
 		url: url		 
 	})

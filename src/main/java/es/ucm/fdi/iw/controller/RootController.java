@@ -194,6 +194,16 @@ public class RootController {
 	    return json;
 	}
 	
+	@RequestMapping(value = "/editar_quest", method = RequestMethod.POST)
+	public String editarQuest(HttpServletRequest request, Model m) {
+		long id = Long.parseLong(request.getParameter("id_quest"));
+		Quest q = QuestQueries.findQuestById(entityManager, id);
+		m.addAttribute("titulo", q.getTitulo());
+		m.addAttribute("descripcion", q.getDescripcion());
+		m.addAttribute("id", q.getId());
+		return "editar_historia";
+	}
+	
 	@GetMapping("/user")
 	public String user(Model m, Authentication authentication) {	
 			User u = UserQueries.findWithName(entityManager, authentication.getName());
