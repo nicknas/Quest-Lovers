@@ -54,7 +54,7 @@ var nombre_finales = new Map();
 				else{
 					jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea><button type="button" class="btn btn-danger col-md-12"><span class="fui-cross"></span> Borrar Pregunta</button></div></div>');
 				}
-				jQuery("fieldset").append('<div class="form-group" id="blockRespuesta'+ num_preguntas +'"></div>');
+				jQuery("fieldset").append('<div class="form-group blockRespuesta" id="blockRespuesta'+ num_preguntas +'"></div>');
 				
 				data.quest.preguntas[key].respID.forEach(function(element, index){
 					if (index == 0){
@@ -99,6 +99,61 @@ var nombre_finales = new Map();
 			jQuery("fieldset").append('<div class="form-group" id="finButton"><label class="col-md-4 control-label" for="buttonFinales"></label><div class="col-md-4 col-md-offset-4"><input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" /><button id="buttonFinales" type="button" name="buttonFinales" class="btn btn-info ">Ir a los finales</button></div></div>');
 		}
 		
+	});
+	
+	jQuery(document).on("click", ".blockPregunta button", function(){
+		var questionBlock = jQuery(this).parent().parent();
+		var questionKey = questionBlock.find("textarea").attr("id");
+		jQuery(".linkResponses").each(function(){
+			jQuery(this).find("option[value='"+ questionKey +"']").remove();
+		});
+		questionBlock.next().fadeOut("fast", function(){
+			questionBlock.fadeOut("slow", function(){
+				questionBlock.next().remove();
+				questionBlock.remove();
+				jQuery(".blockPregunta").each(function(i){
+					if (i != 0){
+						jQuery(this).find("label").text("Pregunta " + i.toString() + " (texto de la pregunta)");
+						jQuery(this).find("label").attr("for", "p" + i);
+						jQuery(this).find("textarea").attr("id", "p" + i);
+						jQuery(this).find("textarea").attr("name", "p" + i);
+					}
+				});
+			});
+		});
+		
+		jQuery(".blockRespuesta").each(function(i){
+			
+		});
+		
+		jQuery(".linkResponses").each(function(i){
+			if (jQuery(this).parent().parent().attr("class").includes("linkResponseBlock1")){
+				jQuery(this).find("option").each(function(y){
+					if (jQuery(this).val().includes("p")){
+						jQuery(this).val("p" + (y+1));
+						jQuery(this).text("Pregunta " + (y+1));
+					}
+				});
+			}
+			else {
+				jQuery(this).find("option").each(function(y){
+					if (jQuery(this).val().includes("p")){
+						jQuery(this).val("p" + y);
+						jQuery(this).text("Pregunta " + y);
+					}
+				});
+			}
+		});
+						
+		/*questionBlock.find("textarea").attr("id", "");
+		questionBlock.find("textarea").attr("name", "");
+		questionBlock.find("label").attr("for", "");
+		jQuery(".blockPregunta").each(function(i){
+			if (indexQuestionToRemove < i){
+				jQuery(this).find("label").text("Pregunta " + (i-1).toString() + " (texto de la pregunta)");
+			}
+			
+		});*/
 	});
 	
 	jQuery(document).on("change", ".numResponses", function(){
