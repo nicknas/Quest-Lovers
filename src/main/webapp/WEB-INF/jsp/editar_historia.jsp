@@ -36,7 +36,7 @@
 		  <label class="col-md-4 control-label" for="buttonStart"></label>  
 		  <div class="col-md-4">
 		  	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
-		    <button id="buttonQuestions" type="button" name="buttonQuestions" class="btn btn-info ">Ir a preguntas</button>
+		    <button id="buttonPreguntas" type="button" name="buttonPreguntas" class="btn btn-info ">Ir a preguntas</button>
 		  </div>
 		</div>
 		

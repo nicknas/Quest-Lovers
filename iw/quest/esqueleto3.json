@@ -107,7 +107,7 @@
             "f3": {
                 "tipo": "final",
                 "texto": "Enhorabuena, conseguisteis alcanzar la salida del bosque y dejar atrás a los asesinos confiando siempre en tu pareja.",
-                "respID": "agradable 1"
+                "solution": "agradable 1"
             }
         }
     }

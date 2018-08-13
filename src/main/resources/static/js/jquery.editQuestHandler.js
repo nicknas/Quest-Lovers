@@ -20,7 +20,7 @@ var nombre_finales = new Map();
 		});
 	});
 
-	jQuery(document).on("click", "#buttonQuestions", function(){
+	jQuery(document).on("click", "#buttonPreguntas", function(){
 		if (!jQuery("#nombre_historia").val() || !jQuery("#descripcion").val()){
 			if (!jQuery("#nombre_historia").val()){
 				jQuery("#nombre_historia").css("border-color", "red");
@@ -48,15 +48,25 @@ var nombre_finales = new Map();
 			}
 			num_preguntas = 1;
 			nombre_preguntas.forEach(function(value, key, map){
-				jQuery("fieldset").append('<div class="form-group"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea></div></div>');
-				jQuery("fieldset").append('<div class="form-group" id="blockRespuesta'+ num_preguntas +'"><div class="form-group"><label class="col-md-6 control-label" for="numResponse'+ num_preguntas +'">Número de respuestas</label><div class="col-md-2"><select class="form-control numResponses" id="numResponse'+ num_preguntas +'"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div></div></div>');
+				if (num_preguntas == 1){
+					jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea></div></div>');
+				}
+				else{
+					jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea><button type="button" class="btn btn-danger col-md-12"><span class="fui-cross"></span> Borrar Pregunta</button></div></div>');
+				}
+				jQuery("fieldset").append('<div class="form-group" id="blockRespuesta'+ num_preguntas +'"></div>');
 				
 				data.quest.preguntas[key].respID.forEach(function(element, index){
-					jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group respuestasBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Texto de la respuesta '+ parseInt(index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/></div></div>');
+					if (index == 0){
+						jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group respuestasBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Texto de la respuesta '+ parseInt(index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/></div></div>');
+					}
+					else{
+						jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group respuestasBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Texto de la respuesta '+ parseInt(index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/><button type="button" class="btn btn-danger col-md-12"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
+					}
 					jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group linkResponseBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
 				});
-				jQuery(".linkResponseBlock" + num_preguntas + " .linkResponses").each(function(){
-					var linkResponse = jQuery(this);
+				jQuery(".linkResponseBlock" + num_preguntas + " .linkResponses").each(function(i){
+					var linkResponse = jQuery(this);				
 					linkResponse.empty();
 					nombre_preguntas.forEach(function(value, key, map){
 						if (num_preguntas == 1){
@@ -73,6 +83,15 @@ var nombre_finales = new Map();
 					nombre_finales.forEach(function(value, key, map){
 						linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
 					});
+					
+					var respuesta = "";
+					if (num_preguntas == 1){
+						respuesta = data.quest.preguntas["initial"].respID[i];
+					}
+					else {
+						respuesta = data.quest.preguntas["p" + parseInt(num_preguntas - 1)].respID[i];
+					}
+					linkResponse.find("option[value='"+ data.quest.preguntas[respuesta].respID +"']").prop("selected", true);
 					
 				});
 				num_preguntas++;
@@ -117,8 +136,19 @@ var nombre_finales = new Map();
 		var preguntasVacias = false;
 		var respuestasVacias = false;
 		var num_respuestas = 0;
+		for (var key in data.quest.preguntas){
+			if (key.includes('p')){
+				delete data.quest.preguntas.key;
+			}
+			else if (key.includes('r')){
+				delete data.quest.preguntas.key;
+			}
+		}
 		jQuery(".pregunta").each(function(i){
 			var pregunta = jQuery(this);
+			data.quest.preguntas["p" + parseInt(i+1)] = new Object();
+			data.quest.preguntas["p" + parseInt(i+1)].tipo = "pregunta";
+			
 			if (!pregunta.val()){
 				preguntasVacias = true;
 				pregunta.css("border-color", "red")
