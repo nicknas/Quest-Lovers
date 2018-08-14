@@ -58,14 +58,14 @@ var nombre_finales = new Map();
 				
 				data.quest.preguntas[key].respID.forEach(function(element, index){
 					if (index == 0){
-						jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group respuestasBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Texto de la respuesta '+ parseInt(index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/></div></div>');
+						jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta '+ parseInt(index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/></div></div>');
 					}
 					else{
-						jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group respuestasBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Texto de la respuesta '+ parseInt(index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/><button type="button" class="btn btn-danger col-md-12"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
+						jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta '+ parseInt(index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/><button type="button" class="btn btn-danger col-md-12"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
 					}
-					jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group linkResponseBlock'+ num_preguntas +'"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
+					jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
 				});
-				jQuery(".linkResponseBlock" + num_preguntas + " .linkResponses").each(function(i){
+				jQuery("#blockRespuesta" + num_preguntas + " .linkResponses").each(function(i){
 					var linkResponse = jQuery(this);				
 					linkResponse.empty();
 					nombre_preguntas.forEach(function(value, key, map){
@@ -75,7 +75,7 @@ var nombre_finales = new Map();
 							}
 						}
 						else {
-							if (key != ("p" + parseInt(num_preguntas - 1))){
+							if (key != ("p" + (num_preguntas - 1))){
 								linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
 							}
 						}
@@ -89,7 +89,7 @@ var nombre_finales = new Map();
 						respuesta = data.quest.preguntas["initial"].respID[i];
 					}
 					else {
-						respuesta = data.quest.preguntas["p" + parseInt(num_preguntas - 1)].respID[i];
+						respuesta = data.quest.preguntas["p" + (num_preguntas - 1)].respID[i];
 					}
 					linkResponse.find("option[value='"+ data.quest.preguntas[respuesta].respID +"']").prop("selected", true);
 					
@@ -123,37 +123,52 @@ var nombre_finales = new Map();
 		});
 		
 		jQuery(".blockRespuesta").each(function(i){
-			
-		});
-		
-		jQuery(".linkResponses").each(function(i){
-			if (jQuery(this).parent().parent().attr("class").includes("linkResponseBlock1")){
-				jQuery(this).find("option").each(function(y){
-					if (jQuery(this).val().includes("p")){
-						jQuery(this).val("p" + (y+1));
-						jQuery(this).text("Pregunta " + (y+1));
-					}
+			jQuery(this).attr("id", "blockRespuesta" + (i+1));
+			var incrementQuestions = false;
+			if (jQuery(this).attr("id").includes("blockRespuesta1")){
+				jQuery(this).find(".linkResponses").each(function(){			
+					jQuery(this).find("option").each(function(y){
+						if (jQuery(this).val().includes("p")){
+							jQuery(this).val("p" + (y+1));
+							jQuery(this).text("Pregunta " + (y+1));
+							if (incrementQuestions){
+								jQuery(this).val("p" + (y+2));
+								jQuery(this).text("Pregunta " + (y+2));
+							}
+							else if ((y+1) == i){
+								jQuery(this).val("p" + (y+2));
+								jQuery(this).text("Pregunta " + (y+2));
+								incrementQuestions = true;
+							}
+						}
+					});
+					incrementQuestions = false;
 				});
+				
 			}
 			else {
-				jQuery(this).find("option").each(function(y){
-					if (jQuery(this).val().includes("p")){
-						jQuery(this).val("p" + y);
-						jQuery(this).text("Pregunta " + y);
-					}
+				jQuery(this).find(".linkResponses").each(function(){
+					jQuery(this).find("option").each(function(y){
+						if (jQuery(this).val().includes("p")){
+							jQuery(this).val("p" + y);
+							jQuery(this).text("Pregunta " + y);
+							if (incrementQuestions){
+								jQuery(this).val("p" + (y+1));
+								jQuery(this).text("Pregunta " + (y+1));
+							}
+							else if (y == (i-1)){
+								jQuery(this).val("p" + (y+1));
+								jQuery(this).text("Pregunta " + (y+1));
+								incrementQuestions = true;
+							}
+						}
+					});
+					incrementQuestions = false;
 				});
+				
 			}
 		});
-						
-		/*questionBlock.find("textarea").attr("id", "");
-		questionBlock.find("textarea").attr("name", "");
-		questionBlock.find("label").attr("for", "");
-		jQuery(".blockPregunta").each(function(i){
-			if (indexQuestionToRemove < i){
-				jQuery(this).find("label").text("Pregunta " + (i-1).toString() + " (texto de la pregunta)");
-			}
-			
-		});*/
+				
 	});
 	
 	jQuery(document).on("change", ".numResponses", function(){
