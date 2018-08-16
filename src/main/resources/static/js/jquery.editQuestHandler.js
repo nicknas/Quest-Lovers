@@ -33,7 +33,7 @@ var nombre_finales = new Map();
 			data.quest.titulo = jQuery("#nombre_historia").val();
 			data.quest.descripcion = jQuery("#descripcion").val();
 			jQuery(".form-group").remove();
-			jQuery("legend").text("Preguntas");
+			jQuery("h2").text("Preguntas");
 			for (var key in data.quest.preguntas){
 				
 				if (key.includes("initial")){
@@ -80,8 +80,10 @@ var nombre_finales = new Map();
 							}
 						}
 					});
+					var indexFinal = 1;
 					nombre_finales.forEach(function(value, key, map){
-						linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
+						linkResponse.append('<option value="'+ key +'">'+ "Final " + indexFinal +'</option>');
+						indexFinal++;
 					});
 					
 					var respuesta = "";
@@ -98,7 +100,16 @@ var nombre_finales = new Map();
 				num_preguntas++;
 			});
 			jQuery("fieldset").append('<div class="form-group"><button type="button" class="btn btn-success col-md-12" id="btnAddQuestion"><span class="fui-plus-circle"></span> Agregar Pregunta</button></div>');
-			jQuery("fieldset").append('<div class="form-group" id="finButton"><label class="col-md-4 control-label" for="buttonFinales"></label><div class="col-md-4 col-md-offset-4"><input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" /><button id="buttonFinales" type="button" name="buttonFinales" class="btn btn-info ">Ir a los finales</button></div></div>');
+			jQuery("fieldset").append('<hr>');
+			jQuery("fieldset").append('<h2>Finales</h2>');
+			var index = 1;
+			nombre_finales.forEach(function(value, key, map){
+				jQuery("fieldset").append('<div class="form-group"><label class="col-md-2 control-label" for="'+ key +'">Final '+ index +' (texto del final)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md final">'+ data.quest.preguntas[key].texto +'</textarea><button type="button" class="btn btn-danger col-md-12 btnDeleteFinal"><span class="fui-cross"></span> Borrar Final</button></div></div>');
+				jQuery("fieldset").append('<div class="form-group"><label class="col-md-offset-2 col-md-2 control-label">Tipo de final</label><div class="col-md-6"><input type="text" class="form-control input-md tipoFinal" value="'+ data.quest.preguntas[key].solution +'"/></div></div>');
+				index++;
+			});
+			jQuery("fieldset").append('<div class="form-group"><button type="button" id="btnAddFinal" class="btn btn-success col-md-12"><span class="fui-plus-circle"></span> Agregar Final</button></div>');
+			jQuery("fieldset").append('<div class="form-group"><div><input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" /><button id="buttonSubmit" type="button" name="buttonSubmit" class="btn btn-info col-md-offset-3 col-md-6"><span class="fui-exit"></span> Guardar Cambios</button></div></div>');
 		}
 		
 	});
@@ -211,8 +222,8 @@ var nombre_finales = new Map();
 						}
 					}
 				});
-				nombre_finales.forEach(function(value, key, map){
-					linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
+				jQuery(".final").each(function(i){
+					linkResponse.append('<option value="'+ jQuery(this).attr("id") +'">'+ "Final " + (i + 1) +'</option>');
 				});
 				
 			});
@@ -233,38 +244,7 @@ var nombre_finales = new Map();
 		
 	});
 	
-	jQuery(document).on("change", ".numResponses", function(){
-		var numResponse = jQuery(this);
-		var id_pregunta = numResponse.attr("id");
-		id_pregunta = id_pregunta[id_pregunta.length - 1];
-		jQuery(".respuestasBlock" + id_pregunta).remove();
-		jQuery(".linkResponseBlock" + id_pregunta).remove();
-		var numRespTotal = parseInt(numResponse.find("option:selected").text());
-		for (var i = 1; i <= numRespTotal; i++){
-			jQuery("#blockRespuesta" + id_pregunta).append('<div class="form-group respuestasBlock'+ id_pregunta +'"><label class="col-md-6 control-label">Nombre de la respuesta '+ i +'</label><div class="col-md-6"><input class="form-control input-md respuesta" type="text"/></div></div>');
-			jQuery("#blockRespuesta" + id_pregunta).append('<div class="form-group linkResponseBlock'+ id_pregunta +'"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
-			jQuery(".linkResponseBlock" + id_pregunta + " .linkResponses").each(function(){
-				var linkResponse = jQuery(this);
-				linkResponse.empty();
-				nombre_preguntas.forEach(function(value, key, map){
-					if (id_pregunta == 1){
-						if (key != "initial"){
-							linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
-						}
-					}
-					else {
-						if (key != ("p" + parseInt(id_pregunta - 1))){
-							linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
-						}
-					}
-				});
-				nombre_finales.forEach(function(value, key, map){
-					linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
-				});
-			});
-		}
-	});
-	jQuery(document).on("click", "#buttonFinales", function(){
+	jQuery(document).on("click", "#buttonSubmit", function(){
 		var preguntasVacias = false;
 		var respuestasVacias = false;
 		var num_respuestas = 0;
@@ -273,6 +253,10 @@ var nombre_finales = new Map();
 				delete data.quest.preguntas.key;
 			}
 			else if (key.includes('r')){
+				delete data.quest.preguntas.key;
+			}
+			
+			else if (key.includes('f')){
 				delete data.quest.preguntas.key;
 			}
 		}
@@ -289,7 +273,7 @@ var nombre_finales = new Map();
 				if (i == 0){
 					data.quest.preguntas.initial.texto = pregunta.val();
 					data.quest.preguntas.initial.respID = [];
-					jQuery(".respuestasBlock1 .respuesta").each(function(k){
+					jQuery("#blockRespuesta1 .respuesta").each(function(k){
 						var respuesta = jQuery(this);
 						if (!respuesta.val()){
 							respuestasVacias = true;
@@ -301,7 +285,7 @@ var nombre_finales = new Map();
 							data.quest.preguntas["r" + num_respuestas] = new Object();
 							data.quest.preguntas["r" + num_respuestas].tipo = "respuesta";
 							data.quest.preguntas["r" + num_respuestas].texto = respuesta.val();
-							jQuery(".linkResponseBlock1 .linkResponses").each(function(l){
+							jQuery("#blockRespuesta1 .linkResponses").each(function(l){
 								var linkResponse = jQuery(this);
 								if (k == l){
 									data.quest.preguntas["r" + num_respuestas].respID = linkResponse.find("option:selected").val();
@@ -318,7 +302,7 @@ var nombre_finales = new Map();
 					var id_pregunta = i + 1;
 					data.quest.preguntas["p" + i].texto = pregunta.val();
 					data.quest.preguntas["p" + i].respID = [];
-					jQuery(".respuestasBlock" + id_pregunta + " .respuesta").each(function(k){
+					jQuery("#blockRespuesta" + id_pregunta + " .respuesta").each(function(k){
 						var respuesta = jQuery(this);
 						if (!respuesta.val()){
 							respuestasVacias = true;
@@ -330,7 +314,7 @@ var nombre_finales = new Map();
 							data.quest.preguntas["r" + num_respuestas] = new Object();
 							data.quest.preguntas["r" + num_respuestas].tipo = "respuesta";
 							data.quest.preguntas["r" + num_respuestas].texto = respuesta.val();
-							jQuery(".linkResponseBlock"+ id_pregunta +" .linkResponses").each(function(l){
+							jQuery("#blockRespuesta"+ id_pregunta +" .linkResponses").each(function(l){
 								var linkResponse = jQuery(this);
 								if (k == l){
 									data.quest.preguntas["r" + num_respuestas].respID = linkResponse.find("option:selected").val();
@@ -350,52 +334,48 @@ var nombre_finales = new Map();
 				}
 			});
 			if (!linkToFinal){
-				jQuery("#buttonFinales").before('<div class="row"><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>La quest debe tener enlace a algún final</strong></div></div>');
+				jQuery("#buttonSubmit").before('<div class="row"><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>La quest debe tener enlace a algún final</strong></div></div>');
 			}
 			else {
-				jQuery(".form-group").remove();
-				jQuery("legend").text("Finales");
-				nombre_finales.forEach(function(value, key, map){
-					jQuery("fieldset").append('<div class="form-group"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto del final)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md final"></textarea></div></div>');
+				var finalesVacios = false;
+				jQuery(".final").each(function(){
+					if (!jQuery(this).val()){
+						jQuery(this).css("border-color", "red");
+						finalesVacios = true;
+					}
 				});
-				jQuery("fieldset").append('<div class="form-group"><div class="col-md-4 col-md-offset-4"><button id="buttonSubmit" type="button" name="buttonSubmit" class="btn btn-success">Subir quest</button></div></div>');
-			}
-		}
-	});
-	
-	jQuery(document).on("click", "#buttonSubmit", function(){
-		var finalesVacios = false;
-		jQuery(".final").each(function(){
-			if (!jQuery(this).val()){
-				jQuery(this).css("border-color", "red");
-				finalesVacios = true;
-			}
-		});
-		if (!finalesVacios){
-			jQuery(".final").each(function(i){
-				var id_final = i + 1;
-				data.quest.preguntas["f" + id_final].texto = jQuery(this).val();
-			});
-			var jsonString = JSON.stringify(data);
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			jQuery.ajax({
-				beforeSend: function(headers){
-					headers.setRequestHeader(header, token);
-				},
-				contentType: "application/json; charset=utf-8",
-				data: jsonString,
-				type: "POST",
-				url: "/add_quest"		
-			})
-			.done(function (result, textStatus, jqXHR){
-				if (result === "ok"){
-					window.location.href = "/mis_historias";
+				if (!finalesVacios){
+					jQuery(".final").each(function(i){
+						var id_final = i + 1;
+						data.quest.preguntas["f" + id_final] = new Object();
+						data.quest.preguntas["f" + id_final].texto = jQuery(this).val();
+					});
+					jQuery(".tipoFinal").each(function(i){
+						var id_final = i + 1;
+						data.quest.preguntas["f" + id_final].solution = jQuery(this).val();
+					});
+					var jsonString = JSON.stringify(data);
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr("content");
+					jQuery.ajax({
+						beforeSend: function(headers){
+							headers.setRequestHeader(header, token);
+						},
+						contentType: "application/json; charset=utf-8",
+						data: jsonString,
+						type: "POST",
+						url: "/add_quest"		
+					})
+					.done(function (result, textStatus, jqXHR){
+						if (result === "ok"){
+							window.location.href = "/mis_historias";
+						}
+						else {
+							alert("Error a la hora de subir la quest");
+						}
+					});
 				}
-				else {
-					alert("Error a la hora de subir la quest");
-				}
-			});
+			}
 		}
 	});
 	

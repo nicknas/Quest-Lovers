@@ -2,15 +2,25 @@
 html, body{
    height: 100%;
 }
+
+hr{
+	background-color: #13c1ac;
+	border-top: 2px solid #13c1ac;
+}
+
 .container{
     min-height: calc(100% - 183px);
+    padding-top: 70px;
+    margin-bottom: 85px;
 }
-.footer{
-    height: 100px;
+footer{
+	position: relative;
+	height: 100px;
+	width: 100%;
     background-color: #13c1ac;
 }
 .banner{
-    margin-top: 20px;
+    margin-top: 40px;
     float: right;
     font-family: Lato,Helvetica,Arial,sans-serif;
     font-weight: 700;

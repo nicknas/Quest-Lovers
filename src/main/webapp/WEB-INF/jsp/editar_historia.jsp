@@ -11,7 +11,7 @@
 		<fieldset>
 		
 		<!-- Form Name -->
-		<legend>Editar historia</legend>
+		<h2>Editar Historia</h2>
 		
 		<input type="hidden" value="${id}" name="id_quest" />
 		
@@ -34,9 +34,9 @@
 		<!-- Button -->
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="buttonStart"></label>  
-		  <div class="col-md-4">
+		  <div>
 		  	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
-		    <button id="buttonPreguntas" type="button" name="buttonPreguntas" class="btn btn-info ">Ir a preguntas</button>
+		    <button id="buttonPreguntas" type="button" name="buttonPreguntas" class="btn btn-info col-md-offset-3 col-md-6">Preguntas y Finales <span class="fui-arrow-right"></span></button>
 		  </div>
 		</div>
 		
