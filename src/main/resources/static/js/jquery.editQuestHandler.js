@@ -244,6 +244,30 @@ var nombre_finales = new Map();
 		
 	});
 	
+	jQuery(document).on("click", "#btnAddFinal", function(){
+		var numFinales = jQuery(".final").length;
+		jQuery(this).parent().before('<div class="form-group" style="display: none;"><label class="col-md-2 control-label" for="f'+ (numFinales + 1) +'">Final '+ (numFinales + 1) +' (texto del final)</label><div class="col-md-6"><textarea id="f'+ (numFinales + 1) +'" name="f'+ (numFinales + 1) +'" class="form-control input-md final"></textarea><button type="button" class="btn btn-danger col-md-12 btnDeleteFinal"><span class="fui-cross"></span> Borrar Final</button></div></div>');
+		jQuery(this).parent().before('<div class="form-group" style="display: none;"><label class="col-md-offset-2 col-md-2 control-label">Tipo de final</label><div class="col-md-6"><input type="text" class="form-control input-md tipoFinal" value=""/></div></div>');
+		jQuery(".final").last().parent().parent().fadeIn("slow", function(){
+			jQuery(".tipoFinal").last().parent().parent().fadeIn("slow");
+			jQuery(".linkResponses").each(function(){
+				jQuery(this).append('<option value="f'+ (numFinales + 1) +'">Final '+ (numFinales + 1) +'</option>');
+			});
+		});
+		
+	});
+	
+	jQuery(document).on("click", ".btnDeleteFinal", function(){
+		var divFinal = jQuery(this).parent().parent();
+		jQuery(".linkResponses option[value='"+ jQuery(this).prev().attr("id") +"']").remove();
+		divFinal.next().fadeOut("slow", function(){
+			divFinal.fadeOut("slow", function(){
+				divFinal.next().remove();
+				divFinal.remove();
+			});
+		});
+	});
+	
 	jQuery(document).on("click", "#buttonSubmit", function(){
 		var preguntasVacias = false;
 		var respuestasVacias = false;
