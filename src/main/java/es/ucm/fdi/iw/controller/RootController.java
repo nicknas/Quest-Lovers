@@ -599,6 +599,55 @@ public class RootController {
 		
 	}
 	
+	@Transactional
+	@RequestMapping(value="/update_quest", method=RequestMethod.POST)
+	@ResponseBody
+	public String updateQuest(@RequestBody String data, Authentication auth) {
+		if (!data.isEmpty()) {
+			Quest q = new Quest();
+			JsonNode nodeJson = null;
+			ObjectMapper objectMapper = new ObjectMapper(); 
+			try {
+				nodeJson = objectMapper.readTree(data);
+			} catch (JsonProcessingException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			q = QuestQueries.findQuestById(entityManager, nodeJson.at("/quest/id").asLong());
+			String titulo = null;
+			titulo = nodeJson.at("/quest/titulo").asText();
+			String descripcion = null;
+			descripcion = nodeJson.at("/quest/descripcion").asText();
+			q.setTitulo(titulo);
+			q.setDescripcion(descripcion);
+			entityManager.merge(q);
+			entityManager.flush();
+			File file = localData.getFile("quest", q.getUrl());
+			try {
+				if (!file.exists()) {
+					file.createNewFile();
+				}
+				 byte[] bytes = data.getBytes();
+	                BufferedOutputStream stream =
+	                        new BufferedOutputStream(
+	                        		new FileOutputStream(file));
+	                stream.write(bytes);
+	                stream.close();
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "ok";
+			
+		}
+		else {
+			return "fail";
+		}
+	}
+	
 	@GetMapping("/mis_historias")
 	public String getMyQuests(Authentication authentication, Model model, HttpServletRequest request) {
 		List<Quest> questList = QuestQueries.findQuestsByEditorName(entityManager, authentication.getName());

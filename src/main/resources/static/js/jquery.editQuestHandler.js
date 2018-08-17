@@ -57,12 +57,7 @@ var nombre_finales = new Map();
 				jQuery("fieldset").append('<div class="form-group blockRespuesta" id="blockRespuesta'+ num_preguntas +'"></div>');
 				
 				data.quest.preguntas[key].respID.forEach(function(element, index){
-					if (index == 0){
-						jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta '+ (index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/></div></div>');
-					}
-					else{
-						jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta '+ (index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
-					}
+					jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta '+ (index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
 					jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
 				});
 				jQuery("#blockRespuesta" + num_preguntas + " .linkResponses").each(function(i){
@@ -126,7 +121,7 @@ var nombre_finales = new Map();
 				questionBlock.remove();
 				jQuery(".blockPregunta").each(function(i){
 					if (i != 0){
-						jQuery(this).find("label").text("Pregunta " + i.toString() + " (texto de la pregunta)");
+						jQuery(this).find("label").text("Pregunta " + i + " (texto de la pregunta)");
 						jQuery(this).find("label").attr("for", "p" + i);
 						jQuery(this).find("textarea").attr("id", "p" + i);
 						jQuery(this).find("textarea").attr("name", "p" + i);
@@ -169,7 +164,7 @@ var nombre_finales = new Map();
 								jQuery(this).val("p" + (y+1));
 								jQuery(this).text("Pregunta " + (y+1));
 							}
-							else if (y == (i-1)){
+							else if (y == i){
 								jQuery(this).val("p" + (y+1));
 								jQuery(this).text("Pregunta " + (y+1));
 								incrementQuestions = true;
@@ -192,6 +187,9 @@ var nombre_finales = new Map();
 				divRespuesta.next().remove();
 				divRespuesta.remove();
 				blockRespuesta.find(".respuesta").each(function(i){
+					if (blockRespuesta.find(".respuesta").length == 1){
+						jQuery(this).next().hide();
+					}
 					var div = jQuery(this).parent().parent();
 					div.find("label").text("Texto de la respuesta " + (i+1));
 				});
@@ -235,6 +233,9 @@ var nombre_finales = new Map();
 	jQuery(document).on("click", ".btnAddResponse", function(){
 		var blockRespuesta = jQuery(this).parent().parent();
 		var numRespuestas = blockRespuesta.find(".respuesta").length;
+		if (numRespuestas == 1){
+			blockRespuesta.find(".respuesta").first().next().show();
+		}
 		jQuery(this).remove();
 		blockRespuesta.append('<div class="form-group" style="display: none;"><label class="col-md-6 control-label">Texto de la respuesta '+ (numRespuestas + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
 		blockRespuesta.find("div.form-group").last().fadeIn("slow", function(){
@@ -246,6 +247,9 @@ var nombre_finales = new Map();
 	
 	jQuery(document).on("click", "#btnAddFinal", function(){
 		var numFinales = jQuery(".final").length;
+		if (numFinales == 1){
+			jQuery(".final").first().next().show();
+		}
 		jQuery(this).parent().before('<div class="form-group" style="display: none;"><label class="col-md-2 control-label" for="f'+ (numFinales + 1) +'">Final '+ (numFinales + 1) +' (texto del final)</label><div class="col-md-6"><textarea id="f'+ (numFinales + 1) +'" name="f'+ (numFinales + 1) +'" class="form-control input-md final"></textarea><button type="button" class="btn btn-danger col-md-12 btnDeleteFinal"><span class="fui-cross"></span> Borrar Final</button></div></div>');
 		jQuery(this).parent().before('<div class="form-group" style="display: none;"><label class="col-md-offset-2 col-md-2 control-label">Tipo de final</label><div class="col-md-6"><input type="text" class="form-control input-md tipoFinal" value=""/></div></div>');
 		jQuery(".final").last().parent().parent().fadeIn("slow", function(){
@@ -259,11 +263,25 @@ var nombre_finales = new Map();
 	
 	jQuery(document).on("click", ".btnDeleteFinal", function(){
 		var divFinal = jQuery(this).parent().parent();
-		jQuery(".linkResponses option[value='"+ jQuery(this).prev().attr("id") +"']").remove();
 		divFinal.next().fadeOut("slow", function(){
 			divFinal.fadeOut("slow", function(){
 				divFinal.next().remove();
 				divFinal.remove();
+				jQuery(".linkResponses option").each(function(){
+					if (jQuery(this).val().includes("f")){
+						jQuery(this).remove();
+					}
+				});
+				jQuery(".final").each(function(i){
+					if (jQuery(".final").length == 1){
+						jQuery(this).next().hide();
+					}
+					jQuery(this).parent().prev().attr("for", "f" + (i+1));
+					jQuery(this).parent().prev().text("Final " + (i+1) + " (texto del final)");
+					jQuery(this).attr("id", "f" + (i+1));
+					jQuery(this).attr("name", "f" + (i+1));
+					jQuery(".linkResponses").append('<option value="f'+ (i+1) +'">Final '+ (i+1) +'</option>');
+				});
 			});
 		});
 	});
@@ -274,20 +292,23 @@ var nombre_finales = new Map();
 		var num_respuestas = 0;
 		for (var key in data.quest.preguntas){
 			if (key.includes('p')){
-				delete data.quest.preguntas.key;
+				delete data.quest.preguntas[key];
 			}
 			else if (key.includes('r')){
-				delete data.quest.preguntas.key;
+				delete data.quest.preguntas[key];
 			}
 			
 			else if (key.includes('f')){
-				delete data.quest.preguntas.key;
+				delete data.quest.preguntas[key];
 			}
 		}
 		jQuery(".pregunta").each(function(i){
 			var pregunta = jQuery(this);
-			data.quest.preguntas["p" + parseInt(i+1)] = new Object();
-			data.quest.preguntas["p" + parseInt(i+1)].tipo = "pregunta";
+			
+			if (i != 0){
+				data.quest.preguntas["p" + i] = new Object();
+				data.quest.preguntas["p" + i].tipo = "pregunta";
+			}
 			
 			if (!pregunta.val()){
 				preguntasVacias = true;
@@ -368,6 +389,12 @@ var nombre_finales = new Map();
 						finalesVacios = true;
 					}
 				});
+				jQuery(".tipoFinal").each(function(){
+					if (!jQuery(this).val()){
+						jQuery(this).css("border-color", red);
+						finalesVacios = true;
+					}
+				});
 				if (!finalesVacios){
 					jQuery(".final").each(function(i){
 						var id_final = i + 1;
@@ -388,7 +415,7 @@ var nombre_finales = new Map();
 						contentType: "application/json; charset=utf-8",
 						data: jsonString,
 						type: "POST",
-						url: "/add_quest"		
+						url: "/update_quest"		
 					})
 					.done(function (result, textStatus, jqXHR){
 						if (result === "ok"){
