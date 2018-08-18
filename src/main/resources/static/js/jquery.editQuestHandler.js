@@ -52,7 +52,7 @@ var nombre_finales = new Map();
 					jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea></div></div>');
 				}
 				else{
-					jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea><button type="button" class="btn btn-danger col-md-12"><span class="fui-cross"></span> Borrar Pregunta</button></div></div>');
+					jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea><button type="button" class="btn btn-danger col-md-12 btnDeleteQuestion"><span class="fui-cross"></span> Borrar Pregunta</button></div></div>');
 				}
 				jQuery("fieldset").append('<div class="form-group blockRespuesta" id="blockRespuesta'+ num_preguntas +'"></div>');
 				
@@ -109,11 +109,13 @@ var nombre_finales = new Map();
 		
 	});
 	
-	jQuery(document).on("click", ".blockPregunta button", function(){
+	jQuery(document).on("click", ".btnDeleteQuestion", function(){
 		var questionBlock = jQuery(this).parent().parent();
 		var questionKey = questionBlock.find("textarea").attr("id");
-		jQuery(".linkResponses").each(function(){
-			jQuery(this).find("option[value='"+ questionKey +"']").remove();
+		jQuery(".linkResponses option").each(function(){
+			if (jQuery(this).val().includes("p")){
+				jQuery(this).remove();
+			}
 		});
 		questionBlock.next().fadeOut("fast", function(){
 			questionBlock.fadeOut("slow", function(){
@@ -127,56 +129,19 @@ var nombre_finales = new Map();
 						jQuery(this).find("textarea").attr("name", "p" + i);
 					}
 				});
+				jQuery(".blockRespuesta").each(function(i){
+					jQuery(this).attr("id", "blockRespuesta" + (i+1));
+					jQuery(this).find(".linkResponses").each(function(){
+						var linkResponse = jQuery(this);
+						jQuery(".pregunta").each(function(y){
+							if (y != 0 && y != i){
+								linkResponse.find("option[value='f1']").before('<option value="'+ jQuery(this).attr("id") +'">Pregunta '+ y +'</option>');
+							}
+						});
+					});
+				});
 			});
-		});
-		
-		jQuery(".blockRespuesta").each(function(i){
-			jQuery(this).attr("id", "blockRespuesta" + (i+1));
-			var incrementQuestions = false;
-			if (jQuery(this).attr("id").includes("blockRespuesta1")){
-				jQuery(this).find(".linkResponses").each(function(){			
-					jQuery(this).find("option").each(function(y){
-						if (jQuery(this).val().includes("p")){
-							jQuery(this).val("p" + (y+1));
-							jQuery(this).text("Pregunta " + (y+1));
-							if (incrementQuestions){
-								jQuery(this).val("p" + (y+2));
-								jQuery(this).text("Pregunta " + (y+2));
-							}
-							else if ((y+1) == i){
-								jQuery(this).val("p" + (y+2));
-								jQuery(this).text("Pregunta " + (y+2));
-								incrementQuestions = true;
-							}
-						}
-					});
-					incrementQuestions = false;
-				});
-				
-			}
-			else {
-				jQuery(this).find(".linkResponses").each(function(){
-					jQuery(this).find("option").each(function(y){
-						if (jQuery(this).val().includes("p")){
-							jQuery(this).val("p" + y);
-							jQuery(this).text("Pregunta " + y);
-							if (incrementQuestions){
-								jQuery(this).val("p" + (y+1));
-								jQuery(this).text("Pregunta " + (y+1));
-							}
-							else if (y == i){
-								jQuery(this).val("p" + (y+1));
-								jQuery(this).text("Pregunta " + (y+1));
-								incrementQuestions = true;
-							}
-						}
-					});
-					incrementQuestions = false;
-				});
-				
-			}
-		});
-				
+		});	
 	});
 	
 	jQuery(document).on("click", ".btnDeleteResponse", function(){
