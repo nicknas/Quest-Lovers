@@ -45,6 +45,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.controller.ChatSocketHandler;
@@ -531,7 +532,9 @@ public class RootController {
 	}
 	
 	@GetMapping("/subir_historia")
-	public String subirHistoria(){
+	public String subirHistoria(Model m){
+		List<Quest> listQuest = QuestQueries.findAllQuests(entityManager);
+		long id = listQuest.get(listQuest.size() - 1).getId() + 1;
 		return "subir_historia";
 	}
 	
@@ -563,6 +566,14 @@ public class RootController {
 			q.setUrl("esqueleto" + q.getId() + ".json");	
 			entityManager.merge(q);
 			entityManager.flush();
+			ObjectNode objectNode = (ObjectNode) nodeJson;
+			objectNode.with("quest").put("id", q.getId());
+			try {
+				data = objectMapper.writeValueAsString(objectNode);
+			} catch (JsonProcessingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			User u = UserQueries.findWithName(entityManager, auth.getName());
 			List<Quest> quests = QuestQueries.findQuestsByEditorName(entityManager, auth.getName());
 			if (quests == null) {
@@ -672,10 +683,6 @@ public class RootController {
 		return new RedirectView("/mis_historias?success=true");
 	}
 	
-	@GetMapping("/subir_historia_guiada")
-	public String getSubirHistoriaGuiada() {
-		return "subir_historia_guiada";
-	}
 	
 	String scapedparameter(String parameterToScape) {
 		String e = Encode.forCDATA(parameterToScape);

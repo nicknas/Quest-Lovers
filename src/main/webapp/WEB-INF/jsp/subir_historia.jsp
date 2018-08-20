@@ -7,18 +7,19 @@
 <%@ include file="../jspf/header.jspf"%>
 
 <div class="starter-template">
-	
-	<form class="form-horizontal" action="/add_quest" enctype="multipart/form-data" method="post">
+	<form class="form-horizontal" action="#">
 		<fieldset>
 		
 		<!-- Form Name -->
-		<legend>Subir historia</legend>
+		<h2>Subir Historia</h2>
+		
+		<input type="hidden" value="${id}" name="id_quest" />
 		
 		<!-- Text input-->
 		<div class="form-group">
-		  <label class="col-md-4 control-label" for="textinput">Nombre de la historia</label>  
+		  <label class="col-md-4 control-label" for="nombre_historia">Nombre de la historia</label>  
 		  <div class="col-md-4">
-		  <input id="nombre_historia" name="nombre_historia" class="form-control input-md" type="text">
+		  <input id="nombre_historia" name="nombre_historia" class="form-control input-md" type="text" />
 		  </div>
 		</div>
 		
@@ -27,32 +28,22 @@
 		  <label class="col-md-4 control-label" for="descripcion">Descripción</label>
 		  <div class="col-md-4">                     
 		    <textarea class="form-control input-md" id="descripcion" name="descripcion"></textarea>
-		  	<span class="help-block">Introduzca una descripción de la historia</span>
 		  </div>
 		</div>
 		
-		
-		<div class="form-group">
-		  <label class="col-md-4 control-label" for="historia">Subir historia</label>  
-		  <div class="col-md-4">
-		  <input class="input-file" type="file" accept=".json" name="historia" size="40">
-		  </div>
-		</div>	
-		
 		<!-- Button -->
 		<div class="form-group">
-		  <label class="col-md-4 control-label" for="buttonlid"></label>  
-		  <div class="col-md-4">
+		  <label class="col-md-4 control-label" for="buttonStart"></label>  
+		  <div>
 		  	<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
-		    <button id="button1id" name="button1id" class="btn btn-success ">Guardar</button>
+		    <button id="buttonPreguntas" type="button" name="buttonPreguntas" class="btn btn-info col-md-offset-3 col-md-6">Preguntas y Finales <span class="fui-arrow-right"></span></button>
 		  </div>
 		</div>
 		
 		</fieldset>
 	</form>
-	<sec:authentication property="principal.username" var="usuario" />
-	
-	<%@ include file="../jspf/authinfo.jspf"%>		
 </div>
-
+<script src="${s}/js/jquery.uploadQuestHandler.js"></script>
 <%@ include file="../jspf/footer.jspf"%>
+
+
