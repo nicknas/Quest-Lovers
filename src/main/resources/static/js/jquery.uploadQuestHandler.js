@@ -21,65 +21,23 @@ var nombre_finales = new Map();
 			jQuery(".form-group").remove();
 			jQuery("h2").text("Preguntas");
 			jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="initial">Pregunta inicial (texto de la pregunta)</label><div class="col-md-6"><textarea id="initial" name="initial" class="form-control input-md pregunta"></textarea></div></div>');
-			num_preguntas = 1;
-			nombre_preguntas.forEach(function(value, key, map){
-				if (num_preguntas == 1){
-					jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea></div></div>');
-				}
-				else{
-					jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta">'+ data.quest.preguntas[key].texto +'</textarea><button type="button" class="btn btn-danger col-md-12 btnDeleteQuestion"><span class="fui-cross"></span> Borrar Pregunta</button></div></div>');
-				}
-				jQuery("fieldset").append('<div class="form-group blockRespuesta" id="blockRespuesta'+ num_preguntas +'"></div>');
-				
-				data.quest.preguntas[key].respID.forEach(function(element, index){
-					jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta '+ (index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="'+ data.quest.preguntas[element].texto +'" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
-					jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
-				});
-				jQuery("#blockRespuesta" + num_preguntas + " .linkResponses").each(function(i){
-					var linkResponse = jQuery(this);				
-					linkResponse.empty();
-					nombre_preguntas.forEach(function(value, key, map){
-						if (num_preguntas == 1){
-							if (key != "initial"){
-								linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
-							}
-						}
-						else {
-							if (key != ("p" + (num_preguntas - 1))){
-								linkResponse.append('<option value="'+ key +'">'+ value +'</option>');
-							}
-						}
-					});
-					var indexFinal = 1;
-					nombre_finales.forEach(function(value, key, map){
-						linkResponse.append('<option value="'+ key +'">'+ "Final " + indexFinal +'</option>');
-						indexFinal++;
-					});
-					
-					var respuesta = "";
-					if (num_preguntas == 1){
-						respuesta = data.quest.preguntas["initial"].respID[i];
-					}
-					else {
-						respuesta = data.quest.preguntas["p" + (num_preguntas - 1)].respID[i];
-					}
-					linkResponse.find("option[value='"+ data.quest.preguntas[respuesta].respID +"']").prop("selected", true);
-					
-				});
-				jQuery("#blockRespuesta" + num_preguntas).append('<div class="form-group"><button type="button" class="btn btn-success col-md-offset-4 col-md-8 btnAddResponse"><span class="fui-plus-circle"></span> Agregar Respuesta</button></div>');
-				num_preguntas++;
-			});
+			jQuery("fieldset").append('<div class="form-group blockRespuesta" id="blockRespuesta1"></div>');
+			jQuery("#blockRespuesta1").append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta '+ (index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
+			jQuery("#blockRespuesta1").find(".respuesta").first().next().hide();
+			nombre_preguntas.set("initial", 0);
+			nombre_finales.set("f1", 1);
+			jQuery("#blockRespuesta1").append('<div class="form-group"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
+			jQuery("#blockRespuesta1 .linkResponses").append('<option value="f1">Final 1</option>');
+			jQuery("#blockRespuesta1").append('<div class="form-group"><button type="button" class="btn btn-success col-md-offset-4 col-md-8 btnAddResponse"><span class="fui-plus-circle"></span> Agregar Respuesta</button></div>');
 			jQuery("fieldset").append('<div class="form-group"><button type="button" class="btn btn-success col-md-12" id="btnAddQuestion"><span class="fui-plus-circle"></span> Agregar Pregunta</button></div>');
 			jQuery("fieldset").append('<hr>');
 			jQuery("fieldset").append('<h2>Finales</h2>');
-			var index = 1;
-			nombre_finales.forEach(function(value, key, map){
-				jQuery("fieldset").append('<div class="form-group"><label class="col-md-2 control-label" for="'+ key +'">Final '+ index +' (texto del final)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md final">'+ data.quest.preguntas[key].texto +'</textarea><button type="button" class="btn btn-danger col-md-12 btnDeleteFinal"><span class="fui-cross"></span> Borrar Final</button></div></div>');
-				jQuery("fieldset").append('<div class="form-group"><label class="col-md-offset-2 col-md-2 control-label">Tipo de final</label><div class="col-md-6"><input type="text" class="form-control input-md tipoFinal" value="'+ data.quest.preguntas[key].solution +'"/></div></div>');
-				index++;
-			});
+			jQuery("fieldset").append('<div class="form-group"><label class="col-md-2 control-label" for="f1">Final 1 (texto del final)</label><div class="col-md-6"><textarea id="f1" name="f1" class="form-control input-md final"></textarea><button type="button" class="btn btn-danger col-md-12 btnDeleteFinal"><span class="fui-cross"></span> Borrar Final</button></div></div>');
+			jQuery(".final").first().next().hide();
+			jQuery("fieldset").append('<div class="form-group"><label class="col-md-offset-2 col-md-2 control-label">Tipo de final</label><div class="col-md-6"><input type="text" class="form-control input-md tipoFinal" value=""/></div></div>');
 			jQuery("fieldset").append('<div class="form-group"><button type="button" id="btnAddFinal" class="btn btn-success col-md-12"><span class="fui-plus-circle"></span> Agregar Final</button></div>');
-			jQuery("fieldset").append('<div class="form-group"><div><input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" /><button id="buttonSubmit" type="button" name="buttonSubmit" class="btn btn-info col-md-offset-3 col-md-6"><span class="fui-exit"></span> Guardar Cambios</button></div></div>');
+			jQuery("fieldset").append('<div class="form-group"><div><input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" /><button id="buttonSubmit" type="button" name="buttonSubmit" class="btn btn-info col-md-offset-3 col-md-6"><span class="fui-exit"></span> Guardar y Subir</button></div></div>');
+			
 		}
 		
 	});
@@ -355,7 +313,7 @@ var nombre_finales = new Map();
 						contentType: "application/json; charset=utf-8",
 						data: jsonString,
 						type: "POST",
-						url: "/update_quest"		
+						url: "/add_quest"		
 					})
 					.done(function (result, textStatus, jqXHR){
 						if (result === "ok"){
