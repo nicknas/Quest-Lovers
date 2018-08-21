@@ -210,7 +210,7 @@ var nombre_finales = new Map();
 		jQuery(this).remove();
 		blockRespuesta.append('<div class="form-group" style="display: none;"><label class="col-md-6 control-label">Texto de la respuesta '+ (numRespuestas + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
 		blockRespuesta.find("div.form-group").last().fadeIn("slow", function(){
-			blockRespuesta.append(jQuery(".linkResponses").parent().parent().first().clone());
+			blockRespuesta.append(blockRespuesta.find("div.form-group").first().next().clone());
 			blockRespuesta.append('<div class="form-group"><button type="button" class="btn btn-success col-md-offset-4 col-md-8 btnAddResponse"><span class="fui-plus-circle"></span> Agregar Respuesta</button></div>');
 		});
 		
@@ -283,9 +283,13 @@ var nombre_finales = new Map();
 			
 			if (!pregunta.val()){
 				preguntasVacias = true;
-				pregunta.css("border-color", "red")
+				pregunta.css("border-color", "red");
+				if (i == 0){
+					pregunta.focus();
+				}
 			}
 			else {
+				pregunta.css("border-color", "");
 				if (i == 0){
 					data.quest.preguntas.initial.texto = pregunta.val();
 					data.quest.preguntas.initial.respID = [];
@@ -293,9 +297,13 @@ var nombre_finales = new Map();
 						var respuesta = jQuery(this);
 						if (!respuesta.val()){
 							respuestasVacias = true;
+							if (k == 0){
+								respuesta.focus();
+							}
 							respuesta.css("border-color", "red");
 						}
 						else{
+							respuesta.css("border-color", "");
 							num_respuestas++;
 							data.quest.preguntas.initial.respID.push("r" + num_respuestas);
 							data.quest.preguntas["r" + num_respuestas] = new Object();
@@ -322,9 +330,13 @@ var nombre_finales = new Map();
 						var respuesta = jQuery(this);
 						if (!respuesta.val()){
 							respuestasVacias = true;
+							if (k == 0){
+								respuesta.focus();
+							}
 							respuesta.css("border-color", "red");
 						}
 						else{
+							respuesta.css("border-color", "");
 							num_respuestas++;
 							data.quest.preguntas["p" + i].respID.push("r" + num_respuestas);
 							data.quest.preguntas["r" + num_respuestas] = new Object();
@@ -341,62 +353,74 @@ var nombre_finales = new Map();
 				}
 			}
 		});
-		if (!preguntasVacias && !respuestasVacias){
-			console.log(JSON.stringify(data));
-			var linkToFinal = false;
-			jQuery(".linkResponses").each(function(i){
-				if (jQuery(this).val().includes("f")){
-					linkToFinal = true;
+		console.log(JSON.stringify(data));
+		var linkToFinal = false;
+		jQuery(".linkResponses").each(function(i){
+			if (jQuery(this).val().includes("f")){
+				linkToFinal = true;
+			}
+		});
+		if (!linkToFinal){
+			jQuery("#buttonSubmit").before('<div class="row"><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>La quest debe tener enlace a algún final</strong></div></div>');
+		}
+		else {
+			var finalesVacios = false;
+			jQuery(".final").each(function(i){
+				var final = jQuery(this);
+				if (!final.val()){
+					final.css("border-color", "red");
+					if (i == 0){
+						final.focus();
+					}
+					finalesVacios = true;
+				}
+				else {
+					final.css("border-color", "");
 				}
 			});
-			if (!linkToFinal){
-				jQuery("#buttonSubmit").before('<div class="row"><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>La quest debe tener enlace a algún final</strong></div></div>');
-			}
-			else {
-				var finalesVacios = false;
-				jQuery(".final").each(function(){
-					if (!jQuery(this).val()){
-						jQuery(this).css("border-color", "red");
-						finalesVacios = true;
+			jQuery(".tipoFinal").each(function(i){
+				var tipoFinal = jQuery(this);
+				if (!tipoFinal.val()){
+					tipoFinal.css("border-color", red);
+					if (i == 0){
+						tipoFinal.focus();
 					}
-				});
-				jQuery(".tipoFinal").each(function(){
-					if (!jQuery(this).val()){
-						jQuery(this).css("border-color", red);
-						finalesVacios = true;
-					}
-				});
-				if (!finalesVacios){
-					jQuery(".final").each(function(i){
-						var id_final = i + 1;
-						data.quest.preguntas["f" + id_final] = new Object();
-						data.quest.preguntas["f" + id_final].texto = jQuery(this).val();
-					});
-					jQuery(".tipoFinal").each(function(i){
-						var id_final = i + 1;
-						data.quest.preguntas["f" + id_final].solution = jQuery(this).val();
-					});
-					var jsonString = JSON.stringify(data);
-					var token = $("meta[name='_csrf']").attr("content");
-					var header = $("meta[name='_csrf_header']").attr("content");
-					jQuery.ajax({
-						beforeSend: function(headers){
-							headers.setRequestHeader(header, token);
-						},
-						contentType: "application/json; charset=utf-8",
-						data: jsonString,
-						type: "POST",
-						url: "/update_quest"		
-					})
-					.done(function (result, textStatus, jqXHR){
-						if (result === "ok"){
-							window.location.href = "/mis_historias";
-						}
-						else {
-							alert("Error a la hora de subir la quest");
-						}
-					});
+					finalesVacios = true;
 				}
+				else {
+					tipoFinal.css("border-color", "");
+				}
+			});
+			if (!finalesVacios && !preguntasVacias && !respuestasVacias){
+				jQuery(".final").each(function(i){
+					var id_final = i + 1;
+					data.quest.preguntas["f" + id_final] = new Object();
+					data.quest.preguntas["f" + id_final].texto = jQuery(this).val();
+				});
+				jQuery(".tipoFinal").each(function(i){
+					var id_final = i + 1;
+					data.quest.preguntas["f" + id_final].solution = jQuery(this).val();
+				});
+				var jsonString = JSON.stringify(data);
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				jQuery.ajax({
+					beforeSend: function(headers){
+						headers.setRequestHeader(header, token);
+					},
+					contentType: "application/json; charset=utf-8",
+					data: jsonString,
+					type: "POST",
+					url: "/update_quest"		
+				})
+				.done(function (result, textStatus, jqXHR){
+					if (result === "ok"){
+						window.location.href = "/mis_historias";
+					}
+					else {
+						alert("Error a la hora de subir la quest");
+					}
+				});
 			}
 		}
 	});
