@@ -13,8 +13,6 @@
 		<!-- Form Name -->
 		<h2>Subir Historia</h2>
 		
-		<input type="hidden" value="${id}" name="id_quest" />
-		
 		<!-- Text input-->
 		<div class="form-group">
 		  <label class="col-md-4 control-label" for="nombre_historia">Nombre de la historia</label>  

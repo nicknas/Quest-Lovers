@@ -22,7 +22,7 @@ var nombre_finales = new Map();
 			jQuery("h2").text("Preguntas");
 			jQuery("fieldset").append('<div class="form-group blockPregunta"><label class="col-md-2 control-label" for="initial">Pregunta inicial (texto de la pregunta)</label><div class="col-md-6"><textarea id="initial" name="initial" class="form-control input-md pregunta"></textarea></div></div>');
 			jQuery("fieldset").append('<div class="form-group blockRespuesta" id="blockRespuesta1"></div>');
-			jQuery("#blockRespuesta1").append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta '+ (index + 1) +'</label><div class="col-md-6"><input class="form-control input-md respuesta" value="" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
+			jQuery("#blockRespuesta1").append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta 1</label><div class="col-md-6"><input class="form-control input-md respuesta" value="" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
 			jQuery("#blockRespuesta1").find(".respuesta").first().next().hide();
 			nombre_preguntas.set("initial", 0);
 			nombre_finales.set("f1", 1);
@@ -100,27 +100,33 @@ var nombre_finales = new Map();
 		var id = jQuery(".blockPregunta").length;
 		var key = "p" + id;
 		var value = "Pregunta " + id;
-		jQuery(this).parent().before('<div class="form-group blockPregunta" style="display: none;"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta"></textarea><button type="button" class="btn btn-danger col-md-12"><span class="fui-cross"></span> Borrar Pregunta</button></div></div>');
+		jQuery(this).parent().before('<div class="form-group blockPregunta" style="display: none;"><label class="col-md-2 control-label" for="'+ key +'">'+ value +' (texto de la pregunta)</label><div class="col-md-6"><textarea id="'+ key +'" name="'+ key +'" class="form-control input-md pregunta"></textarea><button type="button" class="btn btn-danger col-md-12 btnDeleteQuestion"><span class="fui-cross"></span> Borrar Pregunta</button></div></div>');
 		jQuery(this).parent().prev().fadeIn("slow", function(){
 			jQuery(this).after('<div class="form-group blockRespuesta" style="display: none;" id="blockRespuesta'+ (id + 1) +'"></div>');
-			jQuery("#blockRespuesta" + (id + 1)).append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta 1</label><div class="col-md-6"><input class="form-control input-md respuesta" type="text"/></div></div>');
+			jQuery("#blockRespuesta" + (id + 1)).append('<div class="form-group"><label class="col-md-6 control-label">Texto de la respuesta 1</label><div class="col-md-6"><input class="form-control input-md respuesta" type="text"/><button type="button" class="btn btn-danger col-md-12 btnDeleteResponse"><span class="fui-cross"></span> Borrar Respuesta</button></div></div>');
+			jQuery("#blockRespuesta" + (id + 1)).find(".respuesta").first().next().hide();
 			jQuery("#blockRespuesta" + (id + 1)).append('<div class="form-group"><label class="col-md-6 control-label">Enlace a: </label><div class="col-md-2"><select class="form-control linkResponses"></select></div></div>');
-			jQuery("#blockRespuesta" + (id + 1) + " .linkResponses").each(function(i){
-				var linkResponse = jQuery(this);				
-				linkResponse.empty();
-				jQuery(".pregunta").each(function(i){
-					if (i == 0){
-						linkResponse.append('<option value="initial">Pregunta inicial</option>');
-					}
-					else {
-						if (jQuery(this).attr("id") != key){
-							linkResponse.append('<option value="'+ jQuery(this).attr("id") +'">Pregunta '+ i +'</option>');
+			jQuery(".blockRespuesta .linkResponses").each(function(i){
+				if (jQuery(this).parent().parent().parent().attr("id").includes("blockRespuesta" + (id+1))){
+					var linkResponse = jQuery(this);				
+					linkResponse.empty();
+					jQuery(".pregunta").each(function(i){
+						if (i == 0){
+							linkResponse.append('<option value="initial">Pregunta inicial</option>');
 						}
-					}
-				});
-				jQuery(".final").each(function(i){
-					linkResponse.append('<option value="'+ jQuery(this).attr("id") +'">'+ "Final " + (i + 1) +'</option>');
-				});
+						else {
+							if (jQuery(this).attr("id") != key){
+								linkResponse.append('<option value="'+ jQuery(this).attr("id") +'">Pregunta '+ i +'</option>');
+							}
+						}
+					});
+					jQuery(".final").each(function(i){
+						linkResponse.append('<option value="'+ jQuery(this).attr("id") +'">'+ "Final " + (i + 1) +'</option>');
+					});
+				}
+				else {
+					jQuery(this).find("option[value='f1']").before('<option value="'+ key +'">'+ value +'</option>');
+				}
 				
 			});
 			jQuery("#blockRespuesta" + (id + 1)).append('<div class="form-group"><button type="button" class="btn btn-success col-md-offset-4 col-md-8 btnAddResponse"><span class="fui-plus-circle"></span> Agregar Respuesta</button></div>');
@@ -203,7 +209,11 @@ var nombre_finales = new Map();
 		jQuery(".pregunta").each(function(i){
 			var pregunta = jQuery(this);
 			
-			if (i != 0){
+			if (i == 0){
+				data.quest.preguntas["initial"] = new Object();
+				data.quest.preguntas["initial"].tipo = "preguntaInitial";
+			}
+			else {
 				data.quest.preguntas["p" + i] = new Object();
 				data.quest.preguntas["p" + i].tipo = "pregunta";
 			}

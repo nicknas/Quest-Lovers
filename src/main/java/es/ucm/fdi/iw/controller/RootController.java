@@ -171,7 +171,7 @@ public class RootController {
 		File f = localData.getFile("quest", q.getUrl());
 		try {
 			JsonNode node = o.readTree(f);
-			json = node.toString();
+			json = o.writeValueAsString(node);
 			
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
@@ -533,8 +533,6 @@ public class RootController {
 	
 	@GetMapping("/subir_historia")
 	public String subirHistoria(Model m){
-		List<Quest> listQuest = QuestQueries.findAllQuests(entityManager);
-		long id = listQuest.get(listQuest.size() - 1).getId() + 1;
 		return "subir_historia";
 	}
 	
