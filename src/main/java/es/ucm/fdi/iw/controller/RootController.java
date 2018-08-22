@@ -59,6 +59,7 @@ import es.ucm.fdi.iw.model.QuestQueries;
 import es.ucm.fdi.iw.model.Reporte;
 import es.ucm.fdi.iw.model.ReporteQueries;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.UserPhoto;
 import es.ucm.fdi.iw.model.UserQueries;
 import es.ucm.fdi.iw.model.RespuestasQuest;
 import es.ucm.fdi.iw.model.RespuestasQuestQueries;
@@ -448,13 +449,22 @@ public class RootController {
             try {
                 byte[] bytes = photo.getBytes();
                 User u = UserQueries.findWithName(entityManager, id);
-                int numPhotos = u.getNumPhotos() + 1;
+                List<UserPhoto> userPhotos = u.getListPhotos();
+                if (userPhotos == null) {
+                	userPhotos = new ArrayList<UserPhoto>();
+                }
+                UserPhoto userPhoto = new UserPhoto();
+                userPhoto.setPath(id + "-" + Integer.toString(userPhotos.size() + 1));
+                userPhoto.setUserPhoto(u);
+                entityManager.persist(userPhoto);
+                entityManager.flush();
+                userPhotos.add(userPhoto);
+                u.setListPhotos(userPhotos);
                 BufferedOutputStream stream =
                         new BufferedOutputStream(
-                        		new FileOutputStream(localData.getFile("user", id + "-" + Integer.toString(numPhotos))));
+                        		new FileOutputStream(localData.getFile("user", userPhoto.getPath() )));
                 stream.write(bytes);
-                stream.close();    
-                u.setNumPhotos(numPhotos);
+                stream.close();
                 entityManager.merge(u);
                 entityManager.flush();
                 return "You successfully uploaded " + id + 

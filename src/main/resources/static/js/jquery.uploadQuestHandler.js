@@ -318,7 +318,7 @@ var nombre_finales = new Map();
 			jQuery(".tipoFinal").each(function(i){
 				var tipoFinal = jQuery(this);
 				if (!tipoFinal.val()){
-					tipoFinal.css("border-color", red);
+					tipoFinal.css("border-color", "red");
 					if (i == 0){
 						tipoFinal.focus();
 					}

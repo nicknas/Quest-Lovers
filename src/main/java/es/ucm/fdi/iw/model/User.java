@@ -18,9 +18,9 @@ public class User {
 	private int edad;
 	private String resumen;
 	private String email;
-	private int num_photos;
 	private byte enabled;
 	private List<Quest> questsEditor;
+	private List<UserPhoto> listPhotos;
 	
 	@Id
 	@GeneratedValue
@@ -97,15 +97,6 @@ public class User {
 		this.email = email;
 	}
 	
-	@Column(columnDefinition="INTEGER DEFAULT 0")
-	public int getNumPhotos() {
-		return this.num_photos;
-	}
-	
-	public void setNumPhotos(int num_photos) {
-		this.num_photos = num_photos;
-	}
-	
 	@OneToMany(mappedBy = "editor_fk")
 	public List<Quest> getQuestsEditor() {
 		return questsEditor;
@@ -115,4 +106,12 @@ public class User {
 		this.questsEditor = questsEditor;
 	}
 
+	@OneToMany(mappedBy = "userPhoto")
+	public List<UserPhoto> getListPhotos() {
+		return listPhotos;
+	}
+
+	public void setListPhotos(List<UserPhoto> listPhotos) {
+		this.listPhotos = listPhotos;
+	}
 }
