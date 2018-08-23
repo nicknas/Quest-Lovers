@@ -87,7 +87,7 @@
 	<div class="row">
 		<c:choose>
 			<c:when test="${user.getListPhotos().size() > 0}">
-				<div id="userCarousel" class="carousel slide" data-ride="carousel">
+					  <div id="userCarousel" class="carousel slide" data-ride="carousel">
 					  <!-- Indicators -->
 					  <ol class="carousel-indicators">
 					  	<c:forEach var="i" begin="0" end="${user.getListPhotos().size() - 1}" step="1">
@@ -109,12 +109,22 @@
 					  		<c:choose>
 					  			<c:when test="${i == 1}">
 					  				<div class="item active">
-					      				<img src="/photo/${usuario}/${i}" class="img-responsive img-center" alt="${i}">
+					  					<form action="/delete_photo" method="post">
+					  						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					  						<input type="hidden" name="id_photo" value="${user.getListPhotos().get(i-1).getId()}"/>
+					      					<img src="/photo/${usuario}/${i}" class="img-responsive img-center" alt="${i}">
+					      					<button type="submit" class="btn btn-danger col-md-12"><span class="glyphicon glyphicon-trash"></span></button>
+					      				</form>
 					    			</div>
 					  			</c:when>
 					  			<c:otherwise>
-					  				<div class="item">				     			 
-					     				<img src="/photo/${usuario}/${i}" class="img-responsive img-center" alt="${i}">
+					  				<div class="item">
+					  					<form action="/delete_photo" method="post">
+					  						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
+					  						<input type="hidden" name="id_photo" value="${user.getListPhotos().get(i-1).getId()}"/>			     			 
+					     					<img src="/photo/${usuario}/${i}" class="img-responsive img-center" alt="${i}">
+					     					<button type="submit" class="btn btn-danger col-md-12"><span class="glyphicon glyphicon-trash"></span></button>
+					     				</form>
 					 			    </div>
 								</c:otherwise>
 					  		</c:choose>
@@ -130,7 +140,7 @@
 					    <span class="glyphicon glyphicon-chevron-right"></span>
 					    <span class="sr-only">Next</span>
 					  </a>
-				</div> 
+					</div> 
 			</c:when>
 			<c:otherwise>
 				<div class="col-md-4"></div>

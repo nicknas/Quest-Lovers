@@ -40,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,6 +61,7 @@ import es.ucm.fdi.iw.model.Reporte;
 import es.ucm.fdi.iw.model.ReporteQueries;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserPhoto;
+import es.ucm.fdi.iw.model.UserPhotoQueries;
 import es.ucm.fdi.iw.model.UserQueries;
 import es.ucm.fdi.iw.model.RespuestasQuest;
 import es.ucm.fdi.iw.model.RespuestasQuestQueries;
@@ -494,6 +496,29 @@ public class RootController {
 	    	log.info("Error retrieving file: " + f + " -- " + ioe.getMessage());
 	    }
 	}
+	
+	@Transactional
+	@RequestMapping(value="/delete_photo", method = RequestMethod.POST)
+	public String deletePhoto (HttpServletRequest request, Authentication auth) {
+		long id = Long.parseLong(request.getParameter("id_photo"));
+		UserPhoto photo = UserPhotoQueries.findPhotoById(entityManager, id);
+		entityManager.remove(photo);
+		entityManager.flush();
+		User u = UserQueries.findWithName(entityManager, auth.getName());
+		List<UserPhoto> listPhotos = u.getListPhotos();
+		for (UserPhoto p : listPhotos) {
+			if (p.getId() > id) {
+				p.setId(p.getId() - 1);
+				File photoFile = localData.getFile("user", u.getLogin() + "-" + Integer.toString(p.getId() + 1));
+				photoFile.renameTo(localData.getFile("user", u.getLogin() + "-" + Integer.toString(p.getId())));
+			}
+		}
+		u.setListPhotos(listPhotos);
+		entityManager.merge(u);
+		entityManager.flush();
+		return "redirect:/user?deletePhoto=true";
+	}
+	
 	/**
 	 * actualiza un usuario con cambios en su informacion
 	 * @param user
