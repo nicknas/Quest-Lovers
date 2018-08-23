@@ -500,7 +500,7 @@ public class RootController {
 	@Transactional
 	@RequestMapping(value="/delete_photo", method = RequestMethod.POST)
 	public String deletePhoto (HttpServletRequest request, Authentication auth) {
-		long id = Long.parseLong(request.getParameter("id_photo"));
+		int id = Integer.parseInt(request.getParameter("id_photo"));
 		UserPhoto photo = UserPhotoQueries.findPhotoById(entityManager, id);
 		entityManager.remove(photo);
 		entityManager.flush();

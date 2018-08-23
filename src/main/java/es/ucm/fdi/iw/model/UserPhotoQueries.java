@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 public class UserPhotoQueries {
 	private static Logger log = Logger.getLogger(UserPhotoQueries.class);
 	
-	public static UserPhoto findPhotoById(EntityManager entityManager, long id) {
+	public static UserPhoto findPhotoById(EntityManager entityManager, int id) {
 		try {
 			UserPhoto p = entityManager.createQuery("from UserPhoto p where p.id = :id", UserPhoto.class)
 					.setParameter("id", id)
