@@ -10,9 +10,19 @@ var nombre_finales = new Map();
 		if (!jQuery("#nombre_historia").val() || !jQuery("#descripcion").val()){
 			if (!jQuery("#nombre_historia").val()){
 				jQuery("#nombre_historia").css("border-color", "red");
+				jQuery("form").before('<div class="alert alert-danger alert-dismissible"><input type="hidden" autofocus/><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Falta rellenar el nombre de la historia</strong></div>');
+				jQuery("form").prev().focus();
+			}
+			else {
+				jQuery("#nombre_historia").css("border-color", "");
 			}
 			if (!jQuery("#descripcion").val()){
 				jQuery("#descripcion").css("border-color", "red");
+				jQuery("form").before('<div class="alert alert-danger alert-dismissible"><input type="hidden" autofocus/><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Falta rellenar la descripción</strong></div>');
+				jQuery("form").prev().focus();
+			}
+			else{
+				jQuery("#nombre_historia").css("border-color", "");
 			}
 		}
 		else{
@@ -221,9 +231,8 @@ var nombre_finales = new Map();
 			if (!pregunta.val()){
 				preguntasVacias = true;
 				pregunta.css("border-color", "red");
-				if (i == 0){
-					pregunta.focus();
-				}
+				jQuery("form").before('<div class="alert alert-danger alert-dismissible"><input type="hidden" autofocus/><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Falta rellenar preguntas</strong></div>');
+				jQuery("form").prev().focus();
 			}
 			else {
 				pregunta.css("border-color", "");
@@ -235,9 +244,8 @@ var nombre_finales = new Map();
 						if (!respuesta.val()){
 							respuestasVacias = true;
 							respuesta.css("border-color", "red");
-							if (k == 0){
-								respuesta.focus();
-							}
+							jQuery("form").before('<div id="emptyAnswersAlert" class="alert alert-danger alert-dismissible"><input type="hidden" autofocus/><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Falta rellenar respuestas</strong></div>');
+							jQuery("form").prev().focus();
 						}
 						else{
 							respuesta.css("border-color", "");
@@ -268,8 +276,9 @@ var nombre_finales = new Map();
 						if (!respuesta.val()){
 							respuestasVacias = true;
 							respuesta.css("border-color", "red");
-							if (k == 0){
-								respuesta.focus();
+							if (!jQuery("#emptyAnswersAlert").length){
+								jQuery("form").before('<div id="emptyAnswersAlert" class="alert alert-danger alert-dismissible"><input type="hidden" autofocus/><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Falta rellenar respuestas</strong></div>');
+								jQuery("form").prev().focus();
 							}
 						}
 						else{
@@ -306,9 +315,8 @@ var nombre_finales = new Map();
 				var final = jQuery(this);
 				if (!final.val()){
 					final.css("border-color", "red");
-					if (i == 0){
-						final.focus();
-					}
+					jQuery("form").before('<div class="alert alert-danger alert-dismissible"><input type="hidden" autofocus/><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Falta rellenar textos de finales</strong></div>');
+					jQuery("form").prev().focus();
 					finalesVacios = true;
 				}
 				else {
@@ -319,9 +327,8 @@ var nombre_finales = new Map();
 				var tipoFinal = jQuery(this);
 				if (!tipoFinal.val()){
 					tipoFinal.css("border-color", "red");
-					if (i == 0){
-						tipoFinal.focus();
-					}
+					jQuery("form").before('<div class="alert alert-danger alert-dismissible"><input type="hidden" autofocus/><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Falta rellenar tipos de finales</strong></div>');
+					jQuery("form").prev().focus();
 					finalesVacios = true;
 				}
 				else {

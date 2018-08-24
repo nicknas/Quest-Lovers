@@ -209,10 +209,21 @@ public class RootController {
 	}
 	
 	@GetMapping("/user")
-	public String user(Model m, Authentication authentication) {	
-			User u = UserQueries.findWithName(entityManager, authentication.getName());
-			m.addAttribute("user", u);
-			m.addAttribute("usuario", u.getLogin());
+	public String user(Model m, Authentication authentication, HttpServletRequest request) {	
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
+		m.addAttribute("user", u);
+		m.addAttribute("usuario", u.getLogin());
+		boolean photoDeleted = Boolean.parseBoolean(request.getParameter("deletePhoto"));
+		String fileUploaded = request.getParameter("fileUploaded");
+		if (fileUploaded != null) {
+			boolean fileUploadedBoolean = Boolean.parseBoolean(fileUploaded);
+			m.addAttribute("fileUploaded", fileUploadedBoolean);
+		}
+		
+		boolean fileEmpty = Boolean.parseBoolean(request.getParameter("fileEmpty"));
+		m.addAttribute("fileEmpty", fileEmpty);
+		m.addAttribute("photoDeleted", photoDeleted);
+		
 		return "user";
 	}
 	
@@ -445,7 +456,7 @@ public class RootController {
 	
 	@Transactional
 	@RequestMapping(value="/photo/{id}", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("photo") MultipartFile photo,
+    public String handleFileUpload(@RequestParam("photo") MultipartFile photo,
     		@PathVariable("id") String id){
         if (!photo.isEmpty()) {
             try {
@@ -469,13 +480,12 @@ public class RootController {
                 stream.close();
                 entityManager.merge(u);
                 entityManager.flush();
-                return "You successfully uploaded " + id + 
-                		" into " + localData.getFile("user", id).getAbsolutePath() + "!";
+                return "redirect:/user?fileUploaded=true";
             } catch (Exception e) {
-                return "You failed to upload " + id + " => " + e.getMessage();
+                return "redirect:/user?fileUploaded=false";
             }
         } else {
-            return "You failed to upload a photo for " + id + " because the file was empty.";
+            return "redirect:/user?fileEmpty=true";
         }
 	}
 	
@@ -501,20 +511,18 @@ public class RootController {
 	@RequestMapping(value="/delete_photo", method = RequestMethod.POST)
 	public String deletePhoto (HttpServletRequest request, Authentication auth) {
 		int id = Integer.parseInt(request.getParameter("id_photo"));
-		UserPhoto photo = UserPhotoQueries.findPhotoById(entityManager, id);
-		entityManager.remove(photo);
-		entityManager.flush();
 		User u = UserQueries.findWithName(entityManager, auth.getName());
 		List<UserPhoto> listPhotos = u.getListPhotos();
-		for (UserPhoto p : listPhotos) {
-			if (p.getId() > id) {
-				p.setId(p.getId() - 1);
-				File photoFile = localData.getFile("user", u.getLogin() + "-" + Integer.toString(p.getId() + 1));
-				photoFile.renameTo(localData.getFile("user", u.getLogin() + "-" + Integer.toString(p.getId())));
+		File photoToDelete = localData.getFile("user", u.getLogin() + "-" + Integer.toString(id));
+		photoToDelete.delete();
+		for (int i = 1; i <= listPhotos.size(); i++) {
+			if (i > id) {
+				File photoFile = localData.getFile("user", u.getLogin() + "-" + Integer.toString(i));
+				photoFile.renameTo(localData.getFile("user", u.getLogin() + "-" + Integer.toString(i - 1)));
 			}
 		}
-		u.setListPhotos(listPhotos);
-		entityManager.merge(u);
+		UserPhoto photo = listPhotos.get(id-1);
+		entityManager.remove(photo);
 		entityManager.flush();
 		return "redirect:/user?deletePhoto=true";
 	}

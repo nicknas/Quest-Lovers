@@ -7,10 +7,38 @@
 <%@ include file="../jspf/header.jspf"%>
 
 <div class="starter-template">
+	<c:if test="${(photoDeleted != null) && (photoDeleted) }">
+		<div class="alert alert-success alert-dismissible">
+			<input type="hidden" autofocus/>
+ 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ 			<strong>La foto se ha borrado correctamente</strong>
+		</div>
+	</c:if>
+	<c:if test="${(fileUploaded != null) && (fileUploaded) }">
+		<div class="alert alert-success alert-dismissible">
+			<input type="hidden" autofocus/>
+ 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ 			<strong>La foto se ha subido correctamente</strong>
+		</div>
+	</c:if>
 	
+	<c:if test="${(fileUploaded != null) && (!fileUploaded) }">
+		<div class="alert alert-danger alert-dismissible">
+			<input type="hidden" autofocus/>
+ 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ 			<strong>Error a la hora de subir la foto</strong>
+		</div>
+	</c:if>
+	
+	<c:if test="${(fileEmpty != null) && (fileEmpty) }">
+		<div class="alert alert-danger alert-dismissible">
+			<input type="hidden" autofocus/>
+ 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ 			<strong>No se ha seleccionado ningún archivo para subir</strong>
+		</div>
+	</c:if>
 	<form class="form-horizontal" action="/editUser" method="post">
 		<fieldset>
-		
 		<!-- Form Name -->
 		<legend>Mi cuenta</legend>
 		
@@ -111,7 +139,7 @@
 					  				<div class="item active">
 					  					<form action="/delete_photo" method="post">
 					  						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-					  						<input type="hidden" name="id_photo" value="${user.getListPhotos().get(i-1).getId()}"/>
+					  						<input type="hidden" name="id_photo" value="${i}"/>
 					      					<img src="/photo/${usuario}/${i}" class="img-responsive img-center" alt="${i}">
 					      					<button type="submit" class="btn btn-danger col-md-12"><span class="glyphicon glyphicon-trash"></span></button>
 					      				</form>
@@ -121,7 +149,7 @@
 					  				<div class="item">
 					  					<form action="/delete_photo" method="post">
 					  						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>	
-					  						<input type="hidden" name="id_photo" value="${user.getListPhotos().get(i-1).getId()}"/>			     			 
+					  						<input type="hidden" name="id_photo" value="${i}"/>			     			 
 					     					<img src="/photo/${usuario}/${i}" class="img-responsive img-center" alt="${i}">
 					     					<button type="submit" class="btn btn-danger col-md-12"><span class="glyphicon glyphicon-trash"></span></button>
 					     				</form>
