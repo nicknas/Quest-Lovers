@@ -359,10 +359,10 @@ var nombre_finales = new Map();
 				})
 				.done(function (result, textStatus, jqXHR){
 					if (result === "ok"){
-						window.location.href = "/mis_historias";
+						window.location.href = "/mis_historias?upload=true";
 					}
 					else {
-						alert("Error a la hora de subir la quest");
+						window.location.href = "/mis_historias?upload=false";
 					}
 				});
 			}
