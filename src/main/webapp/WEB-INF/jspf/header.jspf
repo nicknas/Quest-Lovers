@@ -51,7 +51,7 @@
 		</sec:authorize>
 		<sec:authorize access="hasRole('USER')">
 	      <li><a href="/user">Mi Cuenta</a></li>
-	      <li><a href="/quest">Mis Quests</a></li>
+	      <li><a href="/quests">Mis Quests</a></li>
 	      <li><a href="/messages">Mis Mensajes</a></li>
 	      <li><a href="/matches">Matches</a></li>            
 	      <li><a href="/logout">Logout</a></li>

@@ -8,11 +8,11 @@
 
 <div class="starter-template">
 	<c:choose>
-			<c:when test="${user.getNumPhotos() > 0}">
+			<c:when test="${user.getListPhotos().size() > 0}">
 				<div id="userCarousel" class="carousel slide" data-ride="carousel">
 					  <!-- Indicators -->
 					  <ol class="carousel-indicators">
-					  	<c:forEach var="i" begin="0" end="${user.getNumPhotos() - 1}" step="1">
+					  	<c:forEach var="i" begin="0" end="${user.getListPhotos().size() - 1}" step="1">
 					  		<c:choose>
 					  			<c:when test="${i == 0}">
 					  				<li data-target="#userCarousel" data-slide-to="0" class="active"></li>
@@ -27,7 +27,7 @@
 					
 					  <!-- Wrapper for slides -->
 					  <div class="carousel-inner">
-					  	<c:forEach var="i" begin="1" end="${user.getNumPhotos()}" step="1">
+					  	<c:forEach var="i" begin="1" end="${user.getListPhotos().size()}" step="1">
 					  		<c:choose>
 					  			<c:when test="${i == 1}">
 					  				<div class="item active">

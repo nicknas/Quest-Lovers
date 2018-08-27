@@ -14,7 +14,7 @@
 		<div class="col-sm-6 col-xs-12">
 			<div class="userpan">
 				<p>Tienes nuevas Quests?</p>
-				<a href="/quest">Mis Quests</a>
+				<a href="/quests">Mis Quests</a>
 			</div>	
 		</div>
 		<div class="col-sm-6 col-xs-12 ">
