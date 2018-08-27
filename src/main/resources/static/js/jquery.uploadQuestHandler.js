@@ -307,7 +307,7 @@ var nombre_finales = new Map();
 			}
 		});
 		if (!linkToFinal){
-			jQuery("#buttonSubmit").before('<div class="row"><div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>La quest debe tener enlace a algún final</strong></div></div>');
+			jQuery("form").before('<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>La quest debe tener enlace a algún final</strong></div>');
 		}
 		else {
 			var finalesVacios = false;

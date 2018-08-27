@@ -9,7 +9,7 @@
 <div class="starter-template">
 	<hr>
 	<div class="login-form">	
-	    <form action="/login" method="post">               
+	    <form action="/index" method="get">               
 	        <fieldset>
 	            <legend>Please Login</legend>
 	            <div class="form-group">
@@ -28,7 +28,7 @@
 	                	<button class="btn  btn-lg btn-block btn-main-color" type="submit" class="btn">Sign in</button>
 	                </div>
 	                <div class="col-md-6 col-xs-12">
-	               	 <a href="/registro" class="btn  btn-lg btn-block btn-main-color"  class="btn">Sign up</a>
+	               	 <a href="/registro" class="btn  btn-lg btn-block btn-main-color">Sign up</a>
 	                </div>
 	            </div>
 	        </fieldset>

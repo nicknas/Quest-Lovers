@@ -28,7 +28,7 @@
 		<div class="col-sm-6 col-xs-12">
 			<div class="userpan">
 				<p>O mira si tienes alguien nuevo con quien hablar</p>
-				<a href="/quest">Mis Quests</a>
+				<a href="/matches">Mis Matches</a>
 			</div>
 		</div>
 		<div class="col-sm-6 col-xs-12 ">

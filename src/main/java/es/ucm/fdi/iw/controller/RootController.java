@@ -124,10 +124,18 @@ public class RootController {
 	}	
 	
 	@GetMapping({"/", "/index"})
-	public String root(Model model, Principal principal) {
-		log.info(principal.getName() + " de tipo " + principal.getClass());		
+	public String root(Model model, Authentication auth) {
+		log.info(auth.getName() + " de tipo " + auth.getClass());		
 		// org.springframework.security.core.userdetails.User
-		return "home";
+		if (UserQueries.findWithName(entityManager, auth.getName()).getRoles().contains("ADMIN")) {
+			model.addAttribute("users", entityManager
+					.createQuery("select u from User u").getResultList());
+			
+			return "admin";	
+		}
+		else {
+			return "home";
+		}
 	}
 	
 	@GetMapping("/login")
