@@ -8,6 +8,16 @@ INSERT INTO USER VALUES(7,'Madrid',22,'luisrubito@hotmail.com',1,'luisrubio','$2
 INSERT INTO USER VALUES(8,'Madrid',28,'jaime@skater.com',1,'jaime','$2a$10$RoDsswKPNDl9DQ1Zw8Cij.F4BVz8jybe0.bA4WJTFYbzhTHq8bBM.','Skater profesional busco una chica que le guste viajar','USER')
 INSERT INTO USER VALUES(9,'Barcelona',19,'sariita@live.com',1,'sariita','$2a$10$eKbujK16U4YmYs5KiavqWOgYcKt3jQRgmcDshEGrAPZfyHW9sG2MO','Busco alguien con quien recorrer el mundo','USER')
 
+INSERT INTO USER_PHOTO VALUES(1,'alicia26-1',5)
+INSERT INTO USER_PHOTO VALUES(2,'alicia26-2',5)
+INSERT INTO USER_PHOTO VALUES(3,'jaime-1',8)
+INSERT INTO USER_PHOTO VALUES(4,'jaime-2',8)
+INSERT INTO USER_PHOTO VALUES(5,'joselito-1',6)
+INSERT INTO USER_PHOTO VALUES(6,'joselito-2',6)
+INSERT INTO USER_PHOTO VALUES(7,'luisrubio-1',7)
+INSERT INTO USER_PHOTO VALUES(8,'luisrubio-2',7)
+
+
 INSERT INTO MENSAJE_CHAT VALUES(1,'Hola Alicia!',7)
 INSERT INTO MENSAJE_CHAT VALUES(2,'Hola luis!',5)
 INSERT INTO MENSAJE_CHAT VALUES(3,'Te apetece tomar algo?',5)
