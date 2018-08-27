@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -125,22 +126,27 @@ public class RootController {
 	
 	@GetMapping({"/", "/index"})
 	public String root(Model model, Authentication auth) {
-		log.info(auth.getName() + " de tipo " + auth.getClass());		
+		log.info(auth.getName() + " de tipo " + auth.getAuthorities().toArray()[0]);		
 		// org.springframework.security.core.userdetails.User
-		if (UserQueries.findWithName(entityManager, auth.getName()).getRoles().contains("ADMIN")) {
+		if (auth.getAuthorities().toArray()[0].toString().contains("ADMIN")) {
 			model.addAttribute("users", entityManager
 					.createQuery("select u from User u").getResultList());
-			
-			return "admin";	
+			return "admin";
 		}
 		else {
 			return "home";
 		}
+
 	}
 	
 	@GetMapping("/login")
-	public String login() {	
-		
+	public String login(HttpServletRequest request, Model m) {	
+		Enumeration<String> parameters = request.getParameterNames();	
+		while (parameters.hasMoreElements()) {
+			if (parameters.nextElement().contains("error")) {
+				m.addAttribute("errorLogin", true);
+			}
+		}
 		return "login";
 	}
 	

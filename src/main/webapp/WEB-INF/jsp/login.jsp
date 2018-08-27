@@ -8,8 +8,15 @@
 
 <div class="starter-template">
 	<hr>
+	<c:if test="${(errorLogin != null)}">
+		<div class="alert alert-danger alert-dismissible">
+			<input type="hidden" autofocus/>
+ 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ 			<strong>El usuario o la contraseña es incorrecto</strong>
+		</div>
+	</c:if>
 	<div class="login-form">	
-	    <form action="/index" method="get">               
+	    <form action="/login" method="POST">               
 	        <fieldset>
 	            <legend>Please Login</legend>
 	            <div class="form-group">

@@ -1,4 +1,5 @@
-INSERT INTO USER VALUES(2,'Madrid',25,'usuariob@usuariob.com',1,'b','$2a$04$NwYuA6rd/UbCs3H8mntvPuqyFuUsX8sTKI1WDYwqrXhncXWIklscW','Resumen','ADMIN')
+INSERT INTO USER VALUES(1,'Madrid',30,'usuarioadmin@usuarioadmin.com',1,'admin','$2a$04$MZ.aJr.mBu.h27y/5RwchOMRrpQgWGvJjHPOOJGCC2UcCieyKGLjq','Resumen','ADMIN')
+INSERT INTO USER VALUES(2,'Madrid',25,'usuariob@usuariob.com',1,'b','$2a$10$mQkdNZ033Jp5UFomNHckNeNHwpVB6rGIA/T.uj3F.tyRktw3.Ux4S','Resumen','ADMIN')
 INSERT INTO USER VALUES(3,'Madrid',32,'pepe@editor.com',1,'pepe','$2a$10$naj4XfGMicoV1fE75Y3fauU2jLt.h2iXGd1xTsWhxDj1RVoy9OEJe','Soy editor de la revista Hola','EDITOR')
 INSERT INTO USER VALUES(4,'Barcelona',45,'maria@editora.com',1,'maria','$2a$10$s9qMt7B2mxRCCnfo5EcOyOFfqaSmTP52IpVzM/FPzcERVdxMOYOpe','Escribo cuentos para niños','EDITOR')
 INSERT INTO USER VALUES(5,'Madrid',26,'alicia26@gmail.com',1,'alicia26','$2a$10$q1wbZkFutj23UUvzEm8hReFDlyX9xWxp1x24AfSOoROjoYsbAntTy','Me encanta la musica y el cine, busco chico joven para relacion estable','USER')

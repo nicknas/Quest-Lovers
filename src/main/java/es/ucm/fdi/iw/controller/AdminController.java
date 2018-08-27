@@ -34,7 +34,6 @@ import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
 
 @Controller	
-@RequestMapping("admin")
 public class AdminController {
 	
 	private static Logger log = Logger.getLogger(AdminController.class);
@@ -58,9 +57,9 @@ public class AdminController {
 		m.addAttribute("users", entityManager
 				.createQuery("select u from User u").getResultList());
 		
-		return "admin";	
-	}*/
-	
+		return "redirect:/admin";	
+	}
+	*/
 	
 	
 	

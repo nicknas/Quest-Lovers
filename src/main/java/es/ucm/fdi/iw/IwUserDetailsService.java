@@ -23,9 +23,10 @@ public class IwUserDetailsService implements UserDetailsService {
         this.entityManager = em;
     }
 
+    @Override
     public UserDetails loadUserByUsername(String username){
     	try {
-	        User u = entityManager.createQuery("from User where login = :login", User.class)
+	        User u = entityManager.createQuery("from User where login = :login and enabled = 1", User.class)
 	                            .setParameter("login", username)
 	                            .getSingleResult();
 	        // build UserDetails object
