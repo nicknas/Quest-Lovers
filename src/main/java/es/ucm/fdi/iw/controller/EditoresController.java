@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
 
@@ -88,11 +89,16 @@ public class EditoresController {
 			
 		User u = UserQueries.findWithId(entityManager, id);
 		if(u != null) {
+			List<Quest> listQuests = u.getQuestsEditor();
+			for (Quest q : listQuests) {
+				entityManager.remove(q);
+				entityManager.flush();
+			}
 			entityManager.remove(u);
 			entityManager.flush();
 			List<User> lista = UserQueries.findEditores(entityManager);
 			m.addAttribute("editores", lista);
-			return "editores";
+			return "redirect:/editores";
 		}
 		else {
 			return "error";

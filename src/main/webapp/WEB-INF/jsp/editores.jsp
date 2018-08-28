@@ -25,7 +25,7 @@
 			</div>
 			<div id="collapse1" class="panel-collapse collapse">
 				<div class="panel-body">
-					<form class="form-horizontal" id="formulario-editor" action="/admin/addEditor" method="post">
+					<form class="form-horizontal" id="formulario-editor" action="/addEditor" method="post">
 						<fieldset>
 
 							<div class="col-md-6">
@@ -120,7 +120,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${editores}" var="u">
-			<form action ="/admin/deleteEditor" method="POST">
+			<form action ="/deleteEditor" method="POST">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<input name="id" id="id" value="${u.id}" type="hidden"/>
 				<tr>
