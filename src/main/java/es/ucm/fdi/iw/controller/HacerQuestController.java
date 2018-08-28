@@ -62,22 +62,10 @@ public class HacerQuestController {
 		User u = UserQueries.findWithName(entityManager, authentication.getName());
 		m.addAttribute("user_actual", u);
 		String idQuest=request.getParameter("id");		
-		
-		List<RespuestasQuest> listaQuestsUser = RespuestasQuestQueries.findQuestsByUser(entityManager, u.getId());
-		List<Integer> lista = new ArrayList<>();
-		if(listaQuestsUser.size()!=0) {
-			for(int i =0;i< listaQuestsUser.size(); i++) {
-				lista.add(listaQuestsUser.get(i).getIdQuest());
-			}
-		}
-		if(lista.contains(Integer.parseInt(idQuest))) {
-			return "/error";
-		} else {
-			Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
-			m.addAttribute("quest_actual", q);
-			return "hacer_quest";
+		Quest q = QuestQueries.findQuestById(entityManager, Integer.parseInt(idQuest));
+		m.addAttribute("quest_actual", q);
+		return "hacer_quest";
 			
-		}
 	}
 	
 	@RequestMapping(value = "/get_quest", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -6,7 +6,7 @@
 <body>
 <h1>Integrantes</h1>
 <ul>
-    <li>Nicolás Alcaine Camilli (único integrante que ha realizado esta versión)</li>
+    <li>Nicolás Alcaine Camilli (único integrante que ha realizado esta nueva versión)</li>
 </ul>
 <h1>Vistas</h1>
 <p>Nuestras vistas se dividen según el tipo de usuario, por lo que hay unas vistas comunes y unas específicas:</p>
@@ -27,7 +27,7 @@
 <p>Lista de todos los matches del usuario. Al acceder a uno de ellos cambia a la vista del usuario elegido. Esta vista contiene mas informacion y dos botones; "enviar mensaje" que accede a un chat y "reportar usuario" que despliega otro campo de texto y otro boton para realizar un reporte.</p><br>
 <h4>ADMIN</h4>
 <h3>Quests</h3>
-<p>Permite al administrador ver todas las quest disponibles</p>
+<p>Permite al administrador ver todas las quest disponibles y banearlas</p>
 <h3>Editores</h3>
 <p>Muestra una tabla con los editores registrados, un boton para eliminar uno o varios a la vez y otro boton que despliega un formulario para registrar un nuevo editor.</p>
 <h3>Reportes</h3>
@@ -38,11 +38,11 @@
 <h3>Editar historia</h3>
 <p>Página usada para editar cada quest que haya creado ese editor</p>
 <h3>Subir historia</h3>
-<p>Vista con dos campos de texto para introducir el nombre y la descripcion de la quest, un boton para seleccionar el archivo ".json" que lleva la quest y un ultimo boton de guardar.</p>
+<p>Vista con capacidad de crear un json de la historia según las preguntas, respuestas y finales que vaya insertando</p>
 <hr>
 <h1>Recursos externos</h1>
 <h3>LocalData</h3>
-<p>Se guardan fotos y quest(json). La dirección de <b>LocalData</b> es <b>/tmp/iw</b>. Existe en el proyecto una carpeta llamada <b>iw</b> localizada justo en la carpeta principal <b>iw-base</b> en la que se encuentran fotos y quest para testear las subidas a LocalData </p>
+<p>Se guardan fotos y quest(json). La dirección de <b>LocalData</b> es <b>/tmp/iw</b>. Existe en el proyecto una carpeta llamada <b>datos</b> localizada justo en la carpeta principal <b>iw-base</b> en la que se encuentran fotos y quest para testear las subidas a LocalData </p>
 <h3>Bases de datos</h3>
 <p>Se usa el perfil <b>default</b> para cargar la base de datos en memoria con el archivo <b>import.sql</b> y el perfil <b>dockerdb</b> para usar la base de datos que tenemos alojada en la dirección <b>jdbc:hsqldb:hsql://container.fdi.ucm.es:20129/iwdb</b></p>
 <hr>

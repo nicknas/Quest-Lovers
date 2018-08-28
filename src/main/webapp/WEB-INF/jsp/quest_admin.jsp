@@ -20,12 +20,12 @@
 			                        <form class="col-md-6" action="/ban_quest" method="POST">
 			                        	<input type="hidden" name="id_quest" value="${quest.getId()}"/>
 			                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			                        	<button type="submit" class="btn btn-block btn-danger">Banear esta Quest</button>
+			                        	<button type="submit" class="btn btn-block btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
 			                       	</form>
 			                        <form class="col-md-6" action="/ver_historia_admin" method="POST">
 			                        	<input type="hidden" name="id_quest" value="${quest.getId()}"/>
 			                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			                        	<button type="submit" class="btn btn-block btn-info">Ver Quest</button>
+			                        	<button type="submit" class="btn btn-block btn-info"><span class="glyphicon glyphicon-eye-open"></span></button>
 			                        </form>
 		                        </div>
 		                    </div>

@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.QuestQueries;
+import es.ucm.fdi.iw.model.RespuestasQuest;
+import es.ucm.fdi.iw.model.RespuestasQuestQueries;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.UserQueries;
 
@@ -41,9 +44,20 @@ public class QuestsController {
 	@GetMapping("/quests")
 	public String quest(Model m, Authentication authentication) {
 		List<Quest> listaQuests = QuestQueries.findAllQuests(entityManager);
-		m.addAttribute("all_quests", listaQuests);
+		List<Quest> questsToRemove = new ArrayList<Quest>();
 		User u = UserQueries.findWithName(entityManager, authentication.getName());
-		
+		List<RespuestasQuest> listaQuestsUser = RespuestasQuestQueries.findQuestsByUser(entityManager, u.getId());
+		for(RespuestasQuest questTerminada : listaQuestsUser) {
+			for(Quest quest : listaQuests) {
+				if (questTerminada.getIdQuest() == quest.getId()) {
+					questsToRemove.add(quest);
+				}
+			}
+		}
+		for(Quest quest : questsToRemove) {
+			listaQuests.remove(quest);
+		}
+		m.addAttribute("all_quests", listaQuests);
 		return "quests";
 	}
 	

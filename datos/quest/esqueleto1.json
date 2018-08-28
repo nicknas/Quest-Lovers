@@ -41,33 +41,8 @@
             },
             "p7": {
                 "tipo": "pregunta",
-                "texto": "pregunta 7",
-                "respID": [1, 2, 3]
-            },
-            "p8": {
-                "tipo": "pregunta",
                 "texto": "Asi que empece hablar con esa persona, tenia conversacion interesante,pero habia algo que me inquietaba asi que...",
                 "respID": ["f1", "f2"]
-            },
-            "p9": {
-                "tipo": "pregunta",
-                "texto": "pregunta 9",
-                "respID": [1, 2, 3]
-            },
-            "p10": {
-                "tipo": "pregunta",
-                "texto": "pregunta 7",
-                "respID": [1, 2, 3]
-            },
-            "p11": {
-                "tipo": "pregunta",
-                "texto": "pregunta 8",
-                "respID": [1, 2, 3]
-            },
-            "p12": {
-                "tipo": "pregunta",
-                "texto": "pregunta 9",
-                "respID": [1, 2, 3]
             },
             "r1": {
                 "tipo": "respuesta",
@@ -122,7 +97,7 @@
             "r11": {
                 "tipo": "respuesta",
                 "texto": "Agua esta bién",
-                "respID": "p10"
+                "respID": "p7"
             },
             "r12": {
                 "tipo": "respuesta",
