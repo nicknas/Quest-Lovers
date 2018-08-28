@@ -15,6 +15,14 @@
 			</div>
 		</div>
 	</c:if>
+	<c:if test="${not empty bannedQuests and bannedQuests}">
+		<div class="row">
+			<div class="alert alert-info alert-dismissible">
+	  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	  			<strong>Alguna de tus Quests ha sido baneada por el administrador</strong>
+			</div>
+		</div>
+	</c:if>
 	<c:forEach var="item" items="${questList}">
 		<div class="quest-container tile col-md-3 col-xs-12">
 	        <h6>${item.titulo}</h6>

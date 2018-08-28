@@ -36,10 +36,12 @@ INSERT INTO MATCH VALUES(3,9,5)
 INSERT INTO MATCH VALUES(4,9,7)
 INSERT INTO MATCH VALUES(5,7,6)
 
-INSERT INTO QUEST VALUES(1,'Es un viernes por la tarde, la ciudad no está mal, pero en una semana todavía no conocía a nadie, había visto ese cartel de fiesta del Jazz en la calle suerte','Un dia movidito','esqueleto1.json',3)
-INSERT INTO QUEST VALUES(3,'Ponte en situación. Imagina que un grupo de asesinos os secuestran a ti y a una persona más y escapais encontrandoos en un bosque, qué harías para salir de allí?','Aventura en el bosque','esqueleto3.json',3)
+INSERT INTO QUEST VALUES(1,'Es un viernes por la tarde, la ciudad no está mal, pero en una semana todavía no conocía a nadie, había visto ese cartel de fiesta del Jazz en la calle suerte',1,'Un dia movidito','esqueleto1.json',3)
+INSERT INTO QUEST VALUES(3,'Ponte en situación. Imagina que un grupo de asesinos os secuestran a ti y a una persona más y escapais encontrandoos en un bosque, qué harías para salir de allí?',1,'Aventura en el bosque','esqueleto3.json',3)
+
 INSERT INTO REPORTE VALUES(1,0,'Me está acosando',1,7,5)
 INSERT INTO REPORTE VALUES(2,0,'Me han copiado el perfil',0,5,9)
+
 INSERT INTO RESPUESTAS_QUEST VALUES(1,1,6,'desagradable 1')
 INSERT INTO RESPUESTAS_QUEST VALUES(2,3,5,'desagradable 3')
 INSERT INTO RESPUESTAS_QUEST VALUES(3,3,7,'desagradable 3')

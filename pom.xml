@@ -4,11 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.ucm.fdi</groupId>
-	<artifactId>ejemplo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>iwbase</name>
+	<name>Quest-Lovers</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -99,4 +98,5 @@
 	</build>
 
 
+	<artifactId>Quest-Lovers</artifactId>
 </project>

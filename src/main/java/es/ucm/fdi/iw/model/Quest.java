@@ -22,6 +22,7 @@ public class Quest {
 	private String descripcion;
 	private String url;//url del json que contiene la quest
 	private User editor_fk;
+	private byte enabled;
 	
 	@Id
 	@GeneratedValue
@@ -58,6 +59,14 @@ public class Quest {
 		this.url = url;
 	}	
 	
+	public byte getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(byte enabled) {
+		this.enabled = enabled;
+	}
+
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name = "editor_fk", referencedColumnName = "id")
 	public User getEditor_fk() {

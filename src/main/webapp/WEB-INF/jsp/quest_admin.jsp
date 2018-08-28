@@ -6,87 +6,34 @@
 <%@ include file="../jspf/header.jspf"%>
 
 <div class="starter-template">
-    <h1>Quests List</h1>    
+    <h1>Todas las Quest</h1>    
     <hr />
-    <div class="quests-container row">
         <div class="col-xs-12 quest">
-            <h3>Titulo de la Quest</h3>
             <ul class="list-quest">
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest  col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest  col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest  col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
-                <li class="quest col-md-3 col-xs-12">
-                    <div class="quest-container tile">
-                        <h6>title</h6>
-                        <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,</p>
-                        <form action="/hacer_quest">
-                            <input class="btn btn-block btn-primary" type="submit" value="Empezar esta Quest">
-                        </form>
-                    </div>
-                </li>
+            	<c:forEach var = "quest" items = "${listQuest}">
+            		<c:if test='${quest.getEnabled() eq Byte.parseByte("1")}'>
+            			<li class="quest col-md-3 col-xs-12">
+		                    <div class="quest-container tile">
+		                        <h6>${quest.getTitulo()}</h6>
+		                        <p>${quest.getDescripcion()}</p>
+		                        <div class="row">
+			                        <form class="col-md-6" action="/ban_quest" method="POST">
+			                        	<input type="hidden" name="id_quest" value="${quest.getId()}"/>
+			                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			                        	<button type="submit" class="btn btn-block btn-danger">Banear esta Quest</button>
+			                       	</form>
+			                        <form class="col-md-6" action="/ver_historia_admin" method="POST">
+			                        	<input type="hidden" name="id_quest" value="${quest.getId()}"/>
+			                        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			                        	<button type="submit" class="btn btn-block btn-info">Ver Quest</button>
+			                        </form>
+		                        </div>
+		                    </div>
+                		</li>
+            		</c:if>
+            	</c:forEach>
             </ul>
         </div>
-    </div>
     
     <hr/>
     

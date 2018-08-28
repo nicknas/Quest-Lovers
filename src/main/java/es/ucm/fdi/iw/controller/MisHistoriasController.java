@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -24,6 +25,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Quest;
 import es.ucm.fdi.iw.model.QuestQueries;
+import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.UserQueries;
 
 @Controller
 public class MisHistoriasController {
@@ -44,8 +47,25 @@ public class MisHistoriasController {
     }
 	
 	@GetMapping("/mis_historias")
+	@Transactional
 	public String getMyQuests(Authentication authentication, Model model, HttpServletRequest request) {
 		List<Quest> questList = QuestQueries.findQuestsByEditorName(entityManager, authentication.getName());
+		List<Quest> questToRemove = new ArrayList<Quest>();
+		for (Quest quest : questList) {
+			if (quest.getEnabled() == Byte.parseByte("0")) {
+				model.addAttribute("bannedQuests", true);
+				questToRemove.add(quest);
+				entityManager.remove(quest);
+				entityManager.flush();
+			}
+		}
+		for (Quest q : questToRemove) {
+			questList.remove(q);
+		}
+		User u = UserQueries.findWithName(entityManager, authentication.getName());
+		u.setQuestsEditor(questList);
+		entityManager.merge(u);
+		entityManager.flush();
 		model.addAttribute("questList", questList);
 		boolean success = Boolean.parseBoolean(request.getParameter("success"));
 		if (success) {
