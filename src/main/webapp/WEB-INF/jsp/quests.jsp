@@ -9,11 +9,10 @@
 <%@ include file="../jspf/header.jspf"%>
 
 <div class="starter-template">
-    <h1>Quests List</h1>    
+    <h1>Todas nuestras Quests disponibles</h1>    
     </hr>
     <div class="quests-container row">
         <div class="col-xs-12 quest">
-            <h3>Todas nuestras Quests disponibles</h3>
             <ul class="list-quest">
 
             	<c:forEach items="${all_quests}" var="quests">

@@ -113,6 +113,7 @@ public class HacerQuestController {
 		r.setIdQuest(Integer.parseInt(id_quest));
 		r.setResultado(resultado);
 		entityManager.persist(r);
+		entityManager.flush();
 		List<RespuestasQuest> listaMatches = RespuestasQuestQueries.findQuestsByRespuesta(entityManager, resultado);
 		if(listaMatches!=null) {
 			for(int i = 0; i<listaMatches.size();i++) {
@@ -122,10 +123,11 @@ public class HacerQuestController {
 						a.setIdUser1(Integer.parseInt(id_user));
 						a.setIdUser2(listaMatches.get(i).getIdUser());
 						entityManager.persist(a);
+						entityManager.flush();
 					}
 				}
 			}
 		}
-		return "quests";
+		return "redirect:/quests";
 	}
 }
